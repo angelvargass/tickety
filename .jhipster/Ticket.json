@@ -1,0 +1,32 @@
+{
+  "applications": ["Tickety"],
+  "changelogDate": "20230321021403",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "ticket",
+  "fields": [
+    {
+      "fieldName": "date",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "ticketStatus",
+      "fieldType": "TicketStatus",
+      "fieldValues": "PENDING,CONFIRMED,SOLD,CANCELED"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Ticket",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "event",
+      "otherEntityRelationshipName": "ticket",
+      "relationshipName": "event",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

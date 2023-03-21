@@ -1,0 +1,11 @@
+{
+  "ticketyApp": {
+    "TicketStatus": {
+      "null": "",
+      "PENDING": "PENDING",
+      "CONFIRMED": "CONFIRMED",
+      "SOLD": "SOLD",
+      "CANCELED": "CANCELED"
+    }
+  }
+}

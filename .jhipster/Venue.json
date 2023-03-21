@@ -1,0 +1,33 @@
+{
+  "applications": ["Tickety"],
+  "changelogDate": "20230321021003",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "venue",
+  "fields": [
+    {
+      "fieldName": "address",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "capacity",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Venue",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "event",
+      "otherEntityRelationshipName": "venue",
+      "relationshipName": "event",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "no"
+}

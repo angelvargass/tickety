@@ -1,0 +1,31 @@
+{
+  "applications": ["Tickety"],
+  "changelogDate": "20230321021103",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "genre",
+  "fields": [
+    {
+      "fieldName": "form",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Genre",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "artist",
+      "otherEntityRelationshipName": "genre",
+      "relationshipName": "artist",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

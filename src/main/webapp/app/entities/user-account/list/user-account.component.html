@@ -1,0 +1,127 @@
+<div>
+  <h2 id="page-heading" data-cy="UserAccountHeading">
+    <span jhiTranslate="ticketyApp.userAccount.home.title">User Accounts</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="ticketyApp.userAccount.home.refreshListLabel">Refrescar lista</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-user-account"
+        [routerLink]="['/user-account/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="ticketyApp.userAccount.home.createLabel"> Crear nuevo User Account </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="userAccounts?.length === 0">
+    <span jhiTranslate="ticketyApp.userAccount.home.notFound">Ningún User Accounts encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="userAccounts && userAccounts.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="email">
+            <div class="d-flex">
+              <span jhiTranslate="ticketyApp.userAccount.email">Email</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="password">
+            <div class="d-flex">
+              <span jhiTranslate="ticketyApp.userAccount.password">Password</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="name">
+            <div class="d-flex">
+              <span jhiTranslate="ticketyApp.userAccount.name">Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="lastName">
+            <div class="d-flex">
+              <span jhiTranslate="ticketyApp.userAccount.lastName">Last Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="genderu">
+            <div class="d-flex">
+              <span jhiTranslate="ticketyApp.userAccount.genderu">Genderu</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="organization.id">
+            <div class="d-flex">
+              <span jhiTranslate="ticketyApp.userAccount.organization">Organization</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let userAccount of userAccounts; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/user-account', userAccount.id, 'view']">{{ userAccount.id }}</a>
+          </td>
+          <td>{{ userAccount.email }}</td>
+          <td>{{ userAccount.password }}</td>
+          <td>{{ userAccount.name }}</td>
+          <td>{{ userAccount.lastName }}</td>
+          <td jhiTranslate="{{ 'ticketyApp.Gender.' + userAccount.genderu }}">{{ userAccount.genderu }}</td>
+          <td>
+            <div *ngIf="userAccount.organization">
+              <a [routerLink]="['/organization', userAccount.organization.id, 'view']">{{ userAccount.organization.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/user-account', userAccount.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/user-account', userAccount.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(userAccount)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

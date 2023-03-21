@@ -1,0 +1,40 @@
+{
+  "applications": ["Tickety"],
+  "changelogDate": "20230321020603",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "contact",
+  "fields": [
+    {
+      "fieldName": "phone",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "instagram",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "facebook",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "whatsapp",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Contact",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "organization",
+      "otherEntityRelationshipName": "contact",
+      "ownerSide": false,
+      "relationshipName": "organization",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "service": "no"
+}

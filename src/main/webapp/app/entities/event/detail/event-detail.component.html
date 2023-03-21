@@ -1,0 +1,64 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="event">
+      <h2 data-cy="eventDetailsHeading"><span jhiTranslate="ticketyApp.event.detail.title">Event</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ event.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="ticketyApp.event.date">Date</span></dt>
+        <dd>
+          <span>{{ event.date | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="ticketyApp.event.eventSatus">Event Satus</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'ticketyApp.EventSatus.' + event.eventSatus }}">{{ event.eventSatus }}</span>
+        </dd>
+        <dt><span jhiTranslate="ticketyApp.event.talTickets">Tal Tickets</span></dt>
+        <dd>
+          <span>{{ event.talTickets }}</span>
+        </dd>
+        <dt><span jhiTranslate="ticketyApp.event.galery">Galery</span></dt>
+        <dd>
+          <div *ngIf="event.galery">
+            <a [routerLink]="['/galery', event.galery.id, 'view']">{{ event.galery.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="ticketyApp.event.userAccount">User Account</span></dt>
+        <dd>
+          <div *ngIf="event.userAccount">
+            <a [routerLink]="['/user-account', event.userAccount.id, 'view']">{{ event.userAccount.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="ticketyApp.event.organization">Organization</span></dt>
+        <dd>
+          <div *ngIf="event.organization">
+            <a [routerLink]="['/organization', event.organization.id, 'view']">{{ event.organization.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="ticketyApp.event.venue">Venue</span></dt>
+        <dd>
+          <div *ngIf="event.venue">
+            <a [routerLink]="['/venue', event.venue.id, 'view']">{{ event.venue.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
+      </button>
+
+      <button type="button" [routerLink]="['/event', event.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

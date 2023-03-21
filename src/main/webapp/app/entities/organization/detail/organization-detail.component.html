@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="organization">
+      <h2 data-cy="organizationDetailsHeading"><span jhiTranslate="ticketyApp.organization.detail.title">Organization</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ organization.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="ticketyApp.organization.name">Name</span></dt>
+        <dd>
+          <span>{{ organization.name }}</span>
+        </dd>
+        <dt><span jhiTranslate="ticketyApp.organization.owner">Owner</span></dt>
+        <dd>
+          <span>{{ organization.owner }}</span>
+        </dd>
+        <dt><span jhiTranslate="ticketyApp.organization.contact">Contact</span></dt>
+        <dd>
+          <div *ngIf="organization.contact">
+            <a [routerLink]="['/contact', organization.contact.id, 'view']">{{ organization.contact.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
+      </button>
+
+      <button type="button" [routerLink]="['/organization', organization.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

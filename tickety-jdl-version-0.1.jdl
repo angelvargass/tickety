@@ -1,0 +1,115 @@
+application {
+  config {
+    baseName Tickety,
+    applicationType monolith,
+    packageName com.tickety,
+    authenticationType jwt,
+    devDatabaseType h2Disk,
+    prodDatabaseType mysql,
+    clientFramework angular,
+    buildTool maven,
+    languages [es,en],
+    nativeLanguage es,
+    enableTranslation true
+  }
+  entities *
+}
+
+entity Roles {
+	Type String
+}
+enum Gender {
+MASCULINO,FEMENINO,OTRO
+}
+enum EventSatus {
+OPEN,CLOSED,CANCELED,SOLDOUT
+}
+
+enum TicketStatus {
+PENDING,CONFIRMED,SOLD,CANCELED
+}
+
+enum PhotoStatus {
+ACTIVE,INSTACTIVE,FAVORITE
+}
+
+enum GaleryStatus {
+ACTIVE,INSTACTIVE,FAVORITE
+}
+
+entity UserAccount {
+	Email String
+    Password String
+    Name String
+    LastName String
+    Genderu Gender
+}
+
+entity Contact {
+	Phone String
+    Instagram String
+    Facebook String
+    Whatsapp String
+}
+
+entity Photo {
+	Url String
+    Status PhotoStatus
+}
+
+entity Galery {
+	Name String
+    Status GaleryStatus
+}
+
+entity Organization {
+	Name String
+    Owner String
+}
+
+entity Venue {
+	Address String
+    Capacity Integer min(0),
+}
+
+entity Genre {
+	Form String
+	Type String
+}
+
+entity Artist {
+	Name String
+    Info String
+    SocialMedia String
+}
+
+entity Event {
+    Date LocalDate
+    EventSatus EventSatus
+    TalTickets Integer min(0)
+}
+entity Ticket {
+	Date LocalDate
+    TicketStatus TicketStatus
+}
+
+
+
+relationship OneToMany {
+UserAccount to Event
+Organization to UserAccount
+Organization to UserAccount
+Organization to Event
+Galery to Photo
+Event to Artist
+Event to Ticket
+Venue to Event
+Artist to Genre
+UserAccount to Roles
+}
+
+relationship OneToOne {
+  Event to Galery
+  Organization to Contact
+}
+

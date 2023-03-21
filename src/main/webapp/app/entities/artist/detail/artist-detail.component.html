@@ -1,0 +1,46 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="artist">
+      <h2 data-cy="artistDetailsHeading"><span jhiTranslate="ticketyApp.artist.detail.title">Artist</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ artist.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="ticketyApp.artist.name">Name</span></dt>
+        <dd>
+          <span>{{ artist.name }}</span>
+        </dd>
+        <dt><span jhiTranslate="ticketyApp.artist.info">Info</span></dt>
+        <dd>
+          <span>{{ artist.info }}</span>
+        </dd>
+        <dt><span jhiTranslate="ticketyApp.artist.socialMedia">Social Media</span></dt>
+        <dd>
+          <span>{{ artist.socialMedia }}</span>
+        </dd>
+        <dt><span jhiTranslate="ticketyApp.artist.event">Event</span></dt>
+        <dd>
+          <div *ngIf="artist.event">
+            <a [routerLink]="['/event', artist.event.id, 'view']">{{ artist.event.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
+      </button>
+
+      <button type="button" [routerLink]="['/artist', artist.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

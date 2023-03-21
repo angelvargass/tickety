@@ -1,0 +1,10 @@
+{
+  "ticketyApp": {
+    "Gender": {
+      "null": "",
+      "MASCULINO": "MASCULINO",
+      "FEMENINO": "FEMENINO",
+      "OTRO": "OTRO"
+    }
+  }
+}

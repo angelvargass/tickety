@@ -1,0 +1,56 @@
+{
+  "applications": ["Tickety"],
+  "changelogDate": "20230321020503",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "user_account",
+  "fields": [
+    {
+      "fieldName": "email",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "password",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "lastName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "genderu",
+      "fieldType": "Gender",
+      "fieldValues": "MASCULINO,FEMENINO,OTRO"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "UserAccount",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "event",
+      "otherEntityRelationshipName": "userAccount",
+      "relationshipName": "event",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "roles",
+      "otherEntityRelationshipName": "userAccount",
+      "relationshipName": "roles",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "organization",
+      "otherEntityRelationshipName": "userAccount",
+      "relationshipName": "organization",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

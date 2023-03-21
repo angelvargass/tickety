@@ -1,0 +1,32 @@
+{
+  "ticketyApp": {
+    "event": {
+      "home": {
+        "title": "Events",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Event",
+        "createOrEditLabel": "Create or edit a Event",
+        "notFound": "No Events found"
+      },
+      "created": "A new Event is created with identifier {{ param }}",
+      "updated": "A Event is updated with identifier {{ param }}",
+      "deleted": "A Event is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Event {{ id }}?"
+      },
+      "detail": {
+        "title": "Event"
+      },
+      "id": "ID",
+      "date": "Date",
+      "eventSatus": "Event Satus",
+      "talTickets": "Tal Tickets",
+      "galery": "Galery",
+      "artist": "Artist",
+      "ticket": "Ticket",
+      "userAccount": "User Account",
+      "organization": "Organization",
+      "venue": "Venue"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "applications": ["Tickety"],
+  "changelogDate": "20230321020703",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "photo",
+  "fields": [
+    {
+      "fieldName": "url",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "PhotoStatus",
+      "fieldValues": "ACTIVE,INSTACTIVE,FAVORITE"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Photo",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "galery",
+      "otherEntityRelationshipName": "photo",
+      "relationshipName": "galery",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

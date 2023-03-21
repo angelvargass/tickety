@@ -1,0 +1,31 @@
+{
+  "ticketyApp": {
+    "userAccount": {
+      "home": {
+        "title": "User Accounts",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new User Account",
+        "createOrEditLabel": "Create or edit a User Account",
+        "notFound": "No User Accounts found"
+      },
+      "created": "A new User Account is created with identifier {{ param }}",
+      "updated": "A User Account is updated with identifier {{ param }}",
+      "deleted": "A User Account is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete User Account {{ id }}?"
+      },
+      "detail": {
+        "title": "User Account"
+      },
+      "id": "ID",
+      "email": "Email",
+      "password": "Password",
+      "name": "Name",
+      "lastName": "Last Name",
+      "genderu": "Genderu",
+      "event": "Event",
+      "roles": "Roles",
+      "organization": "Organization"
+    }
+  }
+}

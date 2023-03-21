@@ -1,0 +1,147 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-event-heading" data-cy="EventCreateUpdateHeading" jhiTranslate="ticketyApp.event.home.createOrEditLabel">
+        Crear o editar Event
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="ticketyApp.event.date" for="field_date">Date</label>
+          <div class="input-group">
+            <input
+              id="field_date"
+              data-cy="date"
+              type="text"
+              class="form-control"
+              name="date"
+              ngbDatepicker
+              #dateDp="ngbDatepicker"
+              formControlName="date"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="ticketyApp.event.eventSatus" for="field_eventSatus">Event Satus</label>
+          <select class="form-control" name="eventSatus" formControlName="eventSatus" id="field_eventSatus" data-cy="eventSatus">
+            <option [ngValue]="null">{{ 'ticketyApp.EventSatus.null' | translate }}</option>
+            <option *ngFor="let eventSatus of eventSatusValues" [value]="eventSatus">
+              {{ 'ticketyApp.EventSatus.' + eventSatus | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="ticketyApp.event.talTickets" for="field_talTickets">Tal Tickets</label>
+          <input
+            type="number"
+            class="form-control"
+            name="talTickets"
+            id="field_talTickets"
+            data-cy="talTickets"
+            formControlName="talTickets"
+          />
+          <div *ngIf="editForm.get('talTickets')!.invalid && (editForm.get('talTickets')!.dirty || editForm.get('talTickets')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('talTickets')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo debe ser mayor que 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('talTickets')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              Este campo debe ser un número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="ticketyApp.event.galery" for="field_galery">Galery</label>
+          <select
+            class="form-control"
+            id="field_galery"
+            data-cy="galery"
+            name="galery"
+            formControlName="galery"
+            [compareWith]="compareGalery"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="galeryOption" *ngFor="let galeryOption of galeriesCollection">{{ galeryOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="ticketyApp.event.userAccount" for="field_userAccount">User Account</label>
+          <select
+            class="form-control"
+            id="field_userAccount"
+            data-cy="userAccount"
+            name="userAccount"
+            formControlName="userAccount"
+            [compareWith]="compareUserAccount"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="userAccountOption" *ngFor="let userAccountOption of userAccountsSharedCollection">
+              {{ userAccountOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="ticketyApp.event.organization" for="field_organization">Organization</label>
+          <select
+            class="form-control"
+            id="field_organization"
+            data-cy="organization"
+            name="organization"
+            formControlName="organization"
+            [compareWith]="compareOrganization"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="organizationOption" *ngFor="let organizationOption of organizationsSharedCollection">
+              {{ organizationOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="ticketyApp.event.venue" for="field_venue">Venue</label>
+          <select class="form-control" id="field_venue" data-cy="venue" name="venue" formControlName="venue" [compareWith]="compareVenue">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="venueOption" *ngFor="let venueOption of venuesSharedCollection">{{ venueOption.id }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+{
+  "ticketyApp": {
+    "EventSatus": {
+      "null": "",
+      "OPEN": "OPEN",
+      "CLOSED": "CLOSED",
+      "CANCELED": "CANCELED",
+      "SOLDOUT": "SOLDOUT"
+    }
+  }
+}

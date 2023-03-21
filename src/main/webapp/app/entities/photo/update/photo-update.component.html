@@ -1,0 +1,64 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-photo-heading" data-cy="PhotoCreateUpdateHeading" jhiTranslate="ticketyApp.photo.home.createOrEditLabel">
+        Crear o editar Photo
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="ticketyApp.photo.url" for="field_url">Url</label>
+          <input type="text" class="form-control" name="url" id="field_url" data-cy="url" formControlName="url" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="ticketyApp.photo.status" for="field_status">Status</label>
+          <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
+            <option [ngValue]="null">{{ 'ticketyApp.PhotoStatus.null' | translate }}</option>
+            <option *ngFor="let photoStatus of photoStatusValues" [value]="photoStatus">
+              {{ 'ticketyApp.PhotoStatus.' + photoStatus | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="ticketyApp.photo.galery" for="field_galery">Galery</label>
+          <select
+            class="form-control"
+            id="field_galery"
+            data-cy="galery"
+            name="galery"
+            formControlName="galery"
+            [compareWith]="compareGalery"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="galeryOption" *ngFor="let galeryOption of galeriesSharedCollection">{{ galeryOption.id }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

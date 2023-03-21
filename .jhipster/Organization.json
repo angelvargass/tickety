@@ -1,0 +1,44 @@
+{
+  "applications": ["Tickety"],
+  "changelogDate": "20230321020903",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "organization",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "owner",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Organization",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "contact",
+      "otherEntityRelationshipName": "organization",
+      "ownerSide": true,
+      "relationshipName": "contact",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "userAccount",
+      "otherEntityRelationshipName": "organization",
+      "relationshipName": "userAccount",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "event",
+      "otherEntityRelationshipName": "organization",
+      "relationshipName": "event",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "no"
+}

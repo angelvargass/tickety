@@ -1,0 +1,27 @@
+{
+  "ticketyApp": {
+    "galery": {
+      "home": {
+        "title": "Galeries",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Galery",
+        "createOrEditLabel": "Crear o editar Galery",
+        "notFound": "Ningún Galeries encontrado"
+      },
+      "created": "Un nuevo Galery ha sido creado con el identificador {{ param }}",
+      "updated": "Un Galery ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Galery ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Galery {{ id }}?"
+      },
+      "detail": {
+        "title": "Galery"
+      },
+      "id": "ID",
+      "name": "Name",
+      "status": "Status",
+      "photo": "Photo",
+      "event": "Event"
+    }
+  }
+}

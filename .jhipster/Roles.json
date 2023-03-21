@@ -1,0 +1,27 @@
+{
+  "applications": ["Tickety"],
+  "changelogDate": "20230321020403",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "roles",
+  "fields": [
+    {
+      "fieldName": "type",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Roles",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "userAccount",
+      "otherEntityRelationshipName": "roles",
+      "relationshipName": "userAccount",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

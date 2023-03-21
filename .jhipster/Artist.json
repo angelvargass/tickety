@@ -1,0 +1,41 @@
+{
+  "applications": ["Tickety"],
+  "changelogDate": "20230321021203",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "artist",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "info",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "socialMedia",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Artist",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "genre",
+      "otherEntityRelationshipName": "artist",
+      "relationshipName": "genre",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "event",
+      "otherEntityRelationshipName": "artist",
+      "relationshipName": "event",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

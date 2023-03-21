@@ -1,0 +1,10 @@
+{
+  "ticketyApp": {
+    "PhotoStatus": {
+      "null": "",
+      "ACTIVE": "ACTIVE",
+      "INSTACTIVE": "INSTACTIVE",
+      "FAVORITE": "FAVORITE"
+    }
+  }
+}

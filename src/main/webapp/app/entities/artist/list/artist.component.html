@@ -1,0 +1,103 @@
+<div>
+  <h2 id="page-heading" data-cy="ArtistHeading">
+    <span jhiTranslate="ticketyApp.artist.home.title">Artists</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="ticketyApp.artist.home.refreshListLabel">Refrescar lista</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-artist"
+        [routerLink]="['/artist/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="ticketyApp.artist.home.createLabel"> Crear nuevo Artist </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="artists?.length === 0">
+    <span jhiTranslate="ticketyApp.artist.home.notFound">Ningún Artists encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="artists && artists.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="name">
+            <div class="d-flex">
+              <span jhiTranslate="ticketyApp.artist.name">Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="info">
+            <div class="d-flex">
+              <span jhiTranslate="ticketyApp.artist.info">Info</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="socialMedia">
+            <div class="d-flex">
+              <span jhiTranslate="ticketyApp.artist.socialMedia">Social Media</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="event.id">
+            <div class="d-flex">
+              <span jhiTranslate="ticketyApp.artist.event">Event</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let artist of artists; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/artist', artist.id, 'view']">{{ artist.id }}</a>
+          </td>
+          <td>{{ artist.name }}</td>
+          <td>{{ artist.info }}</td>
+          <td>{{ artist.socialMedia }}</td>
+          <td>
+            <div *ngIf="artist.event">
+              <a [routerLink]="['/event', artist.event.id, 'view']">{{ artist.event.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/artist', artist.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/artist', artist.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(artist)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

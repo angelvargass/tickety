@@ -1,0 +1,69 @@
+{
+  "applications": ["Tickety"],
+  "changelogDate": "20230321021303",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "event",
+  "fields": [
+    {
+      "fieldName": "date",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "eventSatus",
+      "fieldType": "EventSatus",
+      "fieldValues": "OPEN,CLOSED,CANCELED,SOLDOUT"
+    },
+    {
+      "fieldName": "talTickets",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Event",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "galery",
+      "otherEntityRelationshipName": "event",
+      "ownerSide": true,
+      "relationshipName": "galery",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "artist",
+      "otherEntityRelationshipName": "event",
+      "relationshipName": "artist",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "ticket",
+      "otherEntityRelationshipName": "event",
+      "relationshipName": "ticket",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "userAccount",
+      "otherEntityRelationshipName": "event",
+      "relationshipName": "userAccount",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "organization",
+      "otherEntityRelationshipName": "event",
+      "relationshipName": "organization",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "venue",
+      "otherEntityRelationshipName": "event",
+      "relationshipName": "venue",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

@@ -1,0 +1,136 @@
+<div>
+  <h2 id="page-heading" data-cy="EventHeading">
+    <span jhiTranslate="ticketyApp.event.home.title">Events</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="ticketyApp.event.home.refreshListLabel">Refrescar lista</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-event"
+        [routerLink]="['/event/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="ticketyApp.event.home.createLabel"> Crear nuevo Event </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="events?.length === 0">
+    <span jhiTranslate="ticketyApp.event.home.notFound">Ningún Events encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="events && events.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="date">
+            <div class="d-flex">
+              <span jhiTranslate="ticketyApp.event.date">Date</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="eventSatus">
+            <div class="d-flex">
+              <span jhiTranslate="ticketyApp.event.eventSatus">Event Satus</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="talTickets">
+            <div class="d-flex">
+              <span jhiTranslate="ticketyApp.event.talTickets">Tal Tickets</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="galery.id">
+            <div class="d-flex">
+              <span jhiTranslate="ticketyApp.event.galery">Galery</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="userAccount.id">
+            <div class="d-flex">
+              <span jhiTranslate="ticketyApp.event.userAccount">User Account</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="organization.id">
+            <div class="d-flex">
+              <span jhiTranslate="ticketyApp.event.organization">Organization</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="venue.id">
+            <div class="d-flex">
+              <span jhiTranslate="ticketyApp.event.venue">Venue</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let event of events; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/event', event.id, 'view']">{{ event.id }}</a>
+          </td>
+          <td>{{ event.date | formatMediumDate }}</td>
+          <td jhiTranslate="{{ 'ticketyApp.EventSatus.' + event.eventSatus }}">{{ event.eventSatus }}</td>
+          <td>{{ event.talTickets }}</td>
+          <td>
+            <div *ngIf="event.galery">
+              <a [routerLink]="['/galery', event.galery.id, 'view']">{{ event.galery.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="event.userAccount">
+              <a [routerLink]="['/user-account', event.userAccount.id, 'view']">{{ event.userAccount.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="event.organization">
+              <a [routerLink]="['/organization', event.organization.id, 'view']">{{ event.organization.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="event.venue">
+              <a [routerLink]="['/venue', event.venue.id, 'view']">{{ event.venue.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/event', event.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/event', event.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(event)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+{
+  "applications": ["Tickety"],
+  "changelogDate": "20230321020803",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "galery",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "GaleryStatus",
+      "fieldValues": "ACTIVE,INSTACTIVE,FAVORITE"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Galery",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "photo",
+      "otherEntityRelationshipName": "galery",
+      "relationshipName": "photo",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "event",
+      "otherEntityRelationshipName": "galery",
+      "ownerSide": false,
+      "relationshipName": "event",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "service": "no"
+}
