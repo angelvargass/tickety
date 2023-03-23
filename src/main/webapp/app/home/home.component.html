@@ -1,29 +1,25 @@
 <div>
   <!--  Main event image-->
-  <div class="container">
-    <div class="container-xxl text-center">
-      <img src="../../content/images/concert.jpg" style="max-height: 400px; width: 90%" />
-    </div>
+  <div class="container-fluid background-image text-center d-flex align-items-center">
+    <h1 class="fw-bold text-light mx-auto">Random event</h1>
   </div>
-
   <div class="mt-5"></div>
   <h2>Eventos</h2>
   <div class="mb-5"></div>
 
   <h3 class="fw-bold">Tipo 1</h3>
 
-  <div class="carousel border border-1 border-dark" data-bs-ride="carousel">
+  <div class="carousel" data-bs-ride="carousel">
     <div class="carousel-inner carousel-inner1">
       <div class="carousel-item active" *ngFor="let carouselItem of carouselItems">
         <div class="card">
           <div class="img-wrapper">
             <img src="../../content/images/concert.jpg" class="d-block w-100" alt="..." />
           </div>
-          <div class="card-body">
-            <h5 class="card-title">Card title {{ carouselItem.itemNumber }}</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a class="btn btn-primary">Go somewhere</a>
-          </div>
+
+          <h5 class="card-title text-light position-absolute bottom-20" style="left: 2%">Card item {{ carouselItem.itemNumber }}</h5>
+
+          <a class="btn btn-primary">Ver evento</a>
         </div>
       </div>
     </div>
@@ -53,18 +49,17 @@
   <div class="mt-5"></div>
   <h3 class="fw-bold">Tipo 2</h3>
 
-  <div class="carousel border border-1 border-dark" data-bs-ride="carousel">
+  <div class="carousel" data-bs-ride="carousel">
     <div class="carousel-inner carousel-inner2">
       <div class="carousel-item active" *ngFor="let carouselItem of carouselItems">
         <div class="card">
           <div class="img-wrapper">
             <img src="../../content/images/concert.jpg" class="d-block w-100" alt="..." />
           </div>
-          <div class="card-body">
-            <h5 class="card-title">Card title {{ carouselItem.itemNumber }}</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a class="btn btn-primary">Go somewhere</a>
-          </div>
+
+          <h5 class="card-title text-light position-absolute bottom-20" style="left: 2%">Card item {{ carouselItem.itemNumber }}</h5>
+
+          <a class="btn btn-primary">Ver evento</a>
         </div>
       </div>
     </div>

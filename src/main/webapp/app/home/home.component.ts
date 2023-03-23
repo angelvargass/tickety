@@ -32,6 +32,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe(account => (this.account = account));
 
+    //Get events from somewhere
     this.carouselItems.push(
       { itemNumber: 1 },
       { itemNumber: 2 },
