@@ -1,78 +1,93 @@
-<div class="row">
-  <div class="col-md-3">
-    <span class="hipster img-fluid rounded"></span>
+<div>
+  <!--  Main event image-->
+  <div class="container">
+    <div class="container-xxl text-center">
+      <img src="../../content/images/concert.jpg" style="max-height: 400px; width: 90%" />
+    </div>
   </div>
 
-  <div class="col-md-9">
-    <h1 class="display-4"><span jhiTranslate="home.title">¡Bienvenido, Java Hipster!</span> (Tickety)</h1>
+  <div class="mt-5"></div>
+  <h2>Eventos</h2>
+  <div class="mb-5"></div>
 
-    <p class="lead" jhiTranslate="home.subtitle">Esta es su página de inicio</p>
+  <h3 class="fw-bold">Tipo 1</h3>
 
-    <div [ngSwitch]="account !== null">
-      <div class="alert alert-success" *ngSwitchCase="true">
-        <span id="home-logged-message" *ngIf="account" jhiTranslate="home.logged.message" [translateValues]="{ username: account.login }"
-          >Está conectado como "{{ account.login }}".</span
-        >
-      </div>
-
-      <div class="alert alert-warning" *ngSwitchCase="false">
-        <span jhiTranslate="global.messages.info.authenticated.prefix">Si desea </span>
-        <a class="alert-link" (click)="login()" jhiTranslate="global.messages.info.authenticated.link">iniciar sesión</a
-        ><span jhiTranslate="global.messages.info.authenticated.suffix"
-          >, puede intentar con las cuentas predeterminadas:<br />- Administrador (usuario="admin" y contraseña="admin") <br />- Usuario
-          (usuario="user" y contraseña="user").</span
-        >
-      </div>
-
-      <div class="alert alert-warning" *ngSwitchCase="false">
-        <span jhiTranslate="global.messages.info.register.noaccount">¿Aún no tienes una cuenta?</span>&nbsp;
-        <a class="alert-link" routerLink="account/register" jhiTranslate="global.messages.info.register.link">Crea una cuenta</a>
+  <div class="carousel border border-1 border-dark" data-bs-ride="carousel">
+    <div class="carousel-inner carousel-inner1">
+      <div class="carousel-item active" *ngFor="let carouselItem of carouselItems">
+        <div class="card">
+          <div class="img-wrapper">
+            <img src="../../content/images/concert.jpg" class="d-block w-100" alt="..." />
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Card title {{ carouselItem.itemNumber }}</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
       </div>
     </div>
 
-    <p jhiTranslate="home.question">Si tiene preguntas sobre JHipster:</p>
+    <button
+      (click)="prevCarouselSlide(1)"
+      class="carousel-control-prev"
+      type="button"
+      data-bs-target="#carouselExampleControls"
+      data-bs-slide="prev"
+    >
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button
+      (click)="nextCarouselSlide(1)"
+      class="carousel-control-next"
+      type="button"
+      data-bs-target="#carouselExampleControls"
+      data-bs-slide="next"
+    >
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
 
-    <ul>
-      <li>
-        <a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer" jhiTranslate="home.link.homepage"
-          >Página de inicio de JHipster</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://stackoverflow.com/tags/jhipster/info"
-          target="_blank"
-          rel="noopener noreferrer"
-          jhiTranslate="home.link.stackoverflow"
-          >JHipster en Stack Overflow</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/jhipster/generator-jhipster/issues?state=open"
-          target="_blank"
-          rel="noopener noreferrer"
-          jhiTranslate="home.link.bugtracker"
-          >JHipster seguimiento de errores</a
-        >
-      </li>
-      <li>
-        <a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer" jhiTranslate="home.link.chat"
-          >Sala de chat pública de JHipster</a
-        >
-      </li>
-      <li>
-        <a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer" jhiTranslate="home.link.follow"
-          >contacto @jhipster en Twitter</a
-        >
-      </li>
-    </ul>
+  <div class="mt-5"></div>
+  <h3 class="fw-bold">Tipo 2</h3>
 
-    <p>
-      <span jhiTranslate="home.like">Si te gusta JHipster, danos una estrella en</span>
-      <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer" jhiTranslate="home.github"
-        >GitHub</a
-      >!
-    </p>
+  <div class="carousel border border-1 border-dark" data-bs-ride="carousel">
+    <div class="carousel-inner carousel-inner2">
+      <div class="carousel-item active" *ngFor="let carouselItem of carouselItems">
+        <div class="card">
+          <div class="img-wrapper">
+            <img src="../../content/images/concert.jpg" class="d-block w-100" alt="..." />
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Card title {{ carouselItem.itemNumber }}</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button
+      (click)="prevCarouselSlide(2)"
+      class="carousel-control-prev"
+      type="button"
+      data-bs-target="#carouselExampleControls"
+      data-bs-slide="prev"
+    >
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button
+      (click)="nextCarouselSlide(2)"
+      class="carousel-control-next"
+      type="button"
+      data-bs-target="#carouselExampleControls"
+      data-bs-slide="next"
+    >
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
   </div>
 </div>
