@@ -18,10 +18,6 @@ type UserAccountFormDefaults = Pick<NewUserAccount, 'id'>;
 
 type UserAccountFormGroupContent = {
   id: FormControl<IUserAccount['id'] | NewUserAccount['id']>;
-  email: FormControl<IUserAccount['email']>;
-  password: FormControl<IUserAccount['password']>;
-  name: FormControl<IUserAccount['name']>;
-  lastName: FormControl<IUserAccount['lastName']>;
   genderu: FormControl<IUserAccount['genderu']>;
   organization: FormControl<IUserAccount['organization']>;
 };
@@ -43,10 +39,6 @@ export class UserAccountFormService {
           validators: [Validators.required],
         }
       ),
-      email: new FormControl(userAccountRawValue.email),
-      password: new FormControl(userAccountRawValue.password),
-      name: new FormControl(userAccountRawValue.name),
-      lastName: new FormControl(userAccountRawValue.lastName),
       genderu: new FormControl(userAccountRawValue.genderu),
       organization: new FormControl(userAccountRawValue.organization),
     });

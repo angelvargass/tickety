@@ -3,7 +3,10 @@ package com.tickety.service;
 import com.tickety.config.Constants;
 import com.tickety.domain.Authority;
 import com.tickety.domain.User;
+import com.tickety.domain.UserAccount;
+import com.tickety.domain.enumeration.Gender;
 import com.tickety.repository.AuthorityRepository;
+import com.tickety.repository.UserAccountRepository;
 import com.tickety.repository.UserRepository;
 import com.tickety.security.AuthoritiesConstants;
 import com.tickety.security.SecurityUtils;
@@ -41,16 +44,20 @@ public class UserService {
 
     private final CacheManager cacheManager;
 
+    private final UserAccountRepository userAccountRepository;
+
     public UserService(
         UserRepository userRepository,
         PasswordEncoder passwordEncoder,
         AuthorityRepository authorityRepository,
-        CacheManager cacheManager
+        CacheManager cacheManager,
+        UserAccountRepository userAccountRepository
     ) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
         this.cacheManager = cacheManager;
+        this.userAccountRepository = userAccountRepository;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -93,7 +100,8 @@ public class UserService {
             });
     }
 
-    public User registerUser(AdminUserDTO userDTO, String password) {
+    @Transactional
+    public User registerUser(AdminUserDTO userDTO, String password, String gender) {
         userRepository
             .findOneByLogin(userDTO.getLogin().toLowerCase())
             .ifPresent(existingUser -> {
@@ -129,9 +137,16 @@ public class UserService {
         Set<Authority> authorities = new HashSet<>();
         authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
         newUser.setAuthorities(authorities);
-        userRepository.save(newUser);
+        User savedUser = userRepository.save(newUser);
         this.clearUserCaches(newUser);
         log.debug("Created Information for User: {}", newUser);
+
+        //Creating our custom Tickety client
+        UserAccount newUserAccount = new UserAccount();
+        newUserAccount.setUser(savedUser);
+        newUserAccount.setGenderu(Gender.valueOf(gender));
+        userAccountRepository.save(newUserAccount);
+
         return newUser;
     }
 

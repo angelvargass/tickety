@@ -1,11 +1,11 @@
-id;email;password;name;last_name;genderu
-1;Rosario91@hotmail.com;Paradigma focus;virtual;Esparza;FEMENINO
-2;Teresa.Angulo75@gmail.com;platforms Ladrillo;Hormigon IB;Díaz;MASCULINO
-3;Gloria_Trujillo91@hotmail.com;Producto;schemas Marca Raton;Alaníz;OTRO
-4;Francisca.Pantoja30@gmail.com;basado strategize;Granito Ladrillo SMTP;Cervántez;FEMENINO
-5;JorgeLuis99@gmail.com;Yen;Artesanal;Varela;MASCULINO
-6;Mara.Huerta26@hotmail.com;JSON;recontextualize Gerente;Garrido;OTRO
-7;Ariadna24@gmail.com;Patatas synthesizing Berkshire;impactful;Castellanos;OTRO
-8;Eloisa.Salinas@yahoo.com;Algodón Extremadura Cuba;Rincón Bedfordshire generating;Batista;MASCULINO
-9;Toms14@yahoo.com;Orígenes Vasco e-tailers;THX;Fonseca;OTRO
-10;Esperanza.Villa80@yahoo.com;Parafarmacia Cataluña withdrawal;Planificador Apartamento;Jurado;FEMENINO
+id;genderu
+1;OTRO
+2;OTRO
+3;OTRO
+4;MASCULINO
+5;OTRO
+6;FEMENINO
+7;OTRO
+8;MASCULINO
+9;OTRO
+10;MASCULINO

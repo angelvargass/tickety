@@ -7,6 +7,17 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entidades",
+        "userAccount": "User Account",
+        "roles": "Roles",
+        "contact": "Contact",
+        "photo": "Photo",
+        "galery": "Galery",
+        "organization": "Organization",
+        "venue": "Venue",
+        "genre": "Genre",
+        "artist": "Artist",
+        "event": "Event",
+        "ticket": "Ticket",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

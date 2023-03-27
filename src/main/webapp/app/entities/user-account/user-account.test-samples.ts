@@ -7,19 +7,12 @@ export const sampleWithRequiredData: IUserAccount = {
 };
 
 export const sampleWithPartialData: IUserAccount = {
-  id: 64582,
-  password: 'invoice',
-  lastName: 'Delagarza',
-  genderu: Gender['OTRO'],
+  id: 51794,
 };
 
 export const sampleWithFullData: IUserAccount = {
-  id: 20582,
-  email: 'Santiago.Soliz11@yahoo.com',
-  password: 'Papelería León Seguro',
-  name: 'bandwidth Parque',
-  lastName: 'Granados',
-  genderu: Gender['MASCULINO'],
+  id: 40806,
+  genderu: Gender['FEMENINO'],
 };
 
 export const sampleWithNewData: NewUserAccount = {

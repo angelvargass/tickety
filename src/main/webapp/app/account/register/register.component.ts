@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE } from 'app/config/error.constants';
 import { RegisterService } from './register.service';
+import { Gender } from '../../entities/enumerations/gender.model';
 
 @Component({
   selector: 'jhi-register',
@@ -19,9 +20,28 @@ export class RegisterComponent implements AfterViewInit {
   errorEmailExists = false;
   errorUserExists = false;
   success = false;
+  genderValues = Object.keys(Gender);
 
   registerForm = new FormGroup({
     login: new FormControl('', {
+      nonNullable: true,
+      validators: [
+        Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(50),
+        Validators.pattern('^[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$|^[_.@A-Za-z0-9-]+$'),
+      ],
+    }),
+    firstName: new FormControl('', {
+      nonNullable: true,
+      validators: [
+        Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(50),
+        Validators.pattern('^[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$|^[_.@A-Za-z0-9-]+$'),
+      ],
+    }),
+    lastName: new FormControl('', {
       nonNullable: true,
       validators: [
         Validators.required,
@@ -41,6 +61,10 @@ export class RegisterComponent implements AfterViewInit {
     confirmPassword: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required, Validators.minLength(4), Validators.maxLength(50)],
+    }),
+    genderu: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required],
     }),
   });
 
@@ -62,9 +86,10 @@ export class RegisterComponent implements AfterViewInit {
     if (password !== confirmPassword) {
       this.doNotMatch = true;
     } else {
-      const { login, email } = this.registerForm.getRawValue();
+      const { firstName, lastName, email, genderu } = this.registerForm.getRawValue();
+      const login = firstName;
       this.registerService
-        .save({ login, email, password, langKey: this.translateService.currentLang })
+        .save({ login, firstName, lastName, email, password, langKey: this.translateService.currentLang, genderu })
         .subscribe({ next: () => (this.success = true), error: response => this.processError(response) });
     }
   }

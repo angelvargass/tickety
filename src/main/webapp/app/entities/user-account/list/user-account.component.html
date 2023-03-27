@@ -38,30 +38,6 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="email">
-            <div class="d-flex">
-              <span jhiTranslate="ticketyApp.userAccount.email">Email</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="password">
-            <div class="d-flex">
-              <span jhiTranslate="ticketyApp.userAccount.password">Password</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="name">
-            <div class="d-flex">
-              <span jhiTranslate="ticketyApp.userAccount.name">Name</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="lastName">
-            <div class="d-flex">
-              <span jhiTranslate="ticketyApp.userAccount.lastName">Last Name</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
           <th scope="col" jhiSortBy="genderu">
             <div class="d-flex">
               <span jhiTranslate="ticketyApp.userAccount.genderu">Genderu</span>
@@ -82,10 +58,6 @@
           <td>
             <a [routerLink]="['/user-account', userAccount.id, 'view']">{{ userAccount.id }}</a>
           </td>
-          <td>{{ userAccount.email }}</td>
-          <td>{{ userAccount.password }}</td>
-          <td>{{ userAccount.name }}</td>
-          <td>{{ userAccount.lastName }}</td>
           <td jhiTranslate="{{ 'ticketyApp.Gender.' + userAccount.genderu }}">{{ userAccount.genderu }}</td>
           <td>
             <div *ngIf="userAccount.organization">

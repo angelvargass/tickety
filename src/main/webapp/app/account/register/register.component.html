@@ -29,50 +29,108 @@
     <div class="col-md-8">
       <form name="form" role="form" (ngSubmit)="register()" [formGroup]="registerForm" *ngIf="!success">
         <div class="mb-3">
-          <label class="form-label" for="login" jhiTranslate="global.form.username.label">Usuario</label>
+          <label class="form-label" for="login">Nombre de usuario</label>
           <input
             type="text"
             class="form-control"
             id="login"
             name="login"
-            placeholder="{{ 'global.form.username.placeholder' | translate }}"
+            placeholder="Nombre de usuario"
             formControlName="login"
-            data-cy="username"
+            data-cy="login"
             #login
           />
 
           <div *ngIf="registerForm.get('login')!.invalid && (registerForm.get('login')!.dirty || registerForm.get('login')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="registerForm.get('login')?.errors?.required"
-              jhiTranslate="register.messages.validate.login.required"
-            >
+            <small class="form-text text-danger" *ngIf="registerForm.get('login')?.errors?.required">
               Su nombre de usuario es obligatorio.
             </small>
 
-            <small
-              class="form-text text-danger"
-              *ngIf="registerForm.get('login')?.errors?.minlength"
-              jhiTranslate="register.messages.validate.login.minlength"
-            >
+            <small class="form-text text-danger" *ngIf="registerForm.get('login')?.errors?.minlength">
               Su nombre de usuario debe tener al menos 1 caracter.
             </small>
 
-            <small
-              class="form-text text-danger"
-              *ngIf="registerForm.get('login')?.errors?.maxlength"
-              jhiTranslate="register.messages.validate.login.maxlength"
-            >
+            <small class="form-text text-danger" *ngIf="registerForm.get('login')?.errors?.maxlength">
               Su nombre de usuario no puede tener más de 50 caracteres.
             </small>
 
-            <small
-              class="form-text text-danger"
-              *ngIf="registerForm.get('login')?.errors?.pattern"
-              jhiTranslate="register.messages.validate.login.pattern"
-            >
+            <small class="form-text text-danger" *ngIf="registerForm.get('login')?.errors?.pattern">
               Su nombre de usuario no es válido.
             </small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="nombre">Nombre</label>
+          <input
+            type="text"
+            class="form-control"
+            id="nombre"
+            name="nombre"
+            placeholder="Nombre"
+            formControlName="firstName"
+            data-cy="username"
+          />
+
+          <div
+            *ngIf="
+              registerForm.get('firstName')!.invalid && (registerForm.get('firstName')!.dirty || registerForm.get('firstName')!.touched)
+            "
+          >
+            <small class="form-text text-danger" *ngIf="registerForm.get('firstName')?.errors?.required"> Su nombre es obligatorio. </small>
+
+            <small class="form-text text-danger" *ngIf="registerForm.get('firstName')?.errors?.minlength">
+              Su nombre debe tener al menos 1 caracter.
+            </small>
+
+            <small class="form-text text-danger" *ngIf="registerForm.get('firstName')?.errors?.maxlength">
+              Su nombre no puede tener más de 50 caracteres.
+            </small>
+
+            <small class="form-text text-danger" *ngIf="registerForm.get('firstName')?.errors?.pattern"> Su nombre no es válido. </small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="lastName">Apellido</label>
+          <input
+            type="text"
+            class="form-control"
+            id="lastName"
+            name="login"
+            placeholder="Apellido"
+            formControlName="lastName"
+            data-cy="lastName"
+          />
+
+          <div
+            *ngIf="registerForm.get('lastName')!.invalid && (registerForm.get('lastName')!.dirty || registerForm.get('lastName')!.touched)"
+          >
+            <small class="form-text text-danger" *ngIf="registerForm.get('lastName')?.errors?.required">
+              Su apellido es obligatorio.
+            </small>
+
+            <small class="form-text text-danger" *ngIf="registerForm.get('lastName')?.errors?.minlength">
+              Su apellido debe tener al menos 1 caracter.
+            </small>
+
+            <small class="form-text text-danger" *ngIf="registerForm.get('lastName')?.errors?.maxlength">
+              Su apellido no puede tener más de 50 caracteres.
+            </small>
+
+            <small class="form-text text-danger" *ngIf="registerForm.get('lastName')?.errors?.pattern"> Su apellido no es válido. </small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_genderu">Género</label>
+          <select class="form-control" name="genderu" formControlName="genderu" id="field_genderu" data-cy="genderu">
+            <option [ngValue]="null">{{ 'ticketyApp.Gender.null' | translate }}</option>
+            <option *ngFor="let gender of genderValues" [value]="gender">{{ 'ticketyApp.Gender.' + gender | translate }}</option>
+          </select>
+
+          <div *ngIf="registerForm.get('genderu')!.invalid && (registerForm.get('genderu')!.dirty || registerForm.get('genderu')!.touched)">
+            <small class="form-text text-danger" *ngIf="registerForm.get('genderu')?.errors?.required"> Su género es obligatorio. </small>
           </div>
         </div>
 
