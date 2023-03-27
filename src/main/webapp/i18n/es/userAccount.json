@@ -18,10 +18,6 @@
         "title": "User Account"
       },
       "id": "ID",
-      "email": "Email",
-      "password": "Password",
-      "name": "Name",
-      "lastName": "Last Name",
       "genderu": "Genderu",
       "event": "Event",
       "roles": "Roles",

@@ -30,18 +30,6 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class UserAccountResourceIT {
 
-    private static final String DEFAULT_EMAIL = "AAAAAAAAAA";
-    private static final String UPDATED_EMAIL = "BBBBBBBBBB";
-
-    private static final String DEFAULT_PASSWORD = "AAAAAAAAAA";
-    private static final String UPDATED_PASSWORD = "BBBBBBBBBB";
-
-    private static final String DEFAULT_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_NAME = "BBBBBBBBBB";
-
-    private static final String DEFAULT_LAST_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_LAST_NAME = "BBBBBBBBBB";
-
     private static final Gender DEFAULT_GENDERU = Gender.MASCULINO;
     private static final Gender UPDATED_GENDERU = Gender.FEMENINO;
 
@@ -69,12 +57,7 @@ class UserAccountResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static UserAccount createEntity(EntityManager em) {
-        UserAccount userAccount = new UserAccount()
-            .email(DEFAULT_EMAIL)
-            .password(DEFAULT_PASSWORD)
-            .name(DEFAULT_NAME)
-            .lastName(DEFAULT_LAST_NAME)
-            .genderu(DEFAULT_GENDERU);
+        UserAccount userAccount = new UserAccount().genderu(DEFAULT_GENDERU);
         return userAccount;
     }
 
@@ -85,12 +68,7 @@ class UserAccountResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static UserAccount createUpdatedEntity(EntityManager em) {
-        UserAccount userAccount = new UserAccount()
-            .email(UPDATED_EMAIL)
-            .password(UPDATED_PASSWORD)
-            .name(UPDATED_NAME)
-            .lastName(UPDATED_LAST_NAME)
-            .genderu(UPDATED_GENDERU);
+        UserAccount userAccount = new UserAccount().genderu(UPDATED_GENDERU);
         return userAccount;
     }
 
@@ -112,10 +90,6 @@ class UserAccountResourceIT {
         List<UserAccount> userAccountList = userAccountRepository.findAll();
         assertThat(userAccountList).hasSize(databaseSizeBeforeCreate + 1);
         UserAccount testUserAccount = userAccountList.get(userAccountList.size() - 1);
-        assertThat(testUserAccount.getEmail()).isEqualTo(DEFAULT_EMAIL);
-        assertThat(testUserAccount.getPassword()).isEqualTo(DEFAULT_PASSWORD);
-        assertThat(testUserAccount.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testUserAccount.getLastName()).isEqualTo(DEFAULT_LAST_NAME);
         assertThat(testUserAccount.getGenderu()).isEqualTo(DEFAULT_GENDERU);
     }
 
@@ -149,10 +123,6 @@ class UserAccountResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(userAccount.getId().intValue())))
-            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
-            .andExpect(jsonPath("$.[*].password").value(hasItem(DEFAULT_PASSWORD)))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME)))
             .andExpect(jsonPath("$.[*].genderu").value(hasItem(DEFAULT_GENDERU.toString())));
     }
 
@@ -168,10 +138,6 @@ class UserAccountResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(userAccount.getId().intValue()))
-            .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL))
-            .andExpect(jsonPath("$.password").value(DEFAULT_PASSWORD))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
-            .andExpect(jsonPath("$.lastName").value(DEFAULT_LAST_NAME))
             .andExpect(jsonPath("$.genderu").value(DEFAULT_GENDERU.toString()));
     }
 
@@ -194,12 +160,7 @@ class UserAccountResourceIT {
         UserAccount updatedUserAccount = userAccountRepository.findById(userAccount.getId()).get();
         // Disconnect from session so that the updates on updatedUserAccount are not directly saved in db
         em.detach(updatedUserAccount);
-        updatedUserAccount
-            .email(UPDATED_EMAIL)
-            .password(UPDATED_PASSWORD)
-            .name(UPDATED_NAME)
-            .lastName(UPDATED_LAST_NAME)
-            .genderu(UPDATED_GENDERU);
+        updatedUserAccount.genderu(UPDATED_GENDERU);
 
         restUserAccountMockMvc
             .perform(
@@ -213,10 +174,6 @@ class UserAccountResourceIT {
         List<UserAccount> userAccountList = userAccountRepository.findAll();
         assertThat(userAccountList).hasSize(databaseSizeBeforeUpdate);
         UserAccount testUserAccount = userAccountList.get(userAccountList.size() - 1);
-        assertThat(testUserAccount.getEmail()).isEqualTo(UPDATED_EMAIL);
-        assertThat(testUserAccount.getPassword()).isEqualTo(UPDATED_PASSWORD);
-        assertThat(testUserAccount.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testUserAccount.getLastName()).isEqualTo(UPDATED_LAST_NAME);
         assertThat(testUserAccount.getGenderu()).isEqualTo(UPDATED_GENDERU);
     }
 
@@ -288,7 +245,7 @@ class UserAccountResourceIT {
         UserAccount partialUpdatedUserAccount = new UserAccount();
         partialUpdatedUserAccount.setId(userAccount.getId());
 
-        partialUpdatedUserAccount.email(UPDATED_EMAIL).password(UPDATED_PASSWORD).name(UPDATED_NAME).lastName(UPDATED_LAST_NAME);
+        partialUpdatedUserAccount.genderu(UPDATED_GENDERU);
 
         restUserAccountMockMvc
             .perform(
@@ -302,11 +259,7 @@ class UserAccountResourceIT {
         List<UserAccount> userAccountList = userAccountRepository.findAll();
         assertThat(userAccountList).hasSize(databaseSizeBeforeUpdate);
         UserAccount testUserAccount = userAccountList.get(userAccountList.size() - 1);
-        assertThat(testUserAccount.getEmail()).isEqualTo(UPDATED_EMAIL);
-        assertThat(testUserAccount.getPassword()).isEqualTo(UPDATED_PASSWORD);
-        assertThat(testUserAccount.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testUserAccount.getLastName()).isEqualTo(UPDATED_LAST_NAME);
-        assertThat(testUserAccount.getGenderu()).isEqualTo(DEFAULT_GENDERU);
+        assertThat(testUserAccount.getGenderu()).isEqualTo(UPDATED_GENDERU);
     }
 
     @Test
@@ -321,12 +274,7 @@ class UserAccountResourceIT {
         UserAccount partialUpdatedUserAccount = new UserAccount();
         partialUpdatedUserAccount.setId(userAccount.getId());
 
-        partialUpdatedUserAccount
-            .email(UPDATED_EMAIL)
-            .password(UPDATED_PASSWORD)
-            .name(UPDATED_NAME)
-            .lastName(UPDATED_LAST_NAME)
-            .genderu(UPDATED_GENDERU);
+        partialUpdatedUserAccount.genderu(UPDATED_GENDERU);
 
         restUserAccountMockMvc
             .perform(
@@ -340,10 +288,6 @@ class UserAccountResourceIT {
         List<UserAccount> userAccountList = userAccountRepository.findAll();
         assertThat(userAccountList).hasSize(databaseSizeBeforeUpdate);
         UserAccount testUserAccount = userAccountList.get(userAccountList.size() - 1);
-        assertThat(testUserAccount.getEmail()).isEqualTo(UPDATED_EMAIL);
-        assertThat(testUserAccount.getPassword()).isEqualTo(UPDATED_PASSWORD);
-        assertThat(testUserAccount.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testUserAccount.getLastName()).isEqualTo(UPDATED_LAST_NAME);
         assertThat(testUserAccount.getGenderu()).isEqualTo(UPDATED_GENDERU);
     }
 

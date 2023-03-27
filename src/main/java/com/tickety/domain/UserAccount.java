@@ -21,21 +21,7 @@ public class UserAccount implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
-
-    @Column(name = "email")
-    private String email;
-
-    @Column(name = "password")
-    private String password;
-
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "last_name")
-    private String lastName;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "genderu")
@@ -56,6 +42,9 @@ public class UserAccount implements Serializable {
     private Organization organization;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
+    @OneToOne
+    @MapsId
+    private User user;
 
     public Long getId() {
         return this.id;
@@ -68,58 +57,6 @@ public class UserAccount implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getEmail() {
-        return this.email;
-    }
-
-    public UserAccount email(String email) {
-        this.setEmail(email);
-        return this;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return this.password;
-    }
-
-    public UserAccount password(String password) {
-        this.setPassword(password);
-        return this;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public UserAccount name(String name) {
-        this.setName(name);
-        return this;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLastName() {
-        return this.lastName;
-    }
-
-    public UserAccount lastName(String lastName) {
-        this.setLastName(lastName);
-        return this;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public Gender getGenderu() {
@@ -212,6 +149,14 @@ public class UserAccount implements Serializable {
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -234,10 +179,6 @@ public class UserAccount implements Serializable {
     public String toString() {
         return "UserAccount{" +
             "id=" + getId() +
-            ", email='" + getEmail() + "'" +
-            ", password='" + getPassword() + "'" +
-            ", name='" + getName() + "'" +
-            ", lastName='" + getLastName() + "'" +
             ", genderu='" + getGenderu() + "'" +
             "}";
     }

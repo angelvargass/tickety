@@ -6,22 +6,6 @@
   "entityTableName": "user_account",
   "fields": [
     {
-      "fieldName": "email",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "password",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "name",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "lastName",
-      "fieldType": "String"
-    },
-    {
       "fieldName": "genderu",
       "fieldType": "Gender",
       "fieldValues": "MASCULINO,FEMENINO,OTRO"
@@ -33,6 +17,14 @@
   "pagination": "no",
   "readOnly": false,
   "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "relationshipName": "user",
+      "otherEntityName": "user",
+      "otherEntityField": "id",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "userAccount"
+    },
     {
       "otherEntityName": "event",
       "otherEntityRelationshipName": "userAccount",

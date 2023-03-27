@@ -123,18 +123,6 @@ public class UserAccountResource {
         Optional<UserAccount> result = userAccountRepository
             .findById(userAccount.getId())
             .map(existingUserAccount -> {
-                if (userAccount.getEmail() != null) {
-                    existingUserAccount.setEmail(userAccount.getEmail());
-                }
-                if (userAccount.getPassword() != null) {
-                    existingUserAccount.setPassword(userAccount.getPassword());
-                }
-                if (userAccount.getName() != null) {
-                    existingUserAccount.setName(userAccount.getName());
-                }
-                if (userAccount.getLastName() != null) {
-                    existingUserAccount.setLastName(userAccount.getLastName());
-                }
                 if (userAccount.getGenderu() != null) {
                     existingUserAccount.setGenderu(userAccount.getGenderu());
                 }
