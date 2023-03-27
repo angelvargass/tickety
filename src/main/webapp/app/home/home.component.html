@@ -1,88 +1,313 @@
-<div>
-  <!--  Main event image-->
-  <div class="container-fluid background-image text-center d-flex align-items-center">
-    <h1 class="fw-bold text-light mx-auto">Random event</h1>
-  </div>
-  <div class="mt-5"></div>
-  <h2>Eventos</h2>
-  <div class="mb-5"></div>
+<!DOCTYPE html>
+<div class="row" style="margin-right: 0px">
+  <div style="padding-right: 0px">
+    <div [ngSwitch]="account !== null">
+      <div *ngSwitchCase="true">
+        <div>
+          <!--  Main event image-->
+          <div class="container-fluid background-image text-center d-flex align-items-center">
+            <h1 class="fw-bold text-light mx-auto">Random event</h1>
+          </div>
+          <div class="mt-5"></div>
+          <h2 style="padding-left: 20px; padding-right: 20px">Eventos</h2>
+          <div class="mb-5"></div>
 
-  <h3 class="fw-bold">Tipo 1</h3>
+          <h3 class="fw-bold" style="padding-left: 20px; padding-right: 20px">Tipo 1</h3>
 
-  <div class="carousel" data-bs-ride="carousel">
-    <div class="carousel-inner carousel-inner1">
-      <div class="carousel-item active" *ngFor="let carouselItem of carouselItems">
-        <div class="card">
-          <div class="img-wrapper">
-            <img src="../../content/images/concert.jpg" class="d-block w-100" alt="..." />
+          <div class="carousel" data-bs-ride="carousel">
+            <div class="carousel-inner carousel-inner1">
+              <div class="carousel-item active" *ngFor="let carouselItem of carouselItems">
+                <div class="card">
+                  <div class="img-wrapper">
+                    <img src="../../content/images/concert.jpg" class="d-block w-100" alt="..." />
+                  </div>
+
+                  <h5 class="card-title text-light position-absolute bottom-20" style="left: 2%">
+                    Card item {{ carouselItem.itemNumber }}
+                  </h5>
+
+                  <a class="btn btn-primary boton">Ver evento</a>
+                </div>
+              </div>
+            </div>
+
+            <button
+              (click)="prevCarouselSlide(1)"
+              class="carousel-control-prev"
+              type="button"
+              data-bs-target="#carouselExampleControls"
+              data-bs-slide="prev"
+            >
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button
+              (click)="nextCarouselSlide(1)"
+              class="carousel-control-next"
+              type="button"
+              data-bs-target="#carouselExampleControls"
+              data-bs-slide="next"
+            >
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
           </div>
 
-          <h5 class="card-title text-light position-absolute bottom-20" style="left: 2%">Card item {{ carouselItem.itemNumber }}</h5>
+          <div class="mt-5"></div>
+          <h3 class="fw-bold" style="padding-left: 20px; padding-right: 20px">Tipo 2</h3>
 
-          <a class="btn btn-primary">Ver evento</a>
-        </div>
-      </div>
-    </div>
+          <div class="carousel" data-bs-ride="carousel">
+            <div class="carousel-inner carousel-inner2">
+              <div class="carousel-item active" *ngFor="let carouselItem of carouselItems">
+                <div class="card">
+                  <div class="img-wrapper">
+                    <img src="../../content/images/concert.jpg" class="d-block w-100" alt="..." />
+                  </div>
 
-    <button
-      (click)="prevCarouselSlide(1)"
-      class="carousel-control-prev"
-      type="button"
-      data-bs-target="#carouselExampleControls"
-      data-bs-slide="prev"
-    >
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button
-      (click)="nextCarouselSlide(1)"
-      class="carousel-control-next"
-      type="button"
-      data-bs-target="#carouselExampleControls"
-      data-bs-slide="next"
-    >
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
+                  <h5 class="card-title text-light position-absolute bottom-20" style="left: 2%">
+                    Card item {{ carouselItem.itemNumber }}
+                  </h5>
 
-  <div class="mt-5"></div>
-  <h3 class="fw-bold">Tipo 2</h3>
+                  <a class="btn btn-primary boton">Ver evento</a>
+                </div>
+              </div>
+            </div>
 
-  <div class="carousel" data-bs-ride="carousel">
-    <div class="carousel-inner carousel-inner2">
-      <div class="carousel-item active" *ngFor="let carouselItem of carouselItems">
-        <div class="card">
-          <div class="img-wrapper">
-            <img src="../../content/images/concert.jpg" class="d-block w-100" alt="..." />
+            <button
+              (click)="prevCarouselSlide(2)"
+              class="carousel-control-prev"
+              type="button"
+              data-bs-target="#carouselExampleControls"
+              data-bs-slide="prev"
+            >
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button
+              (click)="nextCarouselSlide(2)"
+              class="carousel-control-next"
+              type="button"
+              data-bs-target="#carouselExampleControls"
+              data-bs-slide="next"
+            >
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
           </div>
-
-          <h5 class="card-title text-light position-absolute bottom-20" style="left: 2%">Card item {{ carouselItem.itemNumber }}</h5>
-
-          <a class="btn btn-primary">Ver evento</a>
         </div>
       </div>
-    </div>
 
-    <button
-      (click)="prevCarouselSlide(2)"
-      class="carousel-control-prev"
-      type="button"
-      data-bs-target="#carouselExampleControls"
-      data-bs-slide="prev"
-    >
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button
-      (click)="nextCarouselSlide(2)"
-      class="carousel-control-next"
-      type="button"
-      data-bs-target="#carouselExampleControls"
-      data-bs-slide="next"
-    >
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
+      <div
+        class="alert alert-warning"
+        *ngSwitchCase="false"
+        style="padding-left: 0px; padding-top: 0px; padding-bottom: 0px; padding-right: 0px; border: 0px; margin-bottom: 0px"
+      >
+        <header class="masthead" style="width: 100%">
+          <div class="container">
+            <div class="masthead-subheading">Disfruta cada momento!</div>
+            <div class="masthead-heading text-uppercase">Tickety</div>
+            <a class="btn btn-primary btn-xl text-uppercase boton" href="#services">Saber más</a>
+          </div>
+        </header>
+        <!-- Services-->
+        <section class="page-section blan" id="services">
+          <div class="container">
+            <div class="text-center">
+              <h2 class="section-heading text-uppercase color-sec">Utilidades</h2>
+              <h3 class="section-subheading text-muted">Descubre los beneficios de la diversión</h3>
+            </div>
+            <div class="row text-center">
+              <div class="col-md-4" style="width: 33.33%">
+                <span class="fa-stack fa-4x">
+                  <img
+                    class="fas fa-circle fa-stack-2x text-primary fas fa-shopping-cart fa-stack-1x fa-inverse imagen"
+                    src="../../content/images/rapido.png"
+                    alt="..."
+                  />
+                </span>
+                <h4 class="my-3 color-sec">Asiste a tus eventos de forma fácil y rápida</h4>
+                <p class="text-muted">Nos centramos en brindar un ambiente amigable y sencillo de entender</p>
+              </div>
+              <div class="col-md-4" style="width: 33.33%">
+                <span class="fa-stack fa-4x">
+                  <img
+                    class="fas fa-circle fa-stack-2x text-primary fas fa-shopping-cart fa-stack-1x fa-inverse imagen"
+                    src="../../content/images/novedad.avif"
+                    alt="..."
+                  />
+                </span>
+                <h4 class="my-3 color-sec">Descubre la novedad</h4>
+                <p class="text-muted">Encuentra los eventos más populares y al mejor precio</p>
+              </div>
+              <div class="col-md-4" style="width: 33.33%">
+                <span class="fa-stack fa-4x">
+                  <img
+                    class="fas fa-circle fa-stack-2x text-primary fas fa-shopping-cart fa-stack-1x fa-inverse imagen"
+                    src="../../content/images/organizar.png"
+                    alt="..."
+                  />
+                </span>
+                <h4 class="my-3 color-sec">Organízate</h4>
+                <p class="text-muted">
+                  Gestiona todos tus eventos de una forma fácil y segura, sin preocuparte por olvidar asistir a tu evento
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- About-->
+        <section class="page-section fondo blanco" id="about">
+          <div class="container">
+            <div class="text-center">
+              <h2 class="section-heading text-uppercase color-sec">Valores</h2>
+              <h3 class="section-subheading">Descubre nuestra personalidad</h3>
+            </div>
+            <ul class="timeline">
+              <li>
+                <div class="timeline-image"><img class="rounded-circle img-fluid" src="../../content/images/about/1.jpg" alt="..." /></div>
+                <div class="timeline-panel">
+                  <div class="timeline-heading">
+                    <h4 class="subheading">Esfuerzo</h4>
+                  </div>
+                  <div class="timeline-body">
+                    <p>
+                      Al dar todos el cien por ciento de entrega en la elaboración del trabajo tanto individual como grupal, con el fin de
+                      entregar un excelente producto.
+                    </p>
+                  </div>
+                </div>
+              </li>
+              <li class="timeline-inverted">
+                <div class="timeline-image"><img class="rounded-circle img-fluid" src="../../content/images/about/2.jpg" alt="..." /></div>
+                <div class="timeline-panel">
+                  <div class="timeline-heading">
+                    <h4 class="subheading">Calidad</h4>
+                  </div>
+                  <div class="timeline-body">
+                    <p>
+                      Valorando el compromiso a la calidad de cada integrante del equipo se asegura un cumplimiento y provecho máximo de un
+                      producto de excelencia.
+                    </p>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="timeline-image"><img class="rounded-circle img-fluid" src="../../content/images/about/3.jpg" alt="..." /></div>
+                <div class="timeline-panel">
+                  <div class="timeline-heading">
+                    <h4 class="subheading">Responsabilidad</h4>
+                  </div>
+                  <div class="timeline-body">
+                    <p>Las acciones no sólo afectan a la persona individual, sino a todos los integrantes del equipo.</p>
+                  </div>
+                </div>
+              </li>
+              <li class="timeline-inverted">
+                <div class="timeline-image"><img class="rounded-circle img-fluid" src="../../content/images/about/4.png" alt="..." /></div>
+                <div class="timeline-panel">
+                  <div class="timeline-heading">
+                    <h4 class="subheading">Innovación</h4>
+                  </div>
+                  <div class="timeline-body">
+                    <p>
+                      La capacidad de adaptarse a los cambios tecnológicos y brindar una experiencia de usuario adaptada a las necesidades
+                      del cliente.
+                    </p>
+                  </div>
+                </div>
+              </li>
+              <li class="timeline-inverted">
+                <div class="timeline-image">
+                  <h4>
+                    Ayúdanos
+                    <br />
+                    a
+                    <br />
+                    demostrarlos
+                  </h4>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </section>
+        <!-- Team-->
+        <section class="page-section bg-light" id="team">
+          <div class="container">
+            <div class="text-center">
+              <h2 class="section-heading text-uppercase color-sec">Únete a nosotros</h2>
+              <h3 class="section-subheading text-muted">Disfruta de tus eventos favoritos de forma rápida</h3>
+            </div>
+            <div class="row">
+              <div class="col-lg-4" style="width: 100%">
+                <div class="team-member">
+                  <div class="text-center">
+                    <button
+                      class="btn btn-primary btn-xl text-uppercase boton"
+                      routerLink="account/register"
+                      routerLinkActive="active"
+                      data-cy="register"
+                    >
+                      Regístrate ahora
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-8 mx-auto text-center">
+                <p class="large text-muted">
+                  Mejora tu forma de disfrutar con nosotros y ayudanos a mejorar, siempre disfrutando cada momento
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- Contact-->
+        <section class="page-section" id="contact">
+          <div class="container">
+            <div class="text-center">
+              <h2 class="section-heading text-uppercase">Contacto</h2>
+              <h3 class="section-subheading text-muted">Envianos tu opinión</h3>
+            </div>
+            <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+              <div class="row align-items-stretch mb-5">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <input class="form-control" id="name" type="text" placeholder="Your Name *" data-sb-validations="required" />
+                    <div class="invalid-feedback" data-sb-feedback="name:required">Nombre es requerido</div>
+                  </div>
+                  <div class="form-group">
+                    <input class="form-control" id="email" type="email" placeholder="Your Email *" data-sb-validations="required,email" />
+                    <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
+                    <div class="invalid-feedback" data-sb-feedback="email:email">El correo no es válido</div>
+                  </div>
+                  <div class="form-group mb-md-0">
+                    <input class="form-control" id="phone" type="tel" placeholder="Your Phone *" data-sb-validations="required" />
+                    <div class="invalid-feedback" data-sb-feedback="phone:required">Teléfono es requerido</div>
+                  </div>
+                </div>
+                <div class="col-md-6" style="padding-top: 30px">
+                  <div class="form-group form-group-textarea mb-md-0">
+                    <textarea class="form-control" id="message" placeholder="Your Message *" data-sb-validations="required"></textarea>
+                    <div class="invalid-feedback" data-sb-feedback="message:required">Mensaje es requerido</div>
+                  </div>
+                </div>
+              </div>
+              <div class="d-none" id="submitSuccessMessage">
+                <div class="text-center text-white mb-3">
+                  <div class="fw-bolder">Enviado Correctamente</div>
+                  <br />
+                </div>
+              </div>
+              <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error al enviar el mensaje</div></div>
+              <!-- Submit Button-->
+              <div class="text-center">
+                <button class="btn btn-primary btn-xl text-uppercase boton" id="submitButton" type="submit">Enviar</button>
+              </div>
+            </form>
+          </div>
+        </section>
+      </div>
+    </div>
   </div>
 </div>

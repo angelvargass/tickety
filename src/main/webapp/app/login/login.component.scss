@@ -1,0 +1,34 @@
+.background-image {
+  background-image: url('../../content/images/fondo-inicio.avif');
+  height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  //background-size: 100% 100%;
+}
+
+.fondo-blanco {
+  background-color: #20262e;
+  padding: 25px;
+  margin: 50px;
+  border-radius: 15px;
+}
+
+.color-letra {
+  color: white;
+}
+
+.color-boton {
+  background-color: #913175;
+  border-color: #913175;
+  color: white;
+}
+
+.color-sec {
+  color: #913175;
+}
+
+.boton-inicio {
+  text-align: center;
+  padding: 30px;
+}
