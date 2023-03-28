@@ -13,7 +13,7 @@ import { Gender } from '../../entities/enumerations/gender.model';
 })
 export class RegisterComponent implements AfterViewInit {
   @ViewChild('login', { static: false })
-  login?: ElementRef;
+  name?: ElementRef;
 
   doNotMatch = false;
   error = false;
@@ -23,15 +23,6 @@ export class RegisterComponent implements AfterViewInit {
   genderValues = Object.keys(Gender);
 
   registerForm = new FormGroup({
-    login: new FormControl('', {
-      nonNullable: true,
-      validators: [
-        Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(50),
-        Validators.pattern('^[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$|^[_.@A-Za-z0-9-]+$'),
-      ],
-    }),
     firstName: new FormControl('', {
       nonNullable: true,
       validators: [
@@ -71,8 +62,8 @@ export class RegisterComponent implements AfterViewInit {
   constructor(private translateService: TranslateService, private registerService: RegisterService) {}
 
   ngAfterViewInit(): void {
-    if (this.login) {
-      this.login.nativeElement.focus();
+    if (this.name) {
+      this.name.nativeElement.focus();
     }
   }
 
@@ -87,7 +78,7 @@ export class RegisterComponent implements AfterViewInit {
       this.doNotMatch = true;
     } else {
       const { firstName, lastName, email, genderu } = this.registerForm.getRawValue();
-      const login = firstName;
+      const login = email;
       this.registerService
         .save({ login, firstName, lastName, email, password, langKey: this.translateService.currentLang, genderu })
         .subscribe({ next: () => (this.success = true), error: response => this.processError(response) });
