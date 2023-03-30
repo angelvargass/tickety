@@ -31,6 +31,9 @@ const organizationRoute: Routes = [
     resolve: {
       organization: OrganizationRoutingResolveService,
     },
+    data: {
+      authorities: ['ROLE_ADMIN', 'ROLE_USER', 'ROLE_ORGANIZATION'],
+    },
     canActivate: [UserRouteAccessService],
   },
   {
