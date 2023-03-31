@@ -1,7 +1,12 @@
 package com.tickety.web.rest;
 
 import com.tickety.domain.Organization;
+import com.tickety.domain.User;
+import com.tickety.domain.UserAccount;
 import com.tickety.repository.OrganizationRepository;
+import com.tickety.repository.UserAccountRepository;
+import com.tickety.repository.UserRepository;
+import com.tickety.security.SecurityUtils;
 import com.tickety.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -33,9 +38,17 @@ public class OrganizationResource {
     private String applicationName;
 
     private final OrganizationRepository organizationRepository;
+    private final UserAccountRepository userAccountRepository;
+    private final UserRepository userRepository;
 
-    public OrganizationResource(OrganizationRepository organizationRepository) {
+    public OrganizationResource(
+        OrganizationRepository organizationRepository,
+        UserAccountRepository userAccountRepository,
+        UserRepository userRepository
+    ) {
         this.organizationRepository = organizationRepository;
+        this.userAccountRepository = userAccountRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -46,12 +59,23 @@ public class OrganizationResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/organizations")
-    public ResponseEntity<Organization> createOrganization(@RequestBody Organization organization) throws URISyntaxException {
+    public ResponseEntity<Organization> createOrganization(@RequestBody Organization organization) throws Exception {
         log.debug("REST request to save Organization : {}", organization);
         if (organization.getId() != null) {
             throw new BadRequestAlertException("A new organization cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        Optional<String> login = SecurityUtils.getCurrentUserLogin();
+        if (!login.isPresent()) {
+            throw new Exception("Bad login");
+        }
+
+        Optional<User> user = userRepository.findOneByLogin(login.get());
+        Optional<UserAccount> userAccount = userAccountRepository.findByUser(user.get());
         Organization result = organizationRepository.save(organization);
+
+        userAccount.get().setOrganization(result);
+        userAccountRepository.save(userAccount.get());
         return ResponseEntity
             .created(new URI("/api/organizations/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
