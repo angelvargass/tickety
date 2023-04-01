@@ -1,8 +1,10 @@
 package com.tickety.web.rest;
 
+import com.tickety.domain.Authority;
 import com.tickety.domain.Organization;
 import com.tickety.domain.User;
 import com.tickety.domain.UserAccount;
+import com.tickety.repository.AuthorityRepository;
 import com.tickety.repository.OrganizationRepository;
 import com.tickety.repository.UserAccountRepository;
 import com.tickety.repository.UserRepository;
@@ -17,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
@@ -40,15 +43,18 @@ public class OrganizationResource {
     private final OrganizationRepository organizationRepository;
     private final UserAccountRepository userAccountRepository;
     private final UserRepository userRepository;
+    private final AuthorityRepository authorityRepository;
 
     public OrganizationResource(
         OrganizationRepository organizationRepository,
         UserAccountRepository userAccountRepository,
-        UserRepository userRepository
+        UserRepository userRepository,
+        AuthorityRepository authorityRepository
     ) {
         this.organizationRepository = organizationRepository;
         this.userAccountRepository = userAccountRepository;
         this.userRepository = userRepository;
+        this.authorityRepository = authorityRepository;
     }
 
     /**
@@ -70,12 +76,16 @@ public class OrganizationResource {
             throw new Exception("Bad login");
         }
 
-        Optional<User> user = userRepository.findOneByLogin(login.get());
-        Optional<UserAccount> userAccount = userAccountRepository.findByUser(user.get());
+        Authority organizationAuthority = authorityRepository.findByName("ROLE_ORGANIZATION").get();
+        User user = userRepository.findOneByLogin(login.get()).get();
+        user.getAuthorities().add(organizationAuthority);
+        userRepository.save(user);
+
+        UserAccount userAccount = userAccountRepository.findByUser(user).get();
         Organization result = organizationRepository.save(organization);
 
-        userAccount.get().setOrganization(result);
-        userAccountRepository.save(userAccount.get());
+        userAccount.setOrganization(result);
+        userAccountRepository.save(userAccount);
         return ResponseEntity
             .created(new URI("/api/organizations/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))

@@ -1,54 +1,129 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="jhi-contact-heading" data-cy="ContactCreateUpdateHeading" jhiTranslate="ticketyApp.contact.home.createOrEditLabel">
-        Crear o editar Contact
-      </h2>
+<!--<div class="d-flex justify-content-center">-->
+<!--  <div class="col-8">-->
+<!--    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">-->
 
-      <div>
-        <jhi-alert-error></jhi-alert-error>
-
-        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
-          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="ticketyApp.contact.phone" for="field_phone">Phone</label>
-          <input type="text" class="form-control" name="phone" id="field_phone" data-cy="phone" formControlName="phone" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="ticketyApp.contact.instagram" for="field_instagram">Instagram</label>
-          <input type="text" class="form-control" name="instagram" id="field_instagram" data-cy="instagram" formControlName="instagram" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="ticketyApp.contact.facebook" for="field_facebook">Facebook</label>
-          <input type="text" class="form-control" name="facebook" id="field_facebook" data-cy="facebook" formControlName="facebook" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="ticketyApp.contact.whatsapp" for="field_whatsapp">Whatsapp</label>
-          <input type="text" class="form-control" name="whatsapp" id="field_whatsapp" data-cy="whatsapp" formControlName="whatsapp" />
-        </div>
-      </div>
-
-      <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
-        </button>
-
-        <button
-          type="submit"
-          id="save-entity"
-          data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
-        >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>
-        </button>
-      </div>
-    </form>
-  </div>
+<div>
+  <jhi-alert-error></jhi-alert-error>
 </div>
+
+<!--    </form>-->
+<!--  </div>-->
+<!--</div>-->
+
+<section class="vh-90 bg-image" style="background-image: url('../../content/images/fondo-inicio.avif')">
+  <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+    <div class="container h-50">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+          <div class="card bg-primary" style="border-radius: 15px; margin-top: 2%; color: white">
+            <div class="card-body p-5">
+              <h2 id="jhi-contact-heading" data-cy="ContactCreateUpdateHeading">Crea un contacto para tu organización</h2>
+
+              <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="mb-3">
+                  <input
+                    type="text"
+                    placeholder="Teléfono"
+                    class="form-control"
+                    name="phone"
+                    id="field_phone"
+                    data-cy="phone"
+                    formControlName="phone"
+                  />
+
+                  <div *ngIf="editForm.get('phone')!.invalid && (editForm.get('phone')!.dirty || editForm.get('phone')!.touched)">
+                    <small class="form-text text-danger" *ngIf="editForm.get('phone')?.errors?.required"> Su número es obligatorio. </small>
+
+                    <small class="form-text text-danger" *ngIf="editForm.get('phone')?.errors?.minlength">
+                      Su número debe tener al menos 8 caracteres.
+                    </small>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <input
+                    type="text"
+                    placeholder="Instagram"
+                    class="form-control"
+                    name="instagram"
+                    id="field_instagram"
+                    data-cy="instagram"
+                    formControlName="instagram"
+                  />
+
+                  <div
+                    *ngIf="editForm.get('instagram')!.invalid && (editForm.get('instagram')!.dirty || editForm.get('instagram')!.touched)"
+                  >
+                    <small class="form-text text-danger" *ngIf="editForm.get('instagram')?.errors?.pattern">
+                      Debe ingresar un url válido.
+                    </small>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <input
+                    type="text"
+                    placeholder="Facebook"
+                    class="form-control"
+                    name="facebook"
+                    id="field_facebook"
+                    data-cy="facebook"
+                    formControlName="facebook"
+                  />
+
+                  <div *ngIf="editForm.get('facebook')!.invalid && (editForm.get('facebook')!.dirty || editForm.get('facebook')!.touched)">
+                    <small class="form-text text-danger" *ngIf="editForm.get('facebook')?.errors?.pattern">
+                      Debe ingresar un url válido.
+                    </small>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <input
+                    type="text"
+                    placeholder="Whatsapp"
+                    class="form-control"
+                    name="whatsapp"
+                    id="field_whatsapp"
+                    data-cy="whatsapp"
+                    formControlName="whatsapp"
+                  />
+
+                  <div *ngIf="editForm.get('whatsapp')!.invalid && (editForm.get('whatsapp')!.dirty || editForm.get('whatsapp')!.touched)">
+                    <small class="form-text text-danger" *ngIf="editForm.get('whatsapp')?.errors?.pattern">
+                      Debe ingresar un url válido.
+                    </small>
+                  </div>
+                </div>
+
+                <div>
+                  <button
+                    type="submit"
+                    id="save-entity"
+                    data-cy="entityCreateSaveButton"
+                    [disabled]="editForm.invalid || isSaving"
+                    class="btn btn-primary"
+                  >
+                    <span>Guardar</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    id="cancel-save"
+                    data-cy="entityCreateCancelButton"
+                    class="btn btn-secondary"
+                    (click)="previousState()"
+                  >
+                    <span>Cancelar</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

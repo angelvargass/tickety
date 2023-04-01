@@ -40,7 +40,7 @@ export class OrganizationFormService {
           validators: [Validators.required],
         }
       ),
-      name: new FormControl(organizationRawValue.name),
+      name: new FormControl(organizationRawValue.name, { validators: [Validators.required, Validators.minLength(2)] }),
     });
   }
 

@@ -1,43 +1,60 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2
-        id="jhi-organization-heading"
-        data-cy="OrganizationCreateUpdateHeading"
-        jhiTranslate="ticketyApp.organization.home.createOrEditLabel"
-      >
-        Crear o editar Organization
-      </h2>
+<section class="vh-90 bg-image" style="background-image: url('../../content/images/fondo-inicio.avif')">
+  <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+    <div class="container h-50">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+          <div class="card bg-primary" style="border-radius: 15px; margin-top: 2%; color: white">
+            <div class="card-body p-5">
+              <h2 id="jhi-organization-heading" data-cy="OrganizationCreateUpdateHeading">Crea una organización</h2>
 
-      <div>
-        <jhi-alert-error></jhi-alert-error>
+              <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+                <jhi-alert-error></jhi-alert-error>
 
-        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
-          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-        </div>
+                <div class="mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="name"
+                    id="field_name"
+                    data-cy="name"
+                    placeholder="Nombre"
+                    formControlName="name"
+                  />
 
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="ticketyApp.organization.name" for="field_name">Name</label>
-          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+                  <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
+                    <small class="form-text text-danger" *ngIf="editForm.get('name')?.errors?.required"> Se requiere un nombre. </small>
+
+                    <small class="form-text text-danger" *ngIf="editForm.get('name')?.errors?.minlength">
+                      Se requiere que su contraseña de confirmación tenga por lo menos 2 caracteres
+                    </small>
+                  </div>
+                </div>
+                <div>
+                  <button
+                    type="submit"
+                    id="save-entity"
+                    data-cy="entityCreateSaveButton"
+                    [disabled]="editForm.invalid || isSaving"
+                    class="btn btn-primary"
+                  >
+                    <span>Guardar</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    id="cancel-save"
+                    data-cy="entityCreateCancelButton"
+                    class="btn btn-secondary"
+                    (click)="previousState()"
+                  >
+                    <span>Cancelar</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
-
-      <div>
-        <button
-          type="submit"
-          id="save-entity"
-          data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
-        >
-          <span>Guardar</span>
-        </button>
-
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <span>Cancelar</span>
-        </button>
-      </div>
-    </form>
+    </div>
   </div>
-</div>
+</section>
