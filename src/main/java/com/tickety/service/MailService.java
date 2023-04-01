@@ -128,5 +128,7 @@ public class MailService {
     }
 
     @Async
-    public void sendPromoterToOrganizationInviteMail(Organization organization, String email) {}
+    public void sendPromoterToOrganizationInviteMail(Organization organization, String email) {
+        sendEmailFromTemplate(email, organization, "mail/promoterInvitation", "email.invitation.title");
+    }
 }

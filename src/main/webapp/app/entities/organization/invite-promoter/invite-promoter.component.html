@@ -1,284 +1,78 @@
-<!--<div>-->
-<!--  <div class="d-flex justify-content-center">-->
-<!--    <div class="col-md-8">-->
-<!--      <div class="alert alert-success" *ngIf="success" jhiTranslate="register.messages.success">-->
-<!--        <strong>Cuenta creada</strong> Por favor, revise su correo electrónico para confirmar.-->
-<!--      </div>-->
+<div>
+  <div class="d-flex justify-content-center">
+    <div class="col-md-8">
+      <div class="alert alert-success" *ngIf="success">
+        <strong>Invitación enviada.</strong>
+        <a class="alert-link" routerLink="/">Volver al inicio</a>.
+      </div>
 
-<!--      <div class="alert alert-danger" *ngIf="error" jhiTranslate="register.messages.error.fail">-->
-<!--        <strong>No se ha podido registrar su cuenta</strong> Por favor, inténtelo de nuevo más tarde.-->
-<!--      </div>-->
+      <div class="alert alert-danger" *ngIf="error">
+        <strong>No se ha podido invitar al promotor</strong> Por favor, inténtelo de nuevo más tarde.
+      </div>
 
-<!--      <div class="alert alert-danger" *ngIf="errorUserExists" jhiTranslate="register.messages.error.userexists">-->
-<!--        <strong>El nombre de usuario ya está registrado</strong> Por favor, escoja otro usuario.-->
-<!--      </div>-->
+      <div class="alert alert-danger" *ngIf="errorEmailExists">
+        <strong>¡El correo electrónico ya está en uso!</strong> Por favor, escoja otro email.
+      </div>
 
-<!--      <div class="alert alert-danger" *ngIf="errorEmailExists" jhiTranslate="register.messages.error.emailexists">-->
-<!--        <strong>¡El correo electrónico ya está en us</strong> Por favor, escoja otro email.-->
-<!--      </div>-->
+      <div class="alert alert-danger" *ngIf="errorOrgDoesNotExists">
+        <strong>No tienes ninguna organización registrada</strong>
+      </div>
+    </div>
+  </div>
+</div>
 
-<!--      <div class="alert alert-danger" *ngIf="doNotMatch" jhiTranslate="global.messages.error.dontmatch">-->
-<!--        La contraseña y la confirmación de contraseña no coinciden-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
+<section class="vh-90 bg-image" style="color: white; background-image: url('../../content/images/fondo-inicio.avif')">
+  <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+    <div class="container h-50">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+          <div class="card bg-primary" style="border-radius: 15px; margin: 2% 0 2% 0">
+            <div class="card-body p-5">
+              <h2 class="text-center mb-5">Invita un promotor a tu organización</h2>
 
-<!--<section class="vh-90 bg-image" *ngIf="!success">-->
-<!--  <div class="mask d-flex align-items-center h-100 gradient-custom-3">-->
-<!--    <div class="container h-50">-->
-<!--      <div class="row d-flex justify-content-center align-items-center h-100">-->
-<!--        <div class="col-12 col-md-9 col-lg-7 col-xl-6">-->
-<!--          <div class="card" style="border-radius: 15px">-->
-<!--            <div class="card-body p-5">-->
-<!--              <h2 class="text-center mb-5">Crea una cuenta</h2>-->
+              <form name="form" role="form" (ngSubmit)="register()" [formGroup]="registerForm">
+                <div class="mb-3">
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    placeholder="Correo electrónico"
+                    formControlName="email"
+                    data-cy="email"
+                  />
 
-<!--              <form name="form" role="form" (ngSubmit)="register()" [formGroup]="registerForm" *ngIf="!success">-->
-<!--                <div class="mb-3">-->
-<!--                  <input-->
-<!--                    type="text"-->
-<!--                    class="form-control"-->
-<!--                    id="nombre"-->
-<!--                    name="nombre"-->
-<!--                    placeholder="Nombre"-->
-<!--                    formControlName="firstName"-->
-<!--                    data-cy="username"-->
-<!--                    #name-->
-<!--                  />-->
+                  <div
+                    *ngIf="registerForm.get('email')!.invalid && (registerForm.get('email')!.dirty || registerForm.get('email')!.touched)"
+                  >
+                    <small class="form-text text-danger" *ngIf="registerForm.get('email')?.errors?.required">
+                      Se requiere un correo electrónico.
+                    </small>
 
-<!--                  <div-->
-<!--                    *ngIf="-->
-<!--                      registerForm.get('firstName')!.invalid &&-->
-<!--                      (registerForm.get('firstName')!.dirty || registerForm.get('firstName')!.touched)-->
-<!--                    "-->
-<!--                  >-->
-<!--                    <small class="form-text text-danger" *ngIf="registerForm.get('firstName')?.errors?.required">-->
-<!--                      Su nombre es obligatorio.-->
-<!--                    </small>-->
+                    <small class="form-text text-danger" *ngIf="registerForm.get('email')?.errors?.email">
+                      Su correo electrónico no es válido.
+                    </small>
 
-<!--                    <small class="form-text text-danger" *ngIf="registerForm.get('firstName')?.errors?.minlength">-->
-<!--                      Su nombre debe tener al menos 1 caracter.-->
-<!--                    </small>-->
+                    <small class="form-text text-danger" *ngIf="registerForm.get('email')?.errors?.minlength">
+                      Se requiere que su correo electrónico tenga por lo menos 5 caracteres
+                    </small>
 
-<!--                    <small class="form-text text-danger" *ngIf="registerForm.get('firstName')?.errors?.maxlength">-->
-<!--                      Su nombre no puede tener más de 50 caracteres.-->
-<!--                    </small>-->
+                    <small class="form-text text-danger" *ngIf="registerForm.get('email')?.errors?.maxlength">
+                      Su correo electrónico no puede tener más de 50 caracteres
+                    </small>
+                  </div>
+                </div>
 
-<!--                    <small class="form-text text-danger" *ngIf="registerForm.get('firstName')?.errors?.pattern">-->
-<!--                      Su nombre no es válido.-->
-<!--                    </small>-->
-<!--                  </div>-->
-<!--                </div>-->
-
-<!--                <div class="mb-3">-->
-<!--                  <input-->
-<!--                    type="text"-->
-<!--                    class="form-control"-->
-<!--                    id="lastName"-->
-<!--                    name="login"-->
-<!--                    placeholder="Apellido"-->
-<!--                    formControlName="lastName"-->
-<!--                    data-cy="lastName"-->
-<!--                  />-->
-
-<!--                  <div-->
-<!--                    *ngIf="-->
-<!--                      registerForm.get('lastName')!.invalid &&-->
-<!--                      (registerForm.get('lastName')!.dirty || registerForm.get('lastName')!.touched)-->
-<!--                    "-->
-<!--                  >-->
-<!--                    <small class="form-text text-danger" *ngIf="registerForm.get('lastName')?.errors?.required">-->
-<!--                      Su apellido es obligatorio.-->
-<!--                    </small>-->
-
-<!--                    <small class="form-text text-danger" *ngIf="registerForm.get('lastName')?.errors?.minlength">-->
-<!--                      Su apellido debe tener al menos 1 caracter.-->
-<!--                    </small>-->
-
-<!--                    <small class="form-text text-danger" *ngIf="registerForm.get('lastName')?.errors?.maxlength">-->
-<!--                      Su apellido no puede tener más de 50 caracteres.-->
-<!--                    </small>-->
-
-<!--                    <small class="form-text text-danger" *ngIf="registerForm.get('lastName')?.errors?.pattern">-->
-<!--                      Su apellido no es válido.-->
-<!--                    </small>-->
-<!--                  </div>-->
-<!--                </div>-->
-
-<!--                <div class="mb-3">-->
-<!--                  <select class="form-control" name="genderu" formControlName="genderu" id="field_genderu" data-cy="genderu">-->
-<!--                    <option value="" disabled selected>Género</option>-->
-<!--                    <option [ngValue]="null">{{ 'ticketyApp.Gender.null' | translate }}</option>-->
-<!--                    <option *ngFor="let gender of genderValues" [value]="gender">{{ 'ticketyApp.Gender.' + gender | translate }}</option>-->
-<!--                  </select>-->
-
-<!--                  <div-->
-<!--                    *ngIf="-->
-<!--                      registerForm.get('genderu')!.invalid && (registerForm.get('genderu')!.dirty || registerForm.get('genderu')!.touched)-->
-<!--                    "-->
-<!--                  >-->
-<!--                    <small class="form-text text-danger" *ngIf="registerForm.get('genderu')?.errors?.required">-->
-<!--                      Su género es obligatorio.-->
-<!--                    </small>-->
-<!--                  </div>-->
-<!--                </div>-->
-
-<!--                <div class="mb-3">-->
-<!--                  <input-->
-<!--                    type="email"-->
-<!--                    class="form-control"-->
-<!--                    id="email"-->
-<!--                    name="email"-->
-<!--                    placeholder="Correo electrónico"-->
-<!--                    formControlName="email"-->
-<!--                    data-cy="email"-->
-<!--                  />-->
-
-<!--                  <div-->
-<!--                    *ngIf="registerForm.get('email')!.invalid && (registerForm.get('email')!.dirty || registerForm.get('email')!.touched)"-->
-<!--                  >-->
-<!--                    <small-->
-<!--                      class="form-text text-danger"-->
-<!--                      *ngIf="registerForm.get('email')?.errors?.required"-->
-<!--                      jhiTranslate="global.messages.validate.email.required"-->
-<!--                    >-->
-<!--                      Se requiere un correo electrónico.-->
-<!--                    </small>-->
-
-<!--                    <small-->
-<!--                      class="form-text text-danger"-->
-<!--                      *ngIf="registerForm.get('email')?.errors?.invalid"-->
-<!--                      jhiTranslate="global.messages.validate.email.invalid"-->
-<!--                    >-->
-<!--                      Su correo electrónico no es válido.-->
-<!--                    </small>-->
-
-<!--                    <small-->
-<!--                      class="form-text text-danger"-->
-<!--                      *ngIf="registerForm.get('email')?.errors?.minlength"-->
-<!--                      jhiTranslate="global.messages.validate.email.minlength"-->
-<!--                    >-->
-<!--                      Se requiere que su correo electrónico tenga por lo menos 5 caracteres-->
-<!--                    </small>-->
-
-<!--                    <small-->
-<!--                      class="form-text text-danger"-->
-<!--                      *ngIf="registerForm.get('email')?.errors?.maxlength"-->
-<!--                      jhiTranslate="global.messages.validate.email.maxlength"-->
-<!--                    >-->
-<!--                      Su correo electrónico no puede tener más de 50 caracteres-->
-<!--                    </small>-->
-<!--                  </div>-->
-<!--                </div>-->
-
-<!--                <div class="mb-3">-->
-<!--                  <input-->
-<!--                    type="password"-->
-<!--                    class="form-control"-->
-<!--                    id="password"-->
-<!--                    name="password"-->
-<!--                    placeholder="{{ 'global.form.newpassword.placeholder' | translate }}"-->
-<!--                    formControlName="password"-->
-<!--                    data-cy="firstPassword"-->
-<!--                  />-->
-
-<!--                  <div-->
-<!--                    *ngIf="-->
-<!--                      registerForm.get('password')!.invalid &&-->
-<!--                      (registerForm.get('password')!.dirty || registerForm.get('password')!.touched)-->
-<!--                    "-->
-<!--                  >-->
-<!--                    <small-->
-<!--                      class="form-text text-danger"-->
-<!--                      *ngIf="registerForm.get('password')?.errors?.required"-->
-<!--                      jhiTranslate="global.messages.validate.newpassword.required"-->
-<!--                    >-->
-<!--                      Se requiere que ingrese una contraseña.-->
-<!--                    </small>-->
-
-<!--                    <small-->
-<!--                      class="form-text text-danger"-->
-<!--                      *ngIf="registerForm.get('password')?.errors?.minlength"-->
-<!--                      jhiTranslate="global.messages.validate.newpassword.minlength"-->
-<!--                    >-->
-<!--                      Se requiere que su contraseña tenga por lo menos 4 caracteres-->
-<!--                    </small>-->
-
-<!--                    <small-->
-<!--                      class="form-text text-danger"-->
-<!--                      *ngIf="registerForm.get('password')?.errors?.maxlength"-->
-<!--                      jhiTranslate="global.messages.validate.newpassword.maxlength"-->
-<!--                    >-->
-<!--                      Su contraseña no puede tener más de 50 caracteres-->
-<!--                    </small>-->
-<!--                  </div>-->
-
-<!--                  <jhi-password-strength-bar [passwordToCheck]="registerForm.get('password')!.value"></jhi-password-strength-bar>-->
-<!--                </div>-->
-
-<!--                <div class="mb-3">-->
-<!--                  <input-->
-<!--                    type="password"-->
-<!--                    class="form-control"-->
-<!--                    id="confirmPassword"-->
-<!--                    name="confirmPassword"-->
-<!--                    placeholder="{{ 'global.form.confirmpassword.placeholder' | translate }}"-->
-<!--                    formControlName="confirmPassword"-->
-<!--                    data-cy="secondPassword"-->
-<!--                  />-->
-
-<!--                  <div-->
-<!--                    *ngIf="-->
-<!--                      registerForm.get('confirmPassword')!.invalid &&-->
-<!--                      (registerForm.get('confirmPassword')!.dirty || registerForm.get('confirmPassword')!.touched)-->
-<!--                    "-->
-<!--                  >-->
-<!--                    <small-->
-<!--                      class="form-text text-danger"-->
-<!--                      *ngIf="registerForm.get('confirmPassword')?.errors?.required"-->
-<!--                      jhiTranslate="global.messages.validate.confirmpassword.required"-->
-<!--                    >-->
-<!--                      Se requiere que confirme la contraseña.-->
-<!--                    </small>-->
-
-<!--                    <small-->
-<!--                      class="form-text text-danger"-->
-<!--                      *ngIf="registerForm.get('confirmPassword')?.errors?.minlength"-->
-<!--                      jhiTranslate="global.messages.validate.confirmpassword.minlength"-->
-<!--                    >-->
-<!--                      Se requiere que su contraseña de confirmación tenga por lo menos 4 caracteres-->
-<!--                    </small>-->
-
-<!--                    <small-->
-<!--                      class="form-text text-danger"-->
-<!--                      *ngIf="registerForm.get('confirmPassword')?.errors?.maxlength"-->
-<!--                      jhiTranslate="global.messages.validate.confirmpassword.maxlength"-->
-<!--                    >-->
-<!--                      Su contraseña de confirmación no puede tener más de 50 caracteres-->
-<!--                    </small>-->
-<!--                  </div>-->
-<!--                </div>-->
-
-<!--                <div class="d-flex justify-content-center">-->
-<!--                  <button-->
-<!--                    type="submit"-->
-<!--                    [disabled]="registerForm.invalid"-->
-<!--                    class="btn btn-primary"-->
-<!--                    jhiTranslate="register.form.button"-->
-<!--                    data-cy="submit"-->
-<!--                  >-->
-<!--                    Crear la cuenta-->
-<!--                  </button>-->
-<!--                </div>-->
-
-<!--                <p class="text-center text-muted mt-5 mb-0">-->
-<!--                  ¿Ya tienes una cuenta? <a routerLink="/login" class="fw-bold text-body"><u>Iniciar sesión</u></a>-->
-<!--                </p>-->
-<!--              </form>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</section>-->
+                <div class="d-flex justify-content-center">
+                  <button type="submit" [disabled]="registerForm.invalid || errorOrgDoesNotExists" class="btn btn-primary" data-cy="submit">
+                    Invitar al promotor
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

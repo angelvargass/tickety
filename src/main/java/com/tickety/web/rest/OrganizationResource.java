@@ -219,15 +219,14 @@ public class OrganizationResource {
     }
 
     @PostMapping("/organizations/{id}/invite")
-    public ResponseEntity<?> invitePromoterToOrganization(@PathVariable(value = "id") final Long id, @RequestBody String email) {
+    public void invitePromoterToOrganization(@PathVariable(value = "id") final Long id, @RequestBody String email) {
         Optional<User> registeredUser = userRepository.findOneByLogin(email);
         Organization organization = organizationRepository.findById(id).get();
 
         if (registeredUser.isPresent()) {
-            return ResponseEntity.badRequest().body("User is already registered in the application.");
+            throw new BadRequestAlertException("User with email ", registeredUser.get().getEmail(), "already exists");
         }
 
         mailService.sendPromoterToOrganizationInviteMail(organization, email);
-        return ResponseEntity.ok().body("Email invitation send to user " + email);
     }
 }

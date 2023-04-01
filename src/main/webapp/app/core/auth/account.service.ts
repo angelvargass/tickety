@@ -23,8 +23,7 @@ export class AccountService {
     private http: HttpClient,
     private stateStorageService: StateStorageService,
     private router: Router,
-    private applicationConfigService: ApplicationConfigService,
-    private userAccountService: UserAccountService
+    private applicationConfigService: ApplicationConfigService
   ) {}
 
   save(account: Account): Observable<{}> {

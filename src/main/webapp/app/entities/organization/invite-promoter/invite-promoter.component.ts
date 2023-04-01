@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UserAccountService } from '../../user-account/service/user-account.service';
+import { Account } from '../../../core/auth/account.model';
+import { AccountService } from '../../../core/auth/account.service';
+import { OrganizationService } from '../service/organization.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE } from '../../../config/error.constants';
 
 @Component({
   selector: 'jhi-invite-promoter',
@@ -16,20 +22,47 @@ export class InvitePromoterComponent implements OnInit {
 
   error = false;
   errorEmailExists = false;
+  errorOrgDoesNotExists = false;
+  userIdentity: Account | null = null;
+  success: boolean = false;
 
-  constructor() {}
+  constructor(
+    private userAccountService: UserAccountService,
+    private accountService: AccountService,
+    private organizationService: OrganizationService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getCurrentUserIdentity();
+  }
+
+  getCurrentUserIdentity() {
+    this.accountService.getAuthenticationState().subscribe(x => (this.userIdentity = x));
+    this.checkForCurrentUserOrganization();
+  }
+
+  checkForCurrentUserOrganization() {
+    if (!this.userIdentity?.userAccount?.organization) {
+      this.errorOrgDoesNotExists = true;
+    }
+  }
 
   register(): void {
-    // this.error = false;
-    // this.errorEmailExists = false;
-    //
-    // const {email} = this.registerForm.getRawValue();
-    //
-    //
-    // this.registerService
-    //   .save({login, firstName, lastName, email, password, langKey: this.translateService.currentLang, genderu})
-    //   .subscribe({next: () => (this.success = true), error: response => this.processError(response)});
+    this.error = false;
+    this.errorEmailExists = false;
+    const { email } = this.registerForm.getRawValue();
+    const currentUserOrganizationId = this.userIdentity?.userAccount?.organization?.id;
+    this.organizationService.invitePromoterToOrganization(currentUserOrganizationId!, email).subscribe(
+      x => (this.success = true),
+      error => this.processError(error)
+    );
+  }
+
+  private processError(response: HttpErrorResponse): void {
+    if (response.status === 400 && response.error.errorKey === 'already exists') {
+      this.errorEmailExists = true;
+    } else {
+      this.error = true;
+    }
   }
 }

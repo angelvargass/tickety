@@ -47,7 +47,9 @@ export class OrganizationService {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
-  //invitePromoterToOrganization()
+  invitePromoterToOrganization(organizationId: number, email: string): Observable<EntityResponseType> {
+    return this.http.post<IOrganization>(`${this.resourceUrl}/${organizationId}/invite`, email, { observe: 'response' });
+  }
 
   getOrganizationIdentifier(organization: Pick<IOrganization, 'id'>): number {
     return organization.id;

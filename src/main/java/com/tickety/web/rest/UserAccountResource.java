@@ -162,10 +162,10 @@ public class UserAccountResource {
         return ResponseUtil.wrapOrNotFound(userAccount);
     }
 
-    @GetMapping("/user-accounts/users/{user_id}")
-    public ResponseEntity<UserAccount> getUserAccountBasedOnUserId(@PathVariable(name = "user_id") Long userId) {
+    @GetMapping("/user-accounts/users/{id}")
+    public ResponseEntity<UserAccount> getUserAccountBasedOnUserId(@PathVariable Long id) {
         User user = new User();
-        user.setId(userId);
+        user.setId(id);
         Optional<UserAccount> userAccount = userAccountRepository.findByUser(user);
         return ResponseUtil.wrapOrNotFound(userAccount);
     }
