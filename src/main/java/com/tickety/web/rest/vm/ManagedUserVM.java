@@ -21,6 +21,8 @@ public class ManagedUserVM extends AdminUserDTO {
 
     private String lastName;
 
+    private Long organizationInvite;
+
     public ManagedUserVM() {
         // Empty constructor needed for Jackson.
     }
@@ -59,6 +61,14 @@ public class ManagedUserVM extends AdminUserDTO {
     @Override
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Long getOrganizationInvite() {
+        return organizationInvite;
+    }
+
+    public void setOrganizationInvite(Long organizationInvite) {
+        this.organizationInvite = organizationInvite;
     }
 
     // prettier-ignore
