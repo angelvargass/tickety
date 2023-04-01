@@ -162,7 +162,7 @@ public class UserAccountResource {
         return ResponseUtil.wrapOrNotFound(userAccount);
     }
 
-    @GetMapping("/user-accounts/{user_id}")
+    @GetMapping("/user-accounts/users/{user_id}")
     public ResponseEntity<UserAccount> getUserAccountBasedOnUserId(@PathVariable(name = "user_id") Long userId) {
         User user = new User();
         user.setId(userId);

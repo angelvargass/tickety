@@ -48,7 +48,7 @@ export class UserAccountService {
   }
 
   findByUser(user_id: number | undefined): Observable<EntityResponseType> {
-    return this.http.get<IUserAccount>(`${this.resourceUrl}/${user_id}`, { observe: 'response' });
+    return this.http.get<IUserAccount>(`${this.resourceUrl}/users/${user_id}`, { observe: 'response' });
   }
 
   getUserAccountIdentifier(userAccount: Pick<IUserAccount, 'id'>): number {

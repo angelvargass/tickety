@@ -1,11 +1,13 @@
 package com.tickety.web.rest;
 
 import com.tickety.domain.User;
+import com.tickety.domain.UserAccount;
 import com.tickety.repository.UserAccountRepository;
 import com.tickety.repository.UserRepository;
 import com.tickety.security.SecurityUtils;
 import com.tickety.service.MailService;
 import com.tickety.service.UserService;
+import com.tickety.service.dto.AdminUserAccountDTO;
 import com.tickety.service.dto.AdminUserDTO;
 import com.tickety.service.dto.PasswordChangeDTO;
 import com.tickety.web.rest.errors.*;
@@ -108,11 +110,17 @@ public class AccountResource {
      * @throws RuntimeException {@code 500 (Internal Server Error)} if the user couldn't be returned.
      */
     @GetMapping("/account")
-    public AdminUserDTO getAccount() {
-        return userService
-            .getUserWithAuthorities()
-            .map(AdminUserDTO::new)
-            .orElseThrow(() -> new AccountResourceException("User could not be found"));
+    public AdminUserAccountDTO getAccount() {
+        Optional<User> user = userService.getUserWithAuthorities();
+
+        if (user.isEmpty()) {
+            throw new AccountResourceException("User could not be found");
+        }
+
+        Optional<UserAccount> userAccount = userAccountRepository.findByUser(user.get());
+        AdminUserAccountDTO adminUserAccountDTO = new AdminUserAccountDTO(user.get());
+        adminUserAccountDTO.setUserAccount(userAccount.orElse(null));
+        return adminUserAccountDTO;
     }
 
     /**

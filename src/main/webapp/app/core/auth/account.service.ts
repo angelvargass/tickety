@@ -31,13 +31,6 @@ export class AccountService {
     return this.http.post(this.applicationConfigService.getEndpointFor('api/account'), account);
   }
 
-  setCurrentUserCompleteInfo() {
-    forkJoin(this.fetch(), this.userAccountService.findByUser(this.userIdentity?.id)).subscribe(([account, userAccount]) => {
-      account.userAccount = userAccount.body;
-      this.userIdentity = account;
-    });
-  }
-
   authenticate(identity: Account | null): void {
     this.userIdentity = identity;
     this.authenticationState.next(this.userIdentity);
