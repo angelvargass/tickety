@@ -17,6 +17,15 @@
         <fa-icon icon="plus"></fa-icon>
         <span jhiTranslate="ticketyApp.organization.home.createLabel"> Crear nuevo Organization </span>
       </button>
+
+      <button
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-organization"
+        [routerLink]="['/organization/invite-promoter']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Invitar promotor a organización </span>
+      </button>
     </div>
   </h2>
 

@@ -3,12 +3,13 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 import { SessionStorageService } from 'ngx-webstorage';
-import { Observable, ReplaySubject, of } from 'rxjs';
+import { Observable, ReplaySubject, of, combineLatestAll, forkJoin } from 'rxjs';
 import { shareReplay, tap, catchError } from 'rxjs/operators';
 
 import { StateStorageService } from 'app/core/auth/state-storage.service';
 import { ApplicationConfigService } from '../config/application-config.service';
 import { Account } from 'app/core/auth/account.model';
+import { UserAccountService } from '../../entities/user-account/service/user-account.service';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
@@ -22,11 +23,19 @@ export class AccountService {
     private http: HttpClient,
     private stateStorageService: StateStorageService,
     private router: Router,
-    private applicationConfigService: ApplicationConfigService
+    private applicationConfigService: ApplicationConfigService,
+    private userAccountService: UserAccountService
   ) {}
 
   save(account: Account): Observable<{}> {
     return this.http.post(this.applicationConfigService.getEndpointFor('api/account'), account);
+  }
+
+  setCurrentUserCompleteInfo() {
+    forkJoin(this.fetch(), this.userAccountService.findByUser(this.userIdentity?.id)).subscribe(([account, userAccount]) => {
+      account.userAccount = userAccount.body;
+      this.userIdentity = account;
+    });
   }
 
   authenticate(identity: Account | null): void {

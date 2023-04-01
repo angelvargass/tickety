@@ -47,6 +47,10 @@ export class UserAccountService {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  findByUser(user_id: number | undefined): Observable<EntityResponseType> {
+    return this.http.get<IUserAccount>(`${this.resourceUrl}/${user_id}`, { observe: 'response' });
+  }
+
   getUserAccountIdentifier(userAccount: Pick<IUserAccount, 'id'>): number {
     return userAccount.id;
   }

@@ -1,6 +1,7 @@
 package com.tickety.web.rest;
 
 import com.tickety.domain.User;
+import com.tickety.repository.UserAccountRepository;
 import com.tickety.repository.UserRepository;
 import com.tickety.security.SecurityUtils;
 import com.tickety.service.MailService;
@@ -17,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -37,14 +39,22 @@ public class AccountResource {
 
     private final UserRepository userRepository;
 
+    private final UserAccountRepository userAccountRepository;
+
     private final UserService userService;
 
     private final MailService mailService;
 
-    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService) {
+    public AccountResource(
+        UserRepository userRepository,
+        UserService userService,
+        MailService mailService,
+        UserAccountRepository userAccountRepository
+    ) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;
+        this.userAccountRepository = userAccountRepository;
     }
 
     /**

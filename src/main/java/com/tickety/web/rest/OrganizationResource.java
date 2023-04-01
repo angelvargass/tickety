@@ -9,6 +9,7 @@ import com.tickety.repository.OrganizationRepository;
 import com.tickety.repository.UserAccountRepository;
 import com.tickety.repository.UserRepository;
 import com.tickety.security.SecurityUtils;
+import com.tickety.service.MailService;
 import com.tickety.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -44,17 +45,20 @@ public class OrganizationResource {
     private final UserAccountRepository userAccountRepository;
     private final UserRepository userRepository;
     private final AuthorityRepository authorityRepository;
+    private final MailService mailService;
 
     public OrganizationResource(
         OrganizationRepository organizationRepository,
         UserAccountRepository userAccountRepository,
         UserRepository userRepository,
-        AuthorityRepository authorityRepository
+        AuthorityRepository authorityRepository,
+        MailService mailService
     ) {
         this.organizationRepository = organizationRepository;
         this.userAccountRepository = userAccountRepository;
         this.userRepository = userRepository;
         this.authorityRepository = authorityRepository;
+        this.mailService = mailService;
     }
 
     /**
@@ -212,5 +216,18 @@ public class OrganizationResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @PostMapping("/organizations/{id}/invite")
+    public ResponseEntity<?> invitePromoterToOrganization(@PathVariable(value = "id") final Long id, @RequestBody String email) {
+        Optional<User> registeredUser = userRepository.findOneByLogin(email);
+        Organization organization = organizationRepository.findById(id).get();
+
+        if (registeredUser.isPresent()) {
+            return ResponseEntity.badRequest().body("User is already registered in the application.");
+        }
+
+        mailService.sendPromoterToOrganizationInviteMail(organization, email);
+        return ResponseEntity.ok().body("Email invitation send to user " + email);
     }
 }

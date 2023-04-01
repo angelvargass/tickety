@@ -47,6 +47,8 @@ export class OrganizationService {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  //invitePromoterToOrganization()
+
   getOrganizationIdentifier(organization: Pick<IOrganization, 'id'>): number {
     return organization.id;
   }

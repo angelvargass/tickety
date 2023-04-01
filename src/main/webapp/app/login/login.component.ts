@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.loginService.login(this.loginForm.getRawValue()).subscribe({
       next: () => {
         this.authenticationError = false;
+        this.accountService.setCurrentUserCompleteInfo();
         if (!this.router.getCurrentNavigation()) {
           // There were no routing during login (eg from navigationToStoredUrl)
           this.router.navigate(['']);

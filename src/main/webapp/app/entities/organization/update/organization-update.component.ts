@@ -9,6 +9,7 @@ import { IOrganization } from '../organization.model';
 import { OrganizationService } from '../service/organization.service';
 import { IContact } from 'app/entities/contact/contact.model';
 import { ContactService } from 'app/entities/contact/service/contact.service';
+import { AccountService } from '../../../core/auth/account.service';
 
 @Component({
   selector: 'jhi-organization-update',
@@ -28,7 +29,8 @@ export class OrganizationUpdateComponent implements OnInit {
     protected organizationFormService: OrganizationFormService,
     protected contactService: ContactService,
     protected activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private accountService: AccountService
   ) {}
 
   compareContact = (o1: IContact | null, o2: IContact | null): boolean => this.contactService.compareContact(o1, o2);
@@ -53,7 +55,6 @@ export class OrganizationUpdateComponent implements OnInit {
     const organization = this.organizationFormService.getOrganization(this.editForm);
     if (organization.id !== null) {
       this.subscribeToSaveResponse(this.organizationService.update(organization));
-      this.router.navigate(['']);
     } else {
       this.subscribeToSaveResponse(this.organizationService.create(organization));
     }
@@ -71,6 +72,16 @@ export class OrganizationUpdateComponent implements OnInit {
     if (organization.id === null) {
       this.router.navigate(['contact/new']);
     }
+
+    //Set organization role since we are gonna need it in the next view
+    this.accountService.identity().subscribe(
+      account => {
+        account?.authorities.push('ROLE_ORGANIZATION');
+      },
+      error => {
+        this.router.navigate(['']);
+      }
+    );
   }
 
   protected onSaveError(): void {
