@@ -37,12 +37,12 @@ public class UserAccount implements Serializable {
     @JsonIgnoreProperties(value = { "userAccount" }, allowSetters = true)
     private Set<Roles> roles = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JsonIgnoreProperties(value = { "contact", "userAccounts", "events" }, allowSetters = true)
     private Organization organization;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @MapsId
     private User user;
 

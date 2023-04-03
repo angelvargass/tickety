@@ -144,7 +144,6 @@ public class UserAccountResource {
      */
     @GetMapping("/user-accounts")
     public List<UserAccount> getAllUserAccounts() {
-        log.debug("REST request to get all UserAccounts");
         return userAccountRepository.findAll();
     }
 
