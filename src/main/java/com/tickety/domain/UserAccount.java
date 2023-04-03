@@ -42,7 +42,7 @@ public class UserAccount implements Serializable {
     private Organization organization;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @MapsId
     private User user;
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 
@@ -10,15 +10,21 @@ import { UserAccountService } from '../service/user-account.service';
 import { IOrganization } from 'app/entities/organization/organization.model';
 import { OrganizationService } from 'app/entities/organization/service/organization.service';
 import { Gender } from 'app/entities/enumerations/gender.model';
+import { AccountService } from '../../../core/auth/account.service';
 
 @Component({
   selector: 'jhi-user-account-update',
   templateUrl: './user-account-update.component.html',
+  styleUrls: ['/user-account-update.component.scss'],
 })
 export class UserAccountUpdateComponent implements OnInit {
   isSaving = false;
   userAccount: IUserAccount | null = null;
   genderValues = Object.keys(Gender);
+  userAuthorities: string[] | undefined = [];
+  protected readonly VIEWMODE_PREFERENCES = 'PREFERENCES';
+  protected readonly DEFAULT_VIEWMODE = this.VIEWMODE_PREFERENCES;
+  currentViewMode: string = this.DEFAULT_VIEWMODE;
 
   organizationsSharedCollection: IOrganization[] = [];
 
@@ -28,7 +34,9 @@ export class UserAccountUpdateComponent implements OnInit {
     protected userAccountService: UserAccountService,
     protected userAccountFormService: UserAccountFormService,
     protected organizationService: OrganizationService,
-    protected activatedRoute: ActivatedRoute
+    protected activatedRoute: ActivatedRoute,
+    private router: Router,
+    private accountService: AccountService
   ) {}
 
   compareOrganization = (o1: IOrganization | null, o2: IOrganization | null): boolean =>
@@ -37,11 +45,18 @@ export class UserAccountUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ userAccount }) => {
       this.userAccount = userAccount;
+      console.log(userAccount);
       if (userAccount) {
         this.updateForm(userAccount);
       }
 
       this.loadRelationshipsOptions();
+    });
+
+    console.log(this.editForm);
+
+    this.accountService.getAuthenticationState().subscribe(account => {
+      this.userAuthorities = account?.authorities;
     });
   }
 
@@ -67,7 +82,7 @@ export class UserAccountUpdateComponent implements OnInit {
   }
 
   protected onSaveSuccess(): void {
-    this.previousState();
+    this.router.navigate(['']);
   }
 
   protected onSaveError(): void {
@@ -99,4 +114,6 @@ export class UserAccountUpdateComponent implements OnInit {
       )
       .subscribe((organizations: IOrganization[]) => (this.organizationsSharedCollection = organizations));
   }
+
+  changeViewMode(viewMode: string): void {}
 }

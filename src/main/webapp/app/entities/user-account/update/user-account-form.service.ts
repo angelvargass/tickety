@@ -20,6 +20,7 @@ type UserAccountFormGroupContent = {
   id: FormControl<IUserAccount['id'] | NewUserAccount['id']>;
   genderu: FormControl<IUserAccount['genderu']>;
   organization: FormControl<IUserAccount['organization']>;
+  user: FormControl<IUserAccount['user']>;
 };
 
 export type UserAccountFormGroup = FormGroup<UserAccountFormGroupContent>;
@@ -31,6 +32,7 @@ export class UserAccountFormService {
       ...this.getFormDefaults(),
       ...userAccount,
     };
+
     return new FormGroup<UserAccountFormGroupContent>({
       id: new FormControl(
         { value: userAccountRawValue.id, disabled: true },
@@ -41,6 +43,11 @@ export class UserAccountFormService {
       ),
       genderu: new FormControl(userAccountRawValue.genderu),
       organization: new FormControl(userAccountRawValue.organization),
+      // @ts-ignore
+      user: new FormGroup({
+        firstName: new FormControl(userAccountRawValue.user?.firstName),
+        lastName: new FormControl(userAccountRawValue.user?.lastName),
+      }),
     });
   }
 
