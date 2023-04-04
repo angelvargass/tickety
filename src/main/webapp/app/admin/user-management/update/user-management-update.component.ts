@@ -16,6 +16,7 @@ const newUser: IUser = {
 @Component({
   selector: 'jhi-user-mgmt-update',
   templateUrl: './user-management-update.component.html',
+  styleUrls: ['./user-management-update.component.scss'],
 })
 export class UserManagementUpdateComponent implements OnInit {
   languages = LANGUAGES;
@@ -33,15 +34,12 @@ export class UserManagementUpdateComponent implements OnInit {
         Validators.pattern('^[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$|^[_.@A-Za-z0-9-]+$'),
       ],
     }),
-    firstName: new FormControl(userTemplate.firstName, { validators: [Validators.maxLength(50)] }),
-    lastName: new FormControl(userTemplate.lastName, { validators: [Validators.maxLength(50)] }),
+    firstName: new FormControl(userTemplate.firstName, { nonNullable: true, validators: [Validators.required, Validators.maxLength(50)] }),
+    lastName: new FormControl(userTemplate.lastName, { nonNullable: true, validators: [Validators.required, Validators.maxLength(50)] }),
     email: new FormControl(userTemplate.email, {
       nonNullable: true,
-      validators: [Validators.minLength(5), Validators.maxLength(254), Validators.email],
+      validators: [Validators.required, Validators.minLength(5), Validators.maxLength(254), Validators.email],
     }),
-    activated: new FormControl(userTemplate.activated, { nonNullable: true }),
-    langKey: new FormControl(userTemplate.langKey, { nonNullable: true }),
-    authorities: new FormControl(userTemplate.authorities, { nonNullable: true }),
   });
 
   constructor(private userService: UserManagementService, private route: ActivatedRoute) {}
@@ -64,6 +62,13 @@ export class UserManagementUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const user = this.editForm.getRawValue();
+    // @ts-ignore
+    user.langKey = 'es';
+    // @ts-ignore
+    user.activated = true;
+    // @ts-ignore
+    user.authorities = ['ROLE_ADMIN'];
+
     if (user.id !== null) {
       this.userService.update(user).subscribe({
         next: () => this.onSaveSuccess(),
