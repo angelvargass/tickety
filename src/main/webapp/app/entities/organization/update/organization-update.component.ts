@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 
@@ -9,10 +9,12 @@ import { IOrganization } from '../organization.model';
 import { OrganizationService } from '../service/organization.service';
 import { IContact } from 'app/entities/contact/contact.model';
 import { ContactService } from 'app/entities/contact/service/contact.service';
+import { AccountService } from '../../../core/auth/account.service';
 
 @Component({
   selector: 'jhi-organization-update',
   templateUrl: './organization-update.component.html',
+  styleUrls: ['./organization-update.component.scss'],
 })
 export class OrganizationUpdateComponent implements OnInit {
   isSaving = false;
@@ -26,7 +28,9 @@ export class OrganizationUpdateComponent implements OnInit {
     protected organizationService: OrganizationService,
     protected organizationFormService: OrganizationFormService,
     protected contactService: ContactService,
-    protected activatedRoute: ActivatedRoute
+    protected activatedRoute: ActivatedRoute,
+    private router: Router,
+    private accountService: AccountService
   ) {}
 
   compareContact = (o1: IContact | null, o2: IContact | null): boolean => this.contactService.compareContact(o1, o2);
@@ -43,7 +47,7 @@ export class OrganizationUpdateComponent implements OnInit {
   }
 
   previousState(): void {
-    window.history.back();
+    this.router.navigate(['']);
   }
 
   save(): void {
@@ -64,7 +68,20 @@ export class OrganizationUpdateComponent implements OnInit {
   }
 
   protected onSaveSuccess(): void {
-    this.previousState();
+    const organization = this.organizationFormService.getOrganization(this.editForm);
+    if (organization.id === null) {
+      this.router.navigate(['contact/new']);
+    }
+
+    //Set organization role since we are gonna need it in the next view
+    this.accountService.identity().subscribe(
+      account => {
+        account?.authorities.push('ROLE_ORGANIZATION');
+      },
+      error => {
+        this.router.navigate(['']);
+      }
+    );
   }
 
   protected onSaveError(): void {

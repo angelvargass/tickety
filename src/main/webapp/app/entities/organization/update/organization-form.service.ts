@@ -19,8 +19,8 @@ type OrganizationFormDefaults = Pick<NewOrganization, 'id'>;
 type OrganizationFormGroupContent = {
   id: FormControl<IOrganization['id'] | NewOrganization['id']>;
   name: FormControl<IOrganization['name']>;
-  owner: FormControl<IOrganization['owner']>;
-  contact: FormControl<IOrganization['contact']>;
+  owner?: FormControl<IOrganization['owner']>;
+  contact?: FormControl<IOrganization['contact']>;
 };
 
 export type OrganizationFormGroup = FormGroup<OrganizationFormGroupContent>;
@@ -40,9 +40,7 @@ export class OrganizationFormService {
           validators: [Validators.required],
         }
       ),
-      name: new FormControl(organizationRawValue.name),
-      owner: new FormControl(organizationRawValue.owner),
-      contact: new FormControl(organizationRawValue.contact),
+      name: new FormControl(organizationRawValue.name, { validators: [Validators.required, Validators.minLength(2)] }),
     });
   }
 

@@ -11,6 +11,20 @@ import { RouterModule } from '@angular/router';
           pageTitle: 'userAccount.home.title',
         },
       },
+      {
+        path: 'organization',
+        loadChildren: () => import('../entities/organization/organization.module').then(m => m.OrganizationModule),
+        data: {
+          pageTitle: 'organization.home.title',
+        },
+      },
+      {
+        path: 'contact',
+        loadChildren: () => import('../entities/contact/contact.module').then(m => m.ContactModule),
+        data: {
+          pageTitle: 'contact.home.title',
+        },
+      },
     ]),
   ],
 })

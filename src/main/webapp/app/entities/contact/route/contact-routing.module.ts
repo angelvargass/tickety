@@ -7,6 +7,7 @@ import { ContactDetailComponent } from '../detail/contact-detail.component';
 import { ContactUpdateComponent } from '../update/contact-update.component';
 import { ContactRoutingResolveService } from './contact-routing-resolve.service';
 import { ASC } from 'app/config/navigation.constants';
+import { Authority } from '../../../config/authority.constants';
 
 const contactRoute: Routes = [
   {
@@ -27,6 +28,9 @@ const contactRoute: Routes = [
   },
   {
     path: 'new',
+    data: {
+      authorities: [Authority.ADMIN, Authority.ORGANIZATION],
+    },
     component: ContactUpdateComponent,
     resolve: {
       contact: ContactRoutingResolveService,

@@ -7,6 +7,7 @@ import { OrganizationDetailComponent } from '../detail/organization-detail.compo
 import { OrganizationUpdateComponent } from '../update/organization-update.component';
 import { OrganizationRoutingResolveService } from './organization-routing-resolve.service';
 import { ASC } from 'app/config/navigation.constants';
+import { InvitePromoterComponent } from '../invite-promoter/invite-promoter.component';
 
 const organizationRoute: Routes = [
   {
@@ -31,6 +32,9 @@ const organizationRoute: Routes = [
     resolve: {
       organization: OrganizationRoutingResolveService,
     },
+    data: {
+      authorities: ['ROLE_ADMIN', 'ROLE_USER', 'ROLE_ORGANIZATION'],
+    },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -38,6 +42,17 @@ const organizationRoute: Routes = [
     component: OrganizationUpdateComponent,
     resolve: {
       organization: OrganizationRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'invite-promoter',
+    component: InvitePromoterComponent,
+    resolve: {
+      organization: OrganizationRoutingResolveService,
+    },
+    data: {
+      authorities: ['ROLE_ADMIN', 'ROLE_ORGANIZATION'],
     },
     canActivate: [UserRouteAccessService],
   },
