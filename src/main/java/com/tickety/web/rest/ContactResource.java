@@ -1,7 +1,13 @@
 package com.tickety.web.rest;
 
 import com.tickety.domain.Contact;
+import com.tickety.domain.User;
+import com.tickety.domain.UserAccount;
 import com.tickety.repository.ContactRepository;
+import com.tickety.repository.OrganizationRepository;
+import com.tickety.repository.UserAccountRepository;
+import com.tickety.repository.UserRepository;
+import com.tickety.security.SecurityUtils;
 import com.tickety.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -14,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
@@ -35,9 +42,20 @@ public class ContactResource {
     private String applicationName;
 
     private final ContactRepository contactRepository;
+    private final UserRepository userRepository;
+    private final UserAccountRepository userAccountRepository;
+    private final OrganizationRepository organizationRepository;
 
-    public ContactResource(ContactRepository contactRepository) {
+    public ContactResource(
+        ContactRepository contactRepository,
+        UserRepository userRepository,
+        UserAccountRepository userAccountRepository,
+        OrganizationRepository organizationRepository
+    ) {
         this.contactRepository = contactRepository;
+        this.userRepository = userRepository;
+        this.userAccountRepository = userAccountRepository;
+        this.organizationRepository = organizationRepository;
     }
 
     /**
@@ -53,7 +71,17 @@ public class ContactResource {
         if (contact.getId() != null) {
             throw new BadRequestAlertException("A new contact cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        Optional<String> login = SecurityUtils.getCurrentUserLogin();
+        User user = userRepository.findOneByLogin(login.get()).get();
+        UserAccount userAccount = userAccountRepository.findByUser(user).get();
+
+        contact.setOrganization(userAccount.getOrganization());
+
         Contact result = contactRepository.save(contact);
+        userAccount.getOrganization().setContact(result);
+        organizationRepository.save(userAccount.getOrganization());
+
         return ResponseEntity
             .created(new URI("/api/contacts/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))

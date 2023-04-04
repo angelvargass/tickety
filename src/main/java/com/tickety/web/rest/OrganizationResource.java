@@ -1,7 +1,15 @@
 package com.tickety.web.rest;
 
+import com.tickety.domain.Authority;
 import com.tickety.domain.Organization;
+import com.tickety.domain.User;
+import com.tickety.domain.UserAccount;
+import com.tickety.repository.AuthorityRepository;
 import com.tickety.repository.OrganizationRepository;
+import com.tickety.repository.UserAccountRepository;
+import com.tickety.repository.UserRepository;
+import com.tickety.security.SecurityUtils;
+import com.tickety.service.MailService;
 import com.tickety.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -12,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
@@ -33,9 +42,23 @@ public class OrganizationResource {
     private String applicationName;
 
     private final OrganizationRepository organizationRepository;
+    private final UserAccountRepository userAccountRepository;
+    private final UserRepository userRepository;
+    private final AuthorityRepository authorityRepository;
+    private final MailService mailService;
 
-    public OrganizationResource(OrganizationRepository organizationRepository) {
+    public OrganizationResource(
+        OrganizationRepository organizationRepository,
+        UserAccountRepository userAccountRepository,
+        UserRepository userRepository,
+        AuthorityRepository authorityRepository,
+        MailService mailService
+    ) {
         this.organizationRepository = organizationRepository;
+        this.userAccountRepository = userAccountRepository;
+        this.userRepository = userRepository;
+        this.authorityRepository = authorityRepository;
+        this.mailService = mailService;
     }
 
     /**
@@ -46,12 +69,27 @@ public class OrganizationResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/organizations")
-    public ResponseEntity<Organization> createOrganization(@RequestBody Organization organization) throws URISyntaxException {
+    public ResponseEntity<Organization> createOrganization(@RequestBody Organization organization) throws Exception {
         log.debug("REST request to save Organization : {}", organization);
         if (organization.getId() != null) {
             throw new BadRequestAlertException("A new organization cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        Optional<String> login = SecurityUtils.getCurrentUserLogin();
+        if (!login.isPresent()) {
+            throw new Exception("Bad login");
+        }
+
+        Authority organizationAuthority = authorityRepository.findByName("ROLE_ORGANIZATION").get();
+        User user = userRepository.findOneByLogin(login.get()).get();
+        user.getAuthorities().add(organizationAuthority);
+        userRepository.save(user);
+
+        UserAccount userAccount = userAccountRepository.findByUser(user).get();
         Organization result = organizationRepository.save(organization);
+
+        userAccount.setOrganization(result);
+        userAccountRepository.save(userAccount);
         return ResponseEntity
             .created(new URI("/api/organizations/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -178,5 +216,17 @@ public class OrganizationResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @PostMapping("/organizations/{id}/invite")
+    public void invitePromoterToOrganization(@PathVariable(value = "id") final Long id, @RequestBody String email) {
+        Optional<User> registeredUser = userRepository.findOneByLogin(email);
+        Organization organization = organizationRepository.findById(id).get();
+
+        if (registeredUser.isPresent()) {
+            throw new BadRequestAlertException("User with email ", registeredUser.get().getEmail(), "already exists");
+        }
+
+        mailService.sendPromoterToOrganizationInviteMail(organization, email);
     }
 }

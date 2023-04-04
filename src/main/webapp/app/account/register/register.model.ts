@@ -6,6 +6,7 @@ export class Registration {
     public email: string,
     public password: string,
     public langKey: string,
-    public genderu: string
+    public genderu: string,
+    public organizationInvite?: number | undefined
   ) {}
 }

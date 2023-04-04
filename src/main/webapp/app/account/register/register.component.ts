@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
@@ -6,12 +6,14 @@ import { TranslateService } from '@ngx-translate/core';
 import { EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE } from 'app/config/error.constants';
 import { RegisterService } from './register.service';
 import { Gender } from '../../entities/enumerations/gender.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'jhi-register',
   templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss'],
 })
-export class RegisterComponent implements AfterViewInit {
+export class RegisterComponent implements AfterViewInit, OnInit {
   @ViewChild('login', { static: false })
   name?: ElementRef;
 
@@ -21,6 +23,7 @@ export class RegisterComponent implements AfterViewInit {
   errorUserExists = false;
   success = false;
   genderValues = Object.keys(Gender);
+  organizationInviteId: number | undefined = undefined;
 
   registerForm = new FormGroup({
     firstName: new FormControl('', {
@@ -59,7 +62,18 @@ export class RegisterComponent implements AfterViewInit {
     }),
   });
 
-  constructor(private translateService: TranslateService, private registerService: RegisterService) {}
+  constructor(private translateService: TranslateService, private registerService: RegisterService, private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    this.getQueryParams();
+  }
+
+  getQueryParams(): void {
+    this.route.queryParams.subscribe(params => {
+      this.organizationInviteId = params['org_invitation'];
+      console.log(this.organizationInviteId);
+    });
+  }
 
   ngAfterViewInit(): void {
     if (this.name) {
@@ -80,7 +94,16 @@ export class RegisterComponent implements AfterViewInit {
       const { firstName, lastName, email, genderu } = this.registerForm.getRawValue();
       const login = email;
       this.registerService
-        .save({ login, firstName, lastName, email, password, langKey: this.translateService.currentLang, genderu })
+        .save({
+          login,
+          firstName,
+          lastName,
+          email,
+          password,
+          langKey: this.translateService.currentLang,
+          genderu,
+          organizationInvite: this.organizationInviteId,
+        })
         .subscribe({ next: () => (this.success = true), error: response => this.processError(response) });
     }
   }
