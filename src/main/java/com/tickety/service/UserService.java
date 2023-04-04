@@ -2,10 +2,12 @@ package com.tickety.service;
 
 import com.tickety.config.Constants;
 import com.tickety.domain.Authority;
+import com.tickety.domain.Organization;
 import com.tickety.domain.User;
 import com.tickety.domain.UserAccount;
 import com.tickety.domain.enumeration.Gender;
 import com.tickety.repository.AuthorityRepository;
+import com.tickety.repository.OrganizationRepository;
 import com.tickety.repository.UserAccountRepository;
 import com.tickety.repository.UserRepository;
 import com.tickety.security.AuthoritiesConstants;
@@ -46,18 +48,22 @@ public class UserService {
 
     private final UserAccountRepository userAccountRepository;
 
+    private final OrganizationRepository organizationRepository;
+
     public UserService(
         UserRepository userRepository,
         PasswordEncoder passwordEncoder,
         AuthorityRepository authorityRepository,
         CacheManager cacheManager,
-        UserAccountRepository userAccountRepository
+        UserAccountRepository userAccountRepository,
+        OrganizationRepository organizationRepository
     ) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
         this.cacheManager = cacheManager;
         this.userAccountRepository = userAccountRepository;
+        this.organizationRepository = organizationRepository;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -145,6 +151,64 @@ public class UserService {
         UserAccount newUserAccount = new UserAccount();
         newUserAccount.setUser(savedUser);
         newUserAccount.setGenderu(Gender.valueOf(gender));
+
+        userAccountRepository.save(newUserAccount);
+
+        return newUser;
+    }
+
+    @Transactional
+    public User registerPromoterUser(AdminUserDTO userDTO, String password, String gender, Long organizationInvite) throws Exception {
+        userRepository
+            .findOneByLogin(userDTO.getLogin().toLowerCase())
+            .ifPresent(existingUser -> {
+                boolean removed = removeNonActivatedUser(existingUser);
+                if (!removed) {
+                    throw new UsernameAlreadyUsedException();
+                }
+            });
+        userRepository
+            .findOneByEmailIgnoreCase(userDTO.getEmail())
+            .ifPresent(existingUser -> {
+                boolean removed = removeNonActivatedUser(existingUser);
+                if (!removed) {
+                    throw new EmailAlreadyUsedException();
+                }
+            });
+        User newUser = new User();
+        String encryptedPassword = passwordEncoder.encode(password);
+        newUser.setLogin(userDTO.getLogin().toLowerCase());
+        // new user gets initially a generated password
+        newUser.setPassword(encryptedPassword);
+        newUser.setFirstName(userDTO.getFirstName());
+        newUser.setLastName(userDTO.getLastName());
+        if (userDTO.getEmail() != null) {
+            newUser.setEmail(userDTO.getEmail().toLowerCase());
+        }
+        newUser.setImageUrl(userDTO.getImageUrl());
+        newUser.setLangKey(userDTO.getLangKey());
+        // new user is not active
+        newUser.setActivated(false);
+        // new user gets registration key
+        newUser.setActivationKey(RandomUtil.generateActivationKey());
+        Set<Authority> authorities = new HashSet<>();
+        authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
+        authorityRepository.findById(AuthoritiesConstants.PROMOTER).ifPresent(authorities::add);
+        newUser.setAuthorities(authorities);
+        User savedUser = userRepository.save(newUser);
+        this.clearUserCaches(newUser);
+        log.debug("Created Information for User: {}", newUser);
+
+        //Creating our custom Tickety client
+        UserAccount newUserAccount = new UserAccount();
+        newUserAccount.setUser(savedUser);
+        newUserAccount.setGenderu(Gender.valueOf(gender));
+
+        //Add organization since this is a promoter user
+        Organization invitingOrganization = organizationRepository
+            .findById(organizationInvite)
+            .orElseThrow(() -> new InvalidOrganizationException());
+        newUserAccount.setOrganization(invitingOrganization);
         userAccountRepository.save(newUserAccount);
 
         return newUser;

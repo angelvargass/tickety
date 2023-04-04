@@ -1,5 +1,6 @@
 package com.tickety.service;
 
+import com.tickety.domain.Organization;
 import com.tickety.domain.User;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
@@ -28,6 +29,10 @@ public class MailService {
     private final Logger log = LoggerFactory.getLogger(MailService.class);
 
     private static final String USER = "user";
+
+    private static final String ORGANIZATION = "organization";
+
+    private static final String EMAIL = "email";
 
     private static final String BASE_URL = "baseUrl";
 
@@ -93,6 +98,18 @@ public class MailService {
     }
 
     @Async
+    public void sendEmailFromTemplate(String email, Organization organization, String templateName, String titleKey) {
+        Locale locale = Locale.forLanguageTag("es");
+        Context context = new Context(locale);
+        context.setVariable(ORGANIZATION, organization);
+        context.setVariable(EMAIL, email);
+        context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
+        String content = templateEngine.process(templateName, context);
+        String subject = messageSource.getMessage(titleKey, null, locale);
+        sendEmail(email, subject, content, false, true);
+    }
+
+    @Async
     public void sendActivationEmail(User user) {
         log.debug("Sending activation email to '{}'", user.getEmail());
         sendEmailFromTemplate(user, "mail/activationEmail", "email.activation.title");
@@ -108,5 +125,10 @@ public class MailService {
     public void sendPasswordResetMail(User user) {
         log.debug("Sending password reset email to '{}'", user.getEmail());
         sendEmailFromTemplate(user, "mail/passwordResetEmail", "email.reset.title");
+    }
+
+    @Async
+    public void sendPromoterToOrganizationInviteMail(Organization organization, String email) {
+        sendEmailFromTemplate(email, organization, "mail/promoterInvitation", "email.invitation.title");
     }
 }
