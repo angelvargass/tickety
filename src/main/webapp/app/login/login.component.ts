@@ -39,11 +39,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   login(): void {
     this.loginService.login(this.loginForm.getRawValue()).subscribe({
-      next: () => {
+      next: account => {
         this.authenticationError = false;
         if (!this.router.getCurrentNavigation()) {
           // There were no routing during login (eg from navigationToStoredUrl)
-          this.router.navigate(['account/settings']);
+          this.router.navigate([`user-account/${account?.userAccount?.id}/edit`]);
         }
       },
       error: () => (this.authenticationError = true),

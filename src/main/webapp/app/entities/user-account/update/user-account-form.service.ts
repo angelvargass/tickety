@@ -45,8 +45,22 @@ export class UserAccountFormService {
       organization: new FormControl(userAccountRawValue.organization),
       // @ts-ignore
       user: new FormGroup({
-        firstName: new FormControl(userAccountRawValue.user?.firstName),
-        lastName: new FormControl(userAccountRawValue.user?.lastName),
+        firstName: new FormControl(userAccountRawValue.user?.firstName, {
+          validators: [
+            Validators.required,
+            Validators.minLength(1),
+            Validators.maxLength(50),
+            Validators.pattern('^[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$|^[_.@A-Za-z0-9-]+$'),
+          ],
+        }),
+        lastName: new FormControl(userAccountRawValue.user?.lastName, {
+          validators: [
+            Validators.required,
+            Validators.minLength(1),
+            Validators.maxLength(50),
+            Validators.pattern('^[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$|^[_.@A-Za-z0-9-]+$'),
+          ],
+        }),
       }),
     });
   }

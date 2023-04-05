@@ -1,8 +1,8 @@
 <div class="container-fluid">
   <div class="row flex-nowrap">
     <!-- DISPLAY NAVBAR BASED ON USER AUTHORITY -->
-    <div class="col-auto col-md-3 col-xl-2 px-0" [ngSwitch]="userAuthorities">
-      <div *ngSwitchCase="'ROLE_USER'" class="d-flex flex-column flex-shrink-0 p-3 bg-primary" style="width: 300px; height: 80vh">
+    <div class="col-auto col-md-3 col-xl-2 px-0">
+      <div *ngIf="userHasOnlyUserRole()" class="d-flex flex-column flex-shrink-0 p-3 bg-primary" style="width: 300px; height: 80vh">
         <ul class="nav nav-pills flex-column mb-auto">
           <li class="nav-item">
             <a class="nav-link link-light" aria-current="page"> Perfil </a>
@@ -20,7 +20,11 @@
         <hr />
       </div>
 
-      <div *ngSwitchCase="'ROLE_PROMOTER'" class="d-flex flex-column flex-shrink-0 p-3 bg-primary" style="width: 300px; height: 80vh">
+      <div
+        *ngIf="userHasOrganizationOrPromoterRole()"
+        class="d-flex flex-column flex-shrink-0 p-3 bg-primary"
+        style="width: 300px; height: 80vh"
+      >
         <ul class="nav nav-pills flex-column mb-auto">
           <li class="nav-item">
             <a class="nav-link link-light" aria-current="page"> Perfil </a>
@@ -42,7 +46,7 @@
       </div>
     </div>
 
-    <section class="vh-70 bg-image" *ngIf="currentViewMode === VIEWMODE_PREFERENCES">
+    <section class="vh-70 bg-image section" *ngIf="currentViewMode === VIEWMODE_PREFERENCES">
       <div class="mask d-flex align-items-center gradient-custom-3">
         <div class="container h-50">
           <div class="row d-flex align-items-center h-100">
@@ -66,64 +70,65 @@
                         #name
                       />
 
-                      <!--                      <div-->
-                      <!--                        *ngIf="-->
-                      <!--                      editForm.get('user')!.invalid &&-->
-                      <!--                      (editForm.get('user')!.dirty || editForm.get('user')!.touched)-->
-                      <!--                    "-->
-                      <!--                      >-->
-                      <!--                        <small class="form-text text-danger" *ngIf="editForm.get('firstName')?.errors?.required">-->
-                      <!--                          Su nombre es obligatorio.-->
-                      <!--                        </small>-->
+                      <div
+                        *ngIf="
+                          editForm.get('user.firstName')!.invalid &&
+                          (editForm.get('user.firstName')!.dirty || editForm.get('user.firstName')!.touched)
+                        "
+                      >
+                        <small class="form-text text-danger" *ngIf="editForm.get('user.firstName')?.errors?.required">
+                          Su nombre es obligatorio.
+                        </small>
 
-                      <!--                        <small class="form-text text-danger" *ngIf="editForm.get('firstName')?.errors?.minlength">-->
-                      <!--                          Su nombre debe tener al menos 1 caracter.-->
-                      <!--                        </small>-->
+                        <small class="form-text text-danger" *ngIf="editForm.get('user.firstName')?.errors?.minlength">
+                          Su nombre debe tener al menos 1 caracter.
+                        </small>
 
-                      <!--                        <small class="form-text text-danger" *ngIf="editForm.get('firstName')?.errors?.maxlength">-->
-                      <!--                          Su nombre no puede tener más de 50 caracteres.-->
-                      <!--                        </small>-->
+                        <small class="form-text text-danger" *ngIf="editForm.get('user.firstName')?.errors?.maxlength">
+                          Su nombre no puede tener más de 50 caracteres.
+                        </small>
 
-                      <!--                        <small class="form-text text-danger" *ngIf="editForm.get('firstName')?.errors?.pattern">-->
-                      <!--                          Su nombre no es válido.-->
-                      <!--                        </small>-->
-                      <!--                      </div>-->
+                        <small class="form-text text-danger" *ngIf="editForm.get('user.firstName')?.errors?.pattern">
+                          Su nombre no es válido.
+                        </small>
+                      </div>
                     </div>
 
-                    <!--                      <div class="mb-3">-->
-                    <!--                        <input-->
-                    <!--                          type="text"-->
-                    <!--                          class="form-control"-->
-                    <!--                          id="lastName"-->
-                    <!--                          name="login"-->
-                    <!--                          placeholder="Apellido"-->
-                    <!--                          formControlName="lastName"-->
-                    <!--                          data-cy="lastName"-->
-                    <!--                        />-->
+                    <div formGroupName="user" class="mb-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="apellido"
+                        name="apellido"
+                        placeholder="Apellido"
+                        formControlName="lastName"
+                        data-cy="username"
+                        #name
+                      />
 
-                    <!--                        <div-->
-                    <!--                          *ngIf="-->
-                    <!--                      editForm.get('lastName')!.invalid &&-->
-                    <!--                      (editForm.get('lastName')!.dirty || editForm.get('lastName')!.touched)-->
-                    <!--                    "-->
-                    <!--                        >-->
-                    <!--                          <small class="form-text text-danger" *ngIf="editForm.get('lastName')?.errors?.required">-->
-                    <!--                            Su apellido es obligatorio.-->
-                    <!--                          </small>-->
+                      <div
+                        *ngIf="
+                          editForm.get('user.lastName')!.invalid &&
+                          (editForm.get('user.lastName')!.dirty || editForm.get('user.lastName')!.touched)
+                        "
+                      >
+                        <small class="form-text text-danger" *ngIf="editForm.get('user.lastName')?.errors?.required">
+                          Su apellido es obligatorio.
+                        </small>
 
-                    <!--                          <small class="form-text text-danger" *ngIf="editForm.get('lastName')?.errors?.minlength">-->
-                    <!--                            Su apellido debe tener al menos 1 caracter.-->
-                    <!--                          </small>-->
+                        <small class="form-text text-danger" *ngIf="editForm.get('user.lastName')?.errors?.minlength">
+                          Su apellido debe tener al menos 1 caracter.
+                        </small>
 
-                    <!--                          <small class="form-text text-danger" *ngIf="editForm.get('lastName')?.errors?.maxlength">-->
-                    <!--                            Su apellido no puede tener más de 50 caracteres.-->
-                    <!--                          </small>-->
+                        <small class="form-text text-danger" *ngIf="editForm.get('user.lastName')?.errors?.maxlength">
+                          Su apellido no puede tener más de 50 caracteres.
+                        </small>
 
-                    <!--                          <small class="form-text text-danger" *ngIf="editForm.get('lastName')?.errors?.pattern">-->
-                    <!--                            Su apellido no es válido.-->
-                    <!--                          </small>-->
-                    <!--                        </div>-->
-                    <!--                      </div>-->
+                        <small class="form-text text-danger" *ngIf="editForm.get('user.lastName')?.errors?.pattern">
+                          Su apellido no es válido.
+                        </small>
+                      </div>
+                    </div>
 
                     <div class="mb-3">
                       <select class="form-control" name="genderu" formControlName="genderu" id="field_genderu" data-cy="genderu">
@@ -159,19 +164,5 @@
         </div>
       </div>
     </section>
-
-    <div class="d-flex justify-content-center" *ngIf="currentViewMode === VIEWMODE_PREFERENCES">
-      <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-          <h2 id="jhi-user-account-heading" data-cy="UserAccountCreateUpdateHeading">Preferencias</h2>
-
-          <div>
-            <jhi-alert-error></jhi-alert-error>
-          </div>
-
-          <div></div>
-        </form>
-      </div>
-    </div>
   </div>
 </div>
