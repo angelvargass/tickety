@@ -258,13 +258,13 @@
             <li *ngSwitchCase="true">
               <a
                 class="dropdown-item"
-                routerLink="account/settings"
+                routerLink="user-account/{{ account?.id }}/edit"
                 routerLinkActive="active"
                 (click)="collapseNavbar()"
                 data-cy="settings"
               >
                 <fa-icon icon="wrench" [fixedWidth]="true"></fa-icon>
-                <span jhiTranslate="global.menu.account.settings">Ajustes</span>
+                <span>Perfil</span>
               </a>
             </li>
             <li *ngSwitchCase="true">
