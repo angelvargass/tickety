@@ -3,12 +3,14 @@ package com.tickety.web.rest;
 import com.tickety.domain.User;
 import com.tickety.domain.UserAccount;
 import com.tickety.repository.UserAccountRepository;
+import com.tickety.repository.UserRepository;
 import com.tickety.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,9 +36,11 @@ public class UserAccountResource {
     private String applicationName;
 
     private final UserAccountRepository userAccountRepository;
+    private final UserRepository userRepository;
 
-    public UserAccountResource(UserAccountRepository userAccountRepository) {
+    public UserAccountResource(UserAccountRepository userAccountRepository, UserRepository userRepository) {
         this.userAccountRepository = userAccountRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -85,7 +89,6 @@ public class UserAccountResource {
         if (!userAccountRepository.existsById(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
-
         UserAccount result = userAccountRepository.save(userAccount);
         return ResponseEntity
             .ok()
@@ -120,6 +123,21 @@ public class UserAccountResource {
         if (!userAccountRepository.existsById(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
+
+        userRepository
+            .findById(userAccount.getId())
+            .map(existingUser -> {
+                if (userAccount.getUser().getFirstName() != null) {
+                    existingUser.setFirstName(userAccount.getUser().getFirstName());
+                }
+
+                if (userAccount.getUser().getLastName() != null) {
+                    existingUser.setLastName(userAccount.getUser().getLastName());
+                }
+
+                return existingUser;
+            })
+            .map(userRepository::save);
 
         Optional<UserAccount> result = userAccountRepository
             .findById(userAccount.getId())
