@@ -5,7 +5,7 @@
       <div *ngIf="userHasOnlyUserRole()" class="d-flex flex-column flex-shrink-0 p-3 bg-primary" style="width: 300px; height: 80vh">
         <ul class="nav nav-pills flex-column mb-auto">
           <li class="nav-item">
-            <a class="nav-link link-light" aria-current="page"> Perfil </a>
+            <button (click)="changeViewMode(VIEWMODE_PREFERENCES)" class="nav-link link-light">Perfil de {{ userType }}</button>
           </li>
           <li class="nav-item">
             <a class="nav-link link-light"> Mis tickets </a>
@@ -27,7 +27,7 @@
       >
         <ul class="nav nav-pills flex-column mb-auto">
           <li class="nav-item">
-            <a class="nav-link link-light" aria-current="page"> Perfil </a>
+            <a class="nav-link link-light" aria-current="page"> Perfil de {{ userType }}</a>
           </li>
           <li class="nav-item">
             <a class="nav-link link-light"> Ubicaciones </a>

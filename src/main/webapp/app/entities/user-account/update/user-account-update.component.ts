@@ -26,6 +26,8 @@ export class UserAccountUpdateComponent implements OnInit {
   protected readonly VIEWMODE_PREFERENCES = 'PREFERENCES';
   protected readonly DEFAULT_VIEWMODE = this.VIEWMODE_PREFERENCES;
 
+  userType: string = 'usuario';
+
   currentViewMode: string = this.DEFAULT_VIEWMODE;
 
   organizationsSharedCollection: IOrganization[] = [];
@@ -54,9 +56,24 @@ export class UserAccountUpdateComponent implements OnInit {
       this.loadRelationshipsOptions();
     });
 
+    this.setAuthorities();
+    this.setUserType();
+  }
+
+  private setAuthorities(): void {
     this.accountService.getAuthenticationState().subscribe(account => {
       this.userAuthorities = account?.authorities;
     });
+  }
+
+  private setUserType() {
+    if (this.userHasOnlyOrganizationRole()) {
+      this.userType = 'organizador';
+    }
+
+    if (this.userHasOnlyPromoterRole()) {
+      this.userType = 'promotor';
+    }
   }
 
   previousState(): void {
@@ -117,10 +134,18 @@ export class UserAccountUpdateComponent implements OnInit {
   changeViewMode(viewMode: string): void {}
 
   userHasOnlyUserRole(): boolean | undefined {
-    return this.userAuthorities?.includes((x: string) => x === Authority.USER) && this.userAuthorities?.length === 1;
+    return this.userAuthorities?.includes(Authority.USER) && this.userAuthorities?.length === 1;
   }
 
   userHasOrganizationOrPromoterRole(): boolean | undefined {
     return this.userAuthorities?.includes(Authority.ORGANIZATION || Authority.PROMOTER);
+  }
+
+  userHasOnlyOrganizationRole(): boolean | undefined {
+    return this.userAuthorities?.includes(Authority.ORGANIZATION) && this.userAuthorities?.length === 2;
+  }
+
+  userHasOnlyPromoterRole(): boolean | undefined {
+    return this.userAuthorities?.includes(Authority.PROMOTER) && this.userAuthorities?.length === 2;
   }
 }
