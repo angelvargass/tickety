@@ -1,5 +1,6 @@
 package com.tickety.web.rest;
 
+import com.tickety.domain.User;
 import com.tickety.domain.UserAccount;
 import com.tickety.repository.UserAccountRepository;
 import com.tickety.web.rest.errors.BadRequestAlertException;
@@ -144,7 +145,6 @@ public class UserAccountResource {
      */
     @GetMapping("/user-accounts")
     public List<UserAccount> getAllUserAccounts() {
-        log.debug("REST request to get all UserAccounts");
         return userAccountRepository.findAll();
     }
 
@@ -158,6 +158,14 @@ public class UserAccountResource {
     public ResponseEntity<UserAccount> getUserAccount(@PathVariable Long id) {
         log.debug("REST request to get UserAccount : {}", id);
         Optional<UserAccount> userAccount = userAccountRepository.findById(id);
+        return ResponseUtil.wrapOrNotFound(userAccount);
+    }
+
+    @GetMapping("/user-accounts/users/{id}")
+    public ResponseEntity<UserAccount> getUserAccountBasedOnUserId(@PathVariable Long id) {
+        User user = new User();
+        user.setId(id);
+        Optional<UserAccount> userAccount = userAccountRepository.findByUser(user);
         return ResponseUtil.wrapOrNotFound(userAccount);
     }
 

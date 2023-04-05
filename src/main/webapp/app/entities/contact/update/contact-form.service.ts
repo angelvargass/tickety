@@ -28,6 +28,7 @@ export type ContactFormGroup = FormGroup<ContactFormGroupContent>;
 
 @Injectable({ providedIn: 'root' })
 export class ContactFormService {
+  private readonly webSitePatternReg = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
   createContactFormGroup(contact: ContactFormGroupInput = { id: null }): ContactFormGroup {
     const contactRawValue = {
       ...this.getFormDefaults(),
@@ -41,10 +42,10 @@ export class ContactFormService {
           validators: [Validators.required],
         }
       ),
-      phone: new FormControl(contactRawValue.phone),
-      instagram: new FormControl(contactRawValue.instagram),
-      facebook: new FormControl(contactRawValue.facebook),
-      whatsapp: new FormControl(contactRawValue.whatsapp),
+      phone: new FormControl(contactRawValue.phone, { validators: [Validators.required, Validators.minLength(8)] }),
+      instagram: new FormControl(contactRawValue.instagram, { validators: [Validators.pattern(this.webSitePatternReg)] }),
+      facebook: new FormControl(contactRawValue.facebook, { validators: [Validators.pattern(this.webSitePatternReg)] }),
+      whatsapp: new FormControl(contactRawValue.whatsapp, { validators: [Validators.pattern(this.webSitePatternReg)] }),
     });
   }
 

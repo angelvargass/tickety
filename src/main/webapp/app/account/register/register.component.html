@@ -24,12 +24,12 @@
   </div>
 </div>
 
-<section class="vh-90 bg-image" *ngIf="!success">
+<section class="vh-90 bg-image" *ngIf="!success" style="color: white; background-image: url('../../content/images/fondo-inicio.avif')">
   <div class="mask d-flex align-items-center h-100 gradient-custom-3">
     <div class="container h-50">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-          <div class="card" style="border-radius: 15px">
+          <div class="card bg-primary" style="border-radius: 15px; margin: 2% 0 2% 0">
             <div class="card-body p-5">
               <h2 class="text-center mb-5">Crea una cuenta</h2>
 
@@ -271,8 +271,8 @@
                   </button>
                 </div>
 
-                <p class="text-center text-muted mt-5 mb-0">
-                  ¿Ya tienes una cuenta? <a routerLink="/login" class="fw-bold text-body"><u>Iniciar sesión</u></a>
+                <p class="text-center mt-5 mb-0">
+                  ¿Ya tienes una cuenta? <a routerLink="/login" class="fw-bold"><u class="text-light">Iniciar sesión</u></a>
                 </p>
               </form>
             </div>

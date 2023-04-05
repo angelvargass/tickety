@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
@@ -11,6 +11,7 @@ import { ContactService } from '../service/contact.service';
 @Component({
   selector: 'jhi-contact-update',
   templateUrl: './contact-update.component.html',
+  styleUrls: ['./contact-update.component.scss'],
 })
 export class ContactUpdateComponent implements OnInit {
   isSaving = false;
@@ -21,7 +22,8 @@ export class ContactUpdateComponent implements OnInit {
   constructor(
     protected contactService: ContactService,
     protected contactFormService: ContactFormService,
-    protected activatedRoute: ActivatedRoute
+    protected activatedRoute: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -34,7 +36,7 @@ export class ContactUpdateComponent implements OnInit {
   }
 
   previousState(): void {
-    window.history.back();
+    this.router.navigate(['']);
   }
 
   save(): void {
@@ -55,7 +57,7 @@ export class ContactUpdateComponent implements OnInit {
   }
 
   protected onSaveSuccess(): void {
-    this.previousState();
+    this.router.navigate(['']);
   }
 
   protected onSaveError(): void {

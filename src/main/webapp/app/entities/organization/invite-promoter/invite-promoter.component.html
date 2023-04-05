@@ -1,0 +1,78 @@
+<div>
+  <div class="d-flex justify-content-center">
+    <div class="col-md-8">
+      <div class="alert alert-success" *ngIf="success">
+        <strong>Invitación enviada.</strong>
+        <a class="alert-link" routerLink="/">Volver al inicio</a>.
+      </div>
+
+      <div class="alert alert-danger" *ngIf="error">
+        <strong>No se ha podido invitar al promotor</strong> Por favor, inténtelo de nuevo más tarde.
+      </div>
+
+      <div class="alert alert-danger" *ngIf="errorEmailExists">
+        <strong>¡El correo electrónico ya está en uso!</strong> Por favor, escoja otro email.
+      </div>
+
+      <div class="alert alert-danger" *ngIf="errorOrgDoesNotExists">
+        <strong>No tienes ninguna organización registrada</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="vh-90 bg-image" style="color: white; background-image: url('../../content/images/fondo-inicio.avif')">
+  <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+    <div class="container h-50">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+          <div class="card bg-primary" style="border-radius: 15px; margin: 2% 0 2% 0">
+            <div class="card-body p-5">
+              <h2 class="text-center mb-5">Invita un promotor a tu organización</h2>
+
+              <form name="form" role="form" (ngSubmit)="register()" [formGroup]="registerForm">
+                <div class="mb-3">
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    placeholder="Correo electrónico"
+                    formControlName="email"
+                    data-cy="email"
+                  />
+
+                  <div
+                    *ngIf="registerForm.get('email')!.invalid && (registerForm.get('email')!.dirty || registerForm.get('email')!.touched)"
+                  >
+                    <small class="form-text text-danger" *ngIf="registerForm.get('email')?.errors?.required">
+                      Se requiere un correo electrónico.
+                    </small>
+
+                    <small class="form-text text-danger" *ngIf="registerForm.get('email')?.errors?.email">
+                      Su correo electrónico no es válido.
+                    </small>
+
+                    <small class="form-text text-danger" *ngIf="registerForm.get('email')?.errors?.minlength">
+                      Se requiere que su correo electrónico tenga por lo menos 5 caracteres
+                    </small>
+
+                    <small class="form-text text-danger" *ngIf="registerForm.get('email')?.errors?.maxlength">
+                      Su correo electrónico no puede tener más de 50 caracteres
+                    </small>
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-center">
+                  <button type="submit" [disabled]="registerForm.invalid || errorOrgDoesNotExists" class="btn btn-primary" data-cy="submit">
+                    Invitar al promotor
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
