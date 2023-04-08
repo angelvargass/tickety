@@ -54,6 +54,7 @@ public class Event implements Serializable {
     private Set<Ticket> tickets = new HashSet<>();
 
     @ManyToOne
+    @JoinColumn(name = "USER_ACCOUNT_ID")
     @JsonIgnoreProperties(value = { "events", "roles", "organization" }, allowSetters = true)
     private UserAccount userAccount;
 

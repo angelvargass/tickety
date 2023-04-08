@@ -102,8 +102,7 @@ export class EventUpdateComponent implements OnInit {
 
     this.galeriesCollection = this.galeryService.addGaleryToCollectionIfMissing<IGalery>(this.galeriesCollection, event.galery);
     this.userAccountsSharedCollection = this.userAccountService.addUserAccountToCollectionIfMissing<IUserAccount>(
-      this.userAccountsSharedCollection,
-      event.userAccount
+      this.userAccountsSharedCollection
     );
     this.organizationsSharedCollection = this.organizationService.addOrganizationToCollectionIfMissing<IOrganization>(
       this.organizationsSharedCollection,
@@ -122,11 +121,7 @@ export class EventUpdateComponent implements OnInit {
     this.userAccountService
       .query()
       .pipe(map((res: HttpResponse<IUserAccount[]>) => res.body ?? []))
-      .pipe(
-        map((userAccounts: IUserAccount[]) =>
-          this.userAccountService.addUserAccountToCollectionIfMissing<IUserAccount>(userAccounts, this.event?.userAccount)
-        )
-      )
+      .pipe(map((userAccounts: IUserAccount[]) => this.userAccountService.addUserAccountToCollectionIfMissing<IUserAccount>(userAccounts)))
       .subscribe((userAccounts: IUserAccount[]) => (this.userAccountsSharedCollection = userAccounts));
 
     this.organizationService
