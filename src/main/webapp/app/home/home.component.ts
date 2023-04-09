@@ -6,6 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
 import { EventService } from '../entities/event/service/event.service';
+
 declare var $: any;
 
 @Component({
@@ -24,6 +25,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   cardWidth: number = 0;
   scrollPosition = 0;
   carouselItems: any[] = [];
+  allEvents?: any;
 
   constructor(private accountService: AccountService, private router: Router, private eventService: EventService) {}
 
@@ -33,14 +35,20 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe(account => (this.account = account));
 
-    this.eventService.find(1).subscribe({
+    const filterEvents = {
+      sort: ['id,asc'],
+    };
+
+    this.eventService.query(filterEvents).subscribe({
       next: response => {
-        console.log(response);
+        console.log(typeof response.body);
       },
       error: err => {
         console.log(err);
       },
     });
+
+    console.log(this.allEvents);
 
     //Get events from somewhere
     this.carouselItems.push(
