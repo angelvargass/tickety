@@ -10,7 +10,7 @@ import { EventDeleteDialogComponent } from '../delete/event-delete-dialog.compon
 import { SortService } from 'app/shared/sort/sort.service';
 
 @Component({
-  selector: 'jhi-event',
+  selector: '[jhi-event]',
   templateUrl: './event.component.html',
 })
 export class EventComponent implements OnInit {

@@ -29,6 +29,18 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access.service'
           loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
         },
         {
+          path: 'photo',
+          loadChildren: () => import('./entities/photo/photo.module').then(m => m.PhotoModule),
+        },
+        {
+          path: 'galery',
+          loadChildren: () => import('./entities/galery/galery.module').then(m => m.GaleryModule),
+        },
+        {
+          path: 'event',
+          loadChildren: () => import('./entities/event/event.module').then(m => m.EventModule),
+        },
+        {
           path: 'ticket',
           loadChildren: () => import('./entities/ticket/ticket.module').then(m => m.TicketModule),
         },
