@@ -43,6 +43,7 @@ public class EventResource {
     /**
      * {@code POST  /events} : Create a new event.
      *
+     * *
      * @param event the event to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new event, or with status {@code 400 (Bad Request)} if the event has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
