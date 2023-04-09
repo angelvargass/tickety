@@ -22,11 +22,17 @@
                     <img src="../../content/images/concert.jpg" class="d-block w-100" alt="..." />
                   </div>
 
-                  <h5 class="card-title text-light position-absolute bottom-20" style="left: 2%">
-                    Card item {{ carouselItem.itemNumber }}
-                  </h5>
+                  <h5 class="card-title text-light position-absolute bottom-20" style="left: 2%">Card item {{ carouselItem.date }}</h5>
 
-                  <a class="btn btn-primary boton">Ver evento</a>
+                  <button
+                    type="submit"
+                    [routerLink]="['/event', carouselItem.id, 'view']"
+                    class="btn btn-primary boton"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
+                  </button>
                 </div>
               </div>
             </div>
@@ -64,11 +70,17 @@
                     <img src="../../content/images/concert.jpg" class="d-block w-100" alt="..." />
                   </div>
 
-                  <h5 class="card-title text-light position-absolute bottom-20" style="left: 2%">
-                    Card item {{ carouselItem.itemNumber }}
-                  </h5>
+                  <h5 class="card-title text-light position-absolute bottom-20" style="left: 2%">Card item {{ carouselItem.id }}</h5>
 
-                  <a class="btn btn-primary boton">Ver evento</a>
+                  <button
+                    type="submit"
+                    [routerLink]="['/event', carouselItem.id, 'view']"
+                    class="btn btn-primary boton"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
+                  </button>
                 </div>
               </div>
             </div>
