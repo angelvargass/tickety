@@ -70,7 +70,19 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" for="field_galery">Galería</label>
+          <label class="form-label" jhiTranslate="ticketyApp.event.eventPrice" for="field_eventPrice">Event Price</label>
+          <input
+            type="number"
+            class="form-control"
+            name="eventPrice"
+            id="field_eventPrice"
+            data-cy="eventPrice"
+            formControlName="eventPrice"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="ticketyApp.event.galery" for="field_galery">Galery</label>
           <select
             class="form-control"
             id="field_galery"
@@ -85,7 +97,7 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" for="field_venue">Dirección</label>
+          <label class="form-label" jhiTranslate="ticketyApp.event.venue" for="field_venue">Venue</label>
           <select class="form-control" id="field_venue" data-cy="venue" name="venue" formControlName="venue" [compareWith]="compareVenue">
             <option [ngValue]="null"></option>
             <option [ngValue]="venueOption" *ngFor="let venueOption of venuesSharedCollection">{{ venueOption.id }}</option>

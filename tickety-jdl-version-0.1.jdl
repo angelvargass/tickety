@@ -87,6 +87,7 @@ entity Event {
     Date LocalDate
     EventSatus EventSatus
     TalTickets Integer min(0)
+    EventPrice Long
 }
 entity Ticket {
 	Date LocalDate
