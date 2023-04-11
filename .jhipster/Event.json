@@ -19,6 +19,10 @@
       "fieldType": "Integer",
       "fieldValidateRules": ["min"],
       "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "eventPrice",
+      "fieldType": "Long"
     }
   ],
   "fluentMethods": true,

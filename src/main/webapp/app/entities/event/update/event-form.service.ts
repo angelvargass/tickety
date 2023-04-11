@@ -21,6 +21,7 @@ type EventFormGroupContent = {
   date: FormControl<IEvent['date']>;
   eventSatus: FormControl<IEvent['eventSatus']>;
   talTickets: FormControl<IEvent['talTickets']>;
+  eventPrice: FormControl<IEvent['eventPrice']>;
   galery: FormControl<IEvent['galery']>;
   userAccount: FormControl<IEvent['userAccount']>;
   organization: FormControl<IEvent['organization']>;
@@ -49,6 +50,7 @@ export class EventFormService {
       talTickets: new FormControl(eventRawValue.talTickets, {
         validators: [Validators.min(0)],
       }),
+      eventPrice: new FormControl(eventRawValue.eventPrice),
       galery: new FormControl(eventRawValue.galery),
       userAccount: new FormControl(eventRawValue.userAccount),
       organization: new FormControl(eventRawValue.organization),

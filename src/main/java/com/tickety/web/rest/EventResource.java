@@ -133,6 +133,9 @@ public class EventResource {
                 if (event.getTalTickets() != null) {
                     existingEvent.setTalTickets(event.getTalTickets());
                 }
+                if (event.getEventPrice() != null) {
+                    existingEvent.setEventPrice(event.getEventPrice());
+                }
 
                 return existingEvent;
             })
