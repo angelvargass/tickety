@@ -38,6 +38,9 @@ public class Event implements Serializable {
     @Column(name = "tal_tickets")
     private Integer talTickets;
 
+    @Column(name = "event_price")
+    private Long eventPrice;
+
     @JsonIgnoreProperties(value = { "photos", "event" }, allowSetters = true)
     @OneToOne
     @JoinColumn(unique = true)
@@ -118,6 +121,19 @@ public class Event implements Serializable {
 
     public void setTalTickets(Integer talTickets) {
         this.talTickets = talTickets;
+    }
+
+    public Long getEventPrice() {
+        return this.eventPrice;
+    }
+
+    public Event eventPrice(Long eventPrice) {
+        this.setEventPrice(eventPrice);
+        return this;
+    }
+
+    public void setEventPrice(Long eventPrice) {
+        this.eventPrice = eventPrice;
     }
 
     public Galery getGalery() {
@@ -261,6 +277,7 @@ public class Event implements Serializable {
             ", date='" + getDate() + "'" +
             ", eventSatus='" + getEventSatus() + "'" +
             ", talTickets=" + getTalTickets() +
+            ", eventPrice=" + getEventPrice() +
             "}";
     }
 }

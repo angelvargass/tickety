@@ -10,6 +10,7 @@ export interface IEvent {
   date?: dayjs.Dayjs | null;
   eventSatus?: EventSatus | null;
   talTickets?: number | null;
+  eventPrice?: number | null;
   galery?: Pick<IGalery, 'id'> | null;
   userAccount?: Pick<IUserAccount, 'id'> | null;
   organization?: Pick<IOrganization, 'id'> | null;

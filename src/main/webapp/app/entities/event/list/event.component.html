@@ -56,6 +56,12 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="eventPrice">
+            <div class="d-flex">
+              <span jhiTranslate="ticketyApp.event.eventPrice">Event Price</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col" jhiSortBy="galery.id">
             <div class="d-flex">
               <span jhiTranslate="ticketyApp.event.galery">Galery</span>
@@ -91,6 +97,7 @@
           <td>{{ event.date | formatMediumDate }}</td>
           <td jhiTranslate="{{ 'ticketyApp.EventSatus.' + event.eventSatus }}">{{ event.eventSatus }}</td>
           <td>{{ event.talTickets }}</td>
+          <td>{{ event.eventPrice }}</td>
           <td>
             <div *ngIf="event.galery">
               <a [routerLink]="['/galery', event.galery.id, 'view']">{{ event.galery.id }}</a>
