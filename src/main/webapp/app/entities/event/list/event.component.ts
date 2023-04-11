@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
-import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
+import { combineLatest, filter, Observable, Subject, switchMap, tap } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IEvent } from '../event.model';
@@ -8,12 +8,18 @@ import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/conf
 import { EntityArrayResponseType, EventService } from '../service/event.service';
 import { EventDeleteDialogComponent } from '../delete/event-delete-dialog.component';
 import { SortService } from 'app/shared/sort/sort.service';
+import { AccountService } from '../../../core/auth/account.service';
+import { UserAccountService } from '../../user-account/service/user-account.service';
+
+import { Account } from '../../../core/auth/account.model';
 
 @Component({
   selector: '[jhi-event]',
   templateUrl: './event.component.html',
 })
 export class EventComponent implements OnInit {
+  account: Account | null = null;
+
   events?: IEvent[];
   isLoading = false;
 
@@ -25,12 +31,18 @@ export class EventComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     public router: Router,
     protected sortService: SortService,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected accountService: AccountService,
+    protected userAccountService: UserAccountService
   ) {}
 
   trackId = (_index: number, item: IEvent): number => this.eventService.getEventIdentifier(item);
 
   ngOnInit(): void {
+    this.accountService.getAuthenticationState().subscribe(account => {
+      this.account = account;
+    });
+
     this.load();
   }
 

@@ -29,8 +29,8 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access.service'
           loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
         },
         {
-          path: 'ticket',
-          loadChildren: () => import('./entities/ticket/ticket.module').then(m => m.TicketModule),
+          path: 'venue',
+          loadChildren: () => import('./entities/venue/venue.module').then(m => m.VenueModule),
         },
         {
           path: 'genre',

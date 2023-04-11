@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { delay, Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 
 import { EventFormService, EventFormGroup } from './event-form.service';
@@ -16,12 +16,16 @@ import { OrganizationService } from 'app/entities/organization/service/organizat
 import { IVenue } from 'app/entities/venue/venue.model';
 import { VenueService } from 'app/entities/venue/service/venue.service';
 import { EventSatus } from 'app/entities/enumerations/event-satus.model';
+import { AccountService } from '../../../core/auth/account.service';
+import { Account } from '../../../core/auth/account.model';
+import { UserService } from '../../user/user.service';
 
 @Component({
   selector: 'jhi-event-update',
   templateUrl: './event-update.component.html',
 })
 export class EventUpdateComponent implements OnInit {
+  account: Account | null = null;
   isSaving = false;
   event: IEvent | null = null;
   eventSatusValues = Object.keys(EventSatus);
@@ -34,6 +38,8 @@ export class EventUpdateComponent implements OnInit {
   editForm: EventFormGroup = this.eventFormService.createEventFormGroup();
 
   constructor(
+    protected userService: UserService,
+    protected accountService: AccountService,
     protected eventService: EventService,
     protected eventFormService: EventFormService,
     protected galeryService: GaleryService,
@@ -53,6 +59,13 @@ export class EventUpdateComponent implements OnInit {
   compareVenue = (o1: IVenue | null, o2: IVenue | null): boolean => this.venueService.compareVenue(o1, o2);
 
   ngOnInit(): void {
+    this.accountService.getAuthenticationState().subscribe(account => {
+      this.account = account;
+    });
+
+    console.log('this.account');
+    console.log(this.account);
+
     this.activatedRoute.data.subscribe(({ event }) => {
       this.event = event;
       if (event) {
@@ -70,6 +83,8 @@ export class EventUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const event = this.eventFormService.getEvent(this.editForm);
+    event.organization = this.account?.userAccount?.organization;
+    event.userAccount = this.account?.userAccount;
     if (event.id !== null) {
       this.subscribeToSaveResponse(this.eventService.update(event));
     } else {
