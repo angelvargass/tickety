@@ -41,17 +41,23 @@ public class Event implements Serializable {
     @Column(name = "event_price")
     private Long eventPrice;
 
-    @JsonIgnoreProperties(value = { "photos", "event" }, allowSetters = true)
-    @OneToOne
+    @Column(name = "event_name")
+    private String eventName;
+
+    @Column(name = "event_description")
+    private String eventDescription;
+
+    @JsonIgnoreProperties(value = { "event" }, allowSetters = true)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(unique = true)
     private Galery galery;
 
-    @OneToMany(mappedBy = "event")
+    @OneToMany(mappedBy = "event", fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "genres", "event" }, allowSetters = true)
     private Set<Artist> artists = new HashSet<>();
 
-    @OneToMany(mappedBy = "event")
+    @OneToMany(mappedBy = "event", fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "event" }, allowSetters = true)
     private Set<Ticket> tickets = new HashSet<>();
@@ -130,6 +136,32 @@ public class Event implements Serializable {
     public Event eventPrice(Long eventPrice) {
         this.setEventPrice(eventPrice);
         return this;
+    }
+
+    public Event eventName(String eventName) {
+        this.setEventName(eventName);
+        return this;
+    }
+
+    public Event eventDescription(String eventDescription) {
+        this.setEventDescription(eventDescription);
+        return this;
+    }
+
+    public String getEventName() {
+        return eventName;
+    }
+
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
+    }
+
+    public String getEventDescription() {
+        return eventDescription;
+    }
+
+    public void setEventDescription(String eventDescription) {
+        this.eventDescription = eventDescription;
     }
 
     public void setEventPrice(Long eventPrice) {
@@ -278,6 +310,8 @@ public class Event implements Serializable {
             ", eventSatus='" + getEventSatus() + "'" +
             ", talTickets=" + getTalTickets() +
             ", eventPrice=" + getEventPrice() +
+            ", eventName=" + getEventName() +
+            ", eventDescription=" + getEventDescription() +
             "}";
     }
 }

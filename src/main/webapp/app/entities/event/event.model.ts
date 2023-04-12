@@ -11,6 +11,8 @@ export interface IEvent {
   eventSatus?: EventSatus | null;
   talTickets?: number | null;
   eventPrice?: number | null;
+  eventName?: string | null;
+  eventDescription?: string | null;
   galery?: Pick<IGalery, 'id'> | null;
   userAccount?: Pick<IUserAccount, 'id'> | null;
   organization?: Pick<IOrganization, 'id'> | null;

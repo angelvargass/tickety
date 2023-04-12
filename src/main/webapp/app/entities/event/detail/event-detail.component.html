@@ -26,6 +26,14 @@
         <dd>
           <span>{{ event.talTickets }}</span>
         </dd>
+        <dt><span jhiTranslate="ticketyApp.event.eventName">Event Name</span></dt>
+        <dd>
+          <span>{{ event.eventName }}</span>
+        </dd>
+        <dt><span jhiTranslate="ticketyApp.event.eventDescription">Event Desc</span></dt>
+        <dd>
+          <span>{{ event.eventDescription }}</span>
+        </dd>
         <dt><span jhiTranslate="ticketyApp.event.galery">Galery</span></dt>
         <dd>
           <div *ngIf="event.galery">

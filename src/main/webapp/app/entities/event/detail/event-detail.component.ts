@@ -16,6 +16,8 @@ export class EventDetailComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ event }) => {
       this.event = event;
     });
+
+    console.log(this.event);
   }
 
   previousState(): void {

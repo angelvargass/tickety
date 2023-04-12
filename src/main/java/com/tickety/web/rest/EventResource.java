@@ -136,6 +136,12 @@ public class EventResource {
                 if (event.getEventPrice() != null) {
                     existingEvent.setEventPrice(event.getEventPrice());
                 }
+                if (event.getEventName() != null) {
+                    existingEvent.setEventName(event.getEventName());
+                }
+                if (event.getEventDescription() != null) {
+                    existingEvent.setEventName(event.getEventDescription());
+                }
 
                 return existingEvent;
             })
