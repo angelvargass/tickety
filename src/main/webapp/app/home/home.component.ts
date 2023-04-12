@@ -43,19 +43,22 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.eventService.query('id').subscribe({
       next: response => {
-        this.setImage(<IEvent[]>response.body);
+        this.setShowCase(<IEvent[]>response.body);
       },
       error: err => {
         console.log(err);
       },
     });
+
+    this.ngAfterViewInit();
   }
 
-  setImage(eventList: IEvent[]): void {
+  // this function set the showcase (image that will be display on the vent card)
+  setShowCase(eventList: IEvent[]): void {
     eventList.forEach(ev => {
-      console.log(ev);
       let tmpGaleria = <IGalery>ev.galery;
       let tmpPhotos = <IPhoto[]>(<unknown>tmpGaleria.photos);
+      // Modify to pick the favorite
       ev.showCase = tmpPhotos[0].url;
       this.carouselItems.push(<IEvent>ev);
     });

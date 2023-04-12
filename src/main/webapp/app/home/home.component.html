@@ -12,7 +12,7 @@
           <h2 style="padding-left: 20px; padding-right: 20px">Eventos</h2>
           <div class="mb-5"></div>
 
-          <h3 class="fw-bold" style="padding-left: 20px; padding-right: 20px">Tipo 1</h3>
+          <h3 class="fw-bold" style="padding-left: 20px; padding-right: 20px">Mis Eventos</h3>
 
           <div class="carousel" data-bs-ride="carousel">
             <div class="carousel-inner carousel-inner1">
@@ -21,7 +21,7 @@
                   <div class="img-wrapper">
                     <img src="{{ carouselItem.showCase }}" class="d-block w-100" alt="..." />
                   </div>
-                  <h5 class="card-title text-light position-absolute bottom-20" style="left: 2%">Card item {{ carouselItem.eventName }}</h5>
+                  <h5 class="card-title text-light position-absolute bottom-20" style="left: 2%">{{ carouselItem.eventName }}</h5>
 
                   <button
                     type="submit"
@@ -59,16 +59,16 @@
           </div>
 
           <div class="mt-5"></div>
-          <h3 class="fw-bold" style="padding-left: 20px; padding-right: 20px">Tipo 2</h3>
+          <h3 class="fw-bold" style="padding-left: 20px; padding-right: 20px">Otros Eventos</h3>
 
           <div class="carousel" data-bs-ride="carousel">
-            <div class="carousel-inner carousel-inner2">
+            <div class="carousel-inner carousel-inner1">
               <div class="carousel-item active" *ngFor="let carouselItem of carouselItems">
                 <div class="card">
                   <div class="img-wrapper">
-                    <img src="../../content/images/concert.jpg" class="d-block w-100" alt="..." />
+                    <img src="{{ carouselItem.showCase }}" class="d-block w-100" alt="..." />
                   </div>
-                  <h5 class="card-title text-light position-absolute bottom-20" style="left: 2%">Card item {{ carouselItem.eventName }}</h5>
+                  <h5 class="card-title text-light position-absolute bottom-20" style="left: 2%">{{ carouselItem.eventName }}</h5>
 
                   <button
                     type="submit"
@@ -84,7 +84,7 @@
             </div>
 
             <button
-              (click)="prevCarouselSlide(2)"
+              (click)="prevCarouselSlide(1)"
               class="carousel-control-prev"
               type="button"
               data-bs-target="#carouselExampleControls"
@@ -94,7 +94,7 @@
               <span class="visually-hidden">Previous</span>
             </button>
             <button
-              (click)="nextCarouselSlide(2)"
+              (click)="nextCarouselSlide(1)"
               class="carousel-control-next"
               type="button"
               data-bs-target="#carouselExampleControls"

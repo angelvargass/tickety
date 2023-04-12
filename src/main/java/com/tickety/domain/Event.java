@@ -48,7 +48,8 @@ public class Event implements Serializable {
     private String eventDescription;
 
     @JsonIgnoreProperties(value = { "event" }, allowSetters = true)
-    @OneToOne(cascade = CascadeType.ALL)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(unique = true)
     private Galery galery;
 
@@ -57,7 +58,7 @@ public class Event implements Serializable {
     @JsonIgnoreProperties(value = { "genres", "event" }, allowSetters = true)
     private Set<Artist> artists = new HashSet<>();
 
-    @OneToMany(mappedBy = "event", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "event", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "event" }, allowSetters = true)
     private Set<Ticket> tickets = new HashSet<>();
