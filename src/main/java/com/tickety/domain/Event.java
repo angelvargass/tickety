@@ -48,7 +48,7 @@ public class Event implements Serializable {
     private String eventDescription;
 
     @JsonIgnoreProperties(value = { "event" }, allowSetters = true)
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(unique = true)
     private Galery galery;
 
