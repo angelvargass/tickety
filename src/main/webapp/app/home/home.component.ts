@@ -7,6 +7,8 @@ import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
 import { EventService } from '../entities/event/service/event.service';
 import { IEvent } from '../entities/event/event.model';
+import { IGalery } from '../entities/galery/galery.model';
+import { IPhoto } from '../entities/photo/photo.model';
 
 declare var $: any;
 
@@ -41,11 +43,21 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.eventService.query('id').subscribe({
       next: response => {
-        this.carouselItems = <IEvent[]>response.body;
+        this.setImage(<IEvent[]>response.body);
       },
       error: err => {
         console.log(err);
       },
+    });
+  }
+
+  setImage(eventList: IEvent[]): void {
+    eventList.forEach(ev => {
+      console.log(ev);
+      let tmpGaleria = <IGalery>ev.galery;
+      let tmpPhotos = <IPhoto[]>(<unknown>tmpGaleria.photos);
+      ev.showCase = tmpPhotos[0].url;
+      this.carouselItems.push(<IEvent>ev);
     });
   }
 

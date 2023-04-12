@@ -19,9 +19,8 @@
               <div class="carousel-item active" *ngFor="let carouselItem of carouselItems">
                 <div class="card">
                   <div class="img-wrapper">
-                    <img src="../../content/images/concert.jpg" class="d-block w-100" alt="..." />
+                    <img src="{{ carouselItem.showCase }}" class="d-block w-100" alt="..." />
                   </div>
-
                   <h5 class="card-title text-light position-absolute bottom-20" style="left: 2%">Card item {{ carouselItem.eventName }}</h5>
 
                   <button
@@ -69,7 +68,6 @@
                   <div class="img-wrapper">
                     <img src="../../content/images/concert.jpg" class="d-block w-100" alt="..." />
                   </div>
-
                   <h5 class="card-title text-light position-absolute bottom-20" style="left: 2%">Card item {{ carouselItem.eventName }}</h5>
 
                   <button
