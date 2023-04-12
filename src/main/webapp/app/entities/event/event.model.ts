@@ -17,6 +17,8 @@ export interface IEvent {
   userAccount?: Pick<IUserAccount, 'id'> | null;
   organization?: Pick<IOrganization, 'id'> | null;
   venue?: Pick<IVenue, 'id'> | null;
+  // this is only use for showing the main image for the event
+  showCase?: string | null;
 }
 
 export type NewEvent = Omit<IEvent, 'id'> & { id: null };
