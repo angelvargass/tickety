@@ -7,7 +7,6 @@ import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
 import { EventService } from '../entities/event/service/event.service';
 import { IEvent } from '../entities/event/event.model';
-import { PhotoService } from '../entities/photo/service/photo.service';
 
 declare var $: any;
 
@@ -40,7 +39,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       sort: ['id,asc'],
     };
 
-    this.eventService.query(filterEvents).subscribe({
+    this.eventService.query('id').subscribe({
       next: response => {
         this.carouselItems = <IEvent[]>response.body;
       },
@@ -48,8 +47,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
         console.log(err);
       },
     });
-
-    console.log(this.carouselItems);
   }
 
   ngOnDestroy(): void {

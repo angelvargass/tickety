@@ -44,6 +44,12 @@ class EventResourceIT {
     private static final Long DEFAULT_EVENT_PRICE = 1L;
     private static final Long UPDATED_EVENT_PRICE = 2L;
 
+    private static final String DEFAULT_EVENT_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_EVENT_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_EVENT_DESCRIPTION = "AAAAAAAAAA";
+    private static final String UPDATED_EVENT_DESCRIPTION = "BBBBBBBBBB";
+
     private static final String ENTITY_API_URL = "/api/events";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -72,7 +78,9 @@ class EventResourceIT {
             .date(DEFAULT_DATE)
             .eventSatus(DEFAULT_EVENT_SATUS)
             .talTickets(DEFAULT_TAL_TICKETS)
-            .eventPrice(DEFAULT_EVENT_PRICE);
+            .eventPrice(DEFAULT_EVENT_PRICE)
+            .eventName(DEFAULT_EVENT_NAME)
+            .eventDescription(DEFAULT_EVENT_NAME);
         return event;
     }
 
@@ -87,7 +95,9 @@ class EventResourceIT {
             .date(UPDATED_DATE)
             .eventSatus(UPDATED_EVENT_SATUS)
             .talTickets(UPDATED_TAL_TICKETS)
-            .eventPrice(UPDATED_EVENT_PRICE);
+            .eventPrice(UPDATED_EVENT_PRICE)
+            .eventName(UPDATED_EVENT_NAME)
+            .eventDescription(UPDATED_EVENT_NAME);
         return event;
     }
 
@@ -148,7 +158,9 @@ class EventResourceIT {
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
             .andExpect(jsonPath("$.[*].eventSatus").value(hasItem(DEFAULT_EVENT_SATUS.toString())))
             .andExpect(jsonPath("$.[*].talTickets").value(hasItem(DEFAULT_TAL_TICKETS)))
-            .andExpect(jsonPath("$.[*].eventPrice").value(hasItem(DEFAULT_EVENT_PRICE.intValue())));
+            .andExpect(jsonPath("$.[*].eventPrice").value(hasItem(DEFAULT_EVENT_PRICE.intValue())))
+            .andExpect(jsonPath("$.[*].eventName").value(hasItem(DEFAULT_EVENT_NAME)))
+            .andExpect(jsonPath("$.[*].eventDescription").value(hasItem(DEFAULT_EVENT_DESCRIPTION)));
     }
 
     @Test
@@ -166,7 +178,9 @@ class EventResourceIT {
             .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
             .andExpect(jsonPath("$.eventSatus").value(DEFAULT_EVENT_SATUS.toString()))
             .andExpect(jsonPath("$.talTickets").value(DEFAULT_TAL_TICKETS))
-            .andExpect(jsonPath("$.eventPrice").value(DEFAULT_EVENT_PRICE.intValue()));
+            .andExpect(jsonPath("$.eventPrice").value(DEFAULT_EVENT_PRICE.intValue()))
+            .andExpect(jsonPath("$.[*].eventName").value(hasItem(DEFAULT_EVENT_NAME)))
+            .andExpect(jsonPath("$.[*].eventDescription").value(hasItem(DEFAULT_EVENT_DESCRIPTION)));
     }
 
     @Test
@@ -206,6 +220,8 @@ class EventResourceIT {
         assertThat(testEvent.getEventSatus()).isEqualTo(UPDATED_EVENT_SATUS);
         assertThat(testEvent.getTalTickets()).isEqualTo(UPDATED_TAL_TICKETS);
         assertThat(testEvent.getEventPrice()).isEqualTo(UPDATED_EVENT_PRICE);
+        assertThat(testEvent.getEventName()).isEqualTo(UPDATED_EVENT_NAME);
+        assertThat(testEvent.getEventDescription()).isEqualTo(UPDATED_EVENT_DESCRIPTION);
     }
 
     @Test
@@ -312,7 +328,9 @@ class EventResourceIT {
             .date(UPDATED_DATE)
             .eventSatus(UPDATED_EVENT_SATUS)
             .talTickets(UPDATED_TAL_TICKETS)
-            .eventPrice(UPDATED_EVENT_PRICE);
+            .eventPrice(UPDATED_EVENT_PRICE)
+            .eventName(UPDATED_EVENT_NAME)
+            .eventDescription(UPDATED_EVENT_DESCRIPTION);
 
         restEventMockMvc
             .perform(
@@ -330,6 +348,8 @@ class EventResourceIT {
         assertThat(testEvent.getEventSatus()).isEqualTo(UPDATED_EVENT_SATUS);
         assertThat(testEvent.getTalTickets()).isEqualTo(UPDATED_TAL_TICKETS);
         assertThat(testEvent.getEventPrice()).isEqualTo(UPDATED_EVENT_PRICE);
+        assertThat(testEvent.getEventName()).isEqualTo(UPDATED_EVENT_NAME);
+        assertThat(testEvent.getEventDescription()).isEqualTo(UPDATED_EVENT_DESCRIPTION);
     }
 
     @Test

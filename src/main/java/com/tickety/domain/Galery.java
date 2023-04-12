@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.persistence.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Fetch;
 
 /**
  * A Galery.
@@ -32,7 +33,7 @@ public class Galery implements Serializable {
     @Column(name = "status")
     private GaleryStatus status;
 
-    @OneToMany(mappedBy = "galery")
+    @OneToMany(mappedBy = "galery", fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "galery" }, allowSetters = true)
     private Set<Photo> photos = new HashSet<>();

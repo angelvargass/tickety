@@ -82,6 +82,23 @@
         </div>
 
         <div class="row mb-3">
+          <label class="form-label" jhiTranslate="ticketyApp.event.eventName" for="field_eventName">Event Name</label>
+          <input type="text" class="form-control" name="eventName" id="field_eventName" data-cy="eventName" formControlName="eventName" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="ticketyApp.event.eventDescription" for="field_eventDescription">Event Description</label>
+          <input
+            type="text"
+            class="form-control"
+            name="eventDescription"
+            id="field_eventDescription"
+            data-cy="eventDescription"
+            formControlName="eventDescription"
+          />
+        </div>
+
+        <div class="row mb-3">
           <label class="form-label" jhiTranslate="ticketyApp.event.galery" for="field_galery">Galery</label>
           <select
             class="form-control"

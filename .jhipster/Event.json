@@ -23,6 +23,14 @@
     {
       "fieldName": "eventPrice",
       "fieldType": "Long"
+    },
+    {
+      "fieldName": "eventName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "eventDescription",
+      "fieldType": "String"
     }
   ],
   "fluentMethods": true,

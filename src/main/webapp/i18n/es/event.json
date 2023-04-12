@@ -22,6 +22,8 @@
       "eventSatus": "Event Satus",
       "talTickets": "Tal Tickets",
       "eventPrice": "Event Price",
+      "eventName": "Event Name",
+      "eventDescription": "Event Description",
       "galery": "Galery",
       "artist": "Artist",
       "ticket": "Ticket",
