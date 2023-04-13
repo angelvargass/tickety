@@ -6,6 +6,7 @@ import { IEvent } from '../event.model';
 @Component({
   selector: 'jhi-event-detail',
   templateUrl: './event-detail.component.html',
+  styleUrls: ['./event-detail.component.scss'],
 })
 export class EventDetailComponent implements OnInit {
   event: IEvent | null = null;
@@ -16,6 +17,8 @@ export class EventDetailComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ event }) => {
       this.event = event;
     });
+
+    console.log(this.event);
   }
 
   previousState(): void {

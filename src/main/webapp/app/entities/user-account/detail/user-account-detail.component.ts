@@ -6,6 +6,7 @@ import { IUserAccount } from '../user-account.model';
 @Component({
   selector: 'jhi-user-account-detail',
   templateUrl: './user-account-detail.component.html',
+  styleUrls: ['./user-account-detail.component.scss'],
 })
 export class UserAccountDetailComponent implements OnInit {
   userAccount: IUserAccount | null = null;

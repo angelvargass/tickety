@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { delay, Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 
 import { EventFormService, EventFormGroup } from './event-form.service';
@@ -16,16 +16,22 @@ import { OrganizationService } from 'app/entities/organization/service/organizat
 import { IVenue } from 'app/entities/venue/venue.model';
 import { VenueService } from 'app/entities/venue/service/venue.service';
 import { EventSatus } from 'app/entities/enumerations/event-satus.model';
+import { AccountService } from '../../../core/auth/account.service';
+import { Account } from '../../../core/auth/account.model';
+import { UserService } from '../../user/user.service';
+import { PhotoModule } from '../../photo/photo.module';
 
 @Component({
   selector: 'jhi-event-update',
   templateUrl: './event-update.component.html',
+  styleUrls: ['./event-update.component.scss'],
 })
 export class EventUpdateComponent implements OnInit {
+  account: Account | null = null;
   isSaving = false;
   event: IEvent | null = null;
   eventSatusValues = Object.keys(EventSatus);
-
+  eventStatusCurrent = EventSatus;
   galeriesCollection: IGalery[] = [];
   userAccountsSharedCollection: IUserAccount[] = [];
   organizationsSharedCollection: IOrganization[] = [];
@@ -34,6 +40,9 @@ export class EventUpdateComponent implements OnInit {
   editForm: EventFormGroup = this.eventFormService.createEventFormGroup();
 
   constructor(
+    private router: Router,
+    protected userService: UserService,
+    protected accountService: AccountService,
     protected eventService: EventService,
     protected eventFormService: EventFormService,
     protected galeryService: GaleryService,
@@ -53,6 +62,13 @@ export class EventUpdateComponent implements OnInit {
   compareVenue = (o1: IVenue | null, o2: IVenue | null): boolean => this.venueService.compareVenue(o1, o2);
 
   ngOnInit(): void {
+    this.accountService.getAuthenticationState().subscribe(account => {
+      this.account = account;
+    });
+
+    const event = this.eventFormService.getEvent(this.editForm);
+    console.log(event);
+
     this.activatedRoute.data.subscribe(({ event }) => {
       this.event = event;
       if (event) {
@@ -70,11 +86,17 @@ export class EventUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const event = this.eventFormService.getEvent(this.editForm);
+    event.organization = this.account?.userAccount?.organization;
+    event.userAccount = this.account?.userAccount;
     if (event.id !== null) {
       this.subscribeToSaveResponse(this.eventService.update(event));
+      this.router.navigate([`event`]);
     } else {
+      event.eventSatus = this.eventStatusCurrent.OPEN;
       this.subscribeToSaveResponse(this.eventService.create(event));
+      this.router.navigate([`galery/new`]);
     }
+    this.isSaving = false;
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IEvent>>): void {
@@ -84,16 +106,15 @@ export class EventUpdateComponent implements OnInit {
     });
   }
 
-  protected onSaveSuccess(): void {
-    this.previousState();
-  }
+  protected onSaveSuccess(): void {}
 
   protected onSaveError(): void {
     // Api for inheritance.
   }
 
-  protected onSaveFinalize(): void {
+  protected onSaveFinalize(): boolean {
     this.isSaving = false;
+    return this.isSaving;
   }
 
   protected updateForm(event: IEvent): void {
@@ -102,8 +123,7 @@ export class EventUpdateComponent implements OnInit {
 
     this.galeriesCollection = this.galeryService.addGaleryToCollectionIfMissing<IGalery>(this.galeriesCollection, event.galery);
     this.userAccountsSharedCollection = this.userAccountService.addUserAccountToCollectionIfMissing<IUserAccount>(
-      this.userAccountsSharedCollection,
-      event.userAccount
+      this.userAccountsSharedCollection
     );
     this.organizationsSharedCollection = this.organizationService.addOrganizationToCollectionIfMissing<IOrganization>(
       this.organizationsSharedCollection,
@@ -122,11 +142,7 @@ export class EventUpdateComponent implements OnInit {
     this.userAccountService
       .query()
       .pipe(map((res: HttpResponse<IUserAccount[]>) => res.body ?? []))
-      .pipe(
-        map((userAccounts: IUserAccount[]) =>
-          this.userAccountService.addUserAccountToCollectionIfMissing<IUserAccount>(userAccounts, this.event?.userAccount)
-        )
-      )
+      .pipe(map((userAccounts: IUserAccount[]) => this.userAccountService.addUserAccountToCollectionIfMissing<IUserAccount>(userAccounts)))
       .subscribe((userAccounts: IUserAccount[]) => (this.userAccountsSharedCollection = userAccounts));
 
     this.organizationService
