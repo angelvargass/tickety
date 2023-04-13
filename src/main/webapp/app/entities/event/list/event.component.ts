@@ -16,6 +16,7 @@ import { Account } from '../../../core/auth/account.model';
 @Component({
   selector: '[jhi-event]',
   templateUrl: './event.component.html',
+  styleUrls: ['./event.component.scss'],
 })
 export class EventComponent implements OnInit {
   account: Account | null = null;

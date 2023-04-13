@@ -1,9 +1,7 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
+<div class="d-flex justify-content-center background-image color-letra">
+  <div class="col-8 fondo-blanco">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="jhi-galery-heading" data-cy="GaleryCreateUpdateHeading" jhiTranslate="ticketyApp.galery.home.createOrEditLabel">
-        Crear o editar Galery
-      </h2>
+      <h2 id="jhi-galery-heading" data-cy="GaleryCreateUpdateHeading">Crear o editar Galería</h2>
 
       <div>
         <jhi-alert-error></jhi-alert-error>
@@ -14,12 +12,12 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="ticketyApp.galery.name" for="field_name">Name</label>
+          <label class="form-label" for="field_name">Nombre</label>
           <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="ticketyApp.galery.status" for="field_status">Status</label>
+          <label class="form-label" for="field_status">Estado</label>
           <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
             <option [ngValue]="null">{{ 'ticketyApp.GaleryStatus.null' | translate }}</option>
             <option *ngFor="let galeryStatus of galeryStatusValues" [value]="galeryStatus">
@@ -30,7 +28,13 @@
       </div>
 
       <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+        <button
+          type="button"
+          id="cancel-save"
+          data-cy="entityCreateCancelButton"
+          class="btn btn-secondary fondo-rojo"
+          (click)="previousState()"
+        >
           <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
         </button>
 
@@ -39,7 +43,7 @@
           id="save-entity"
           data-cy="entityCreateSaveButton"
           [disabled]="editForm.invalid || isSaving"
-          [routerLink]="!isSaving ? '/photo/new' : '/photo/new'"
+          [routerLink]="onSaveFinalize() ? '/photo/new' : '/photo/new'"
           class="btn btn-primary"
         >
           <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>

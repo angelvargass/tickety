@@ -6,6 +6,7 @@ import { IOrganization } from '../organization.model';
 @Component({
   selector: 'jhi-organization-detail',
   templateUrl: './organization-detail.component.html',
+  styleUrls: ['./organization-detail.component.scss'],
 })
 export class OrganizationDetailComponent implements OnInit {
   organization: IOrganization | null = null;

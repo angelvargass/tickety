@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
@@ -12,6 +12,7 @@ import { GaleryStatus } from 'app/entities/enumerations/galery-status.model';
 @Component({
   selector: 'jhi-galery-update',
   templateUrl: './galery-update.component.html',
+  styleUrls: ['./galery-update.component.scss'],
 })
 export class GaleryUpdateComponent implements OnInit {
   isSaving = false;
@@ -21,6 +22,7 @@ export class GaleryUpdateComponent implements OnInit {
   editForm: GaleryFormGroup = this.galeryFormService.createGaleryFormGroup();
 
   constructor(
+    protected router: Router,
     protected galeryService: GaleryService,
     protected galeryFormService: GaleryFormService,
     protected activatedRoute: ActivatedRoute
@@ -47,6 +49,7 @@ export class GaleryUpdateComponent implements OnInit {
     } else {
       this.subscribeToSaveResponse(this.galeryService.create(galery));
     }
+    this.router.navigate([`photo/new`]);
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IGalery>>): void {
@@ -56,16 +59,15 @@ export class GaleryUpdateComponent implements OnInit {
     });
   }
 
-  protected onSaveSuccess(): void {
-    this.previousState();
-  }
+  protected onSaveSuccess(): void {}
 
   protected onSaveError(): void {
     // Api for inheritance.
   }
 
-  protected onSaveFinalize(): void {
+  protected onSaveFinalize(): boolean {
     this.isSaving = false;
+    return this.isSaving;
   }
 
   protected updateForm(galery: IGalery): void {

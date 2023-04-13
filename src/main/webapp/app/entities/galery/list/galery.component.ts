@@ -12,6 +12,7 @@ import { SortService } from 'app/shared/sort/sort.service';
 @Component({
   selector: 'jhi-galery',
   templateUrl: './galery.component.html',
+  styleUrls: ['./galery.component.scss'],
 })
 export class GaleryComponent implements OnInit {
   galeries?: IGalery[];

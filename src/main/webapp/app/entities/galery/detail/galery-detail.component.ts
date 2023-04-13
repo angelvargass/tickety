@@ -6,6 +6,7 @@ import { IGalery } from '../galery.model';
 @Component({
   selector: 'jhi-galery-detail',
   templateUrl: './galery-detail.component.html',
+  styleUrls: ['./galery-detail.component.scss'],
 })
 export class GaleryDetailComponent implements OnInit {
   galery: IGalery | null = null;

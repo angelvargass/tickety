@@ -6,8 +6,7 @@
         <strong>¡El inicio de sesión ha fallado!</strong> Por favor, revise las credenciales e intente de nuevo.
       </div>
       <form class="form" role="form" (ngSubmit)="login()" [formGroup]="loginForm">
-        <div class="mb-3">
-          <label class="username-label" for="username" jhiTranslate="global.form.username.label">Usuario</label>
+        <div class="mb-3" style="padding-top: 20px">
           <input
             type="text"
             class="form-control"
@@ -20,8 +19,7 @@
           />
         </div>
 
-        <div class="mb-3">
-          <label for="password" jhiTranslate="login.form.password">Contraseña</label>
+        <div class="mb-3" style="padding-top: 20px">
           <input
             type="password"
             class="form-control"

@@ -1,5 +1,5 @@
-<div>
-  <h2 id="page-heading" data-cy="EventHeading">
+<div class="background-image color-letra">
+  <h2 id="page-heading" data-cy="EventHeading" style="padding: 30px">
     <span>Eventos</span>
 
     <div class="d-flex justify-content-end">
@@ -29,7 +29,7 @@
   </div>
 
   <div class="table-responsive table-entities" id="entities" *ngIf="events && events.length > 0">
-    <table class="table table-striped" aria-describedby="page-heading">
+    <table class="table table-striped fondo-blanco" aria-describedby="page-heading" style="margin-top: 20px">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
           <th scope="col" jhiSortBy="id">

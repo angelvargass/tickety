@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { delay, Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 
@@ -19,10 +19,12 @@ import { EventSatus } from 'app/entities/enumerations/event-satus.model';
 import { AccountService } from '../../../core/auth/account.service';
 import { Account } from '../../../core/auth/account.model';
 import { UserService } from '../../user/user.service';
+import { PhotoModule } from '../../photo/photo.module';
 
 @Component({
   selector: 'jhi-event-update',
   templateUrl: './event-update.component.html',
+  styleUrls: ['./event-update.component.scss'],
 })
 export class EventUpdateComponent implements OnInit {
   account: Account | null = null;
@@ -38,6 +40,7 @@ export class EventUpdateComponent implements OnInit {
   editForm: EventFormGroup = this.eventFormService.createEventFormGroup();
 
   constructor(
+    private router: Router,
     protected userService: UserService,
     protected accountService: AccountService,
     protected eventService: EventService,
@@ -87,9 +90,12 @@ export class EventUpdateComponent implements OnInit {
     event.userAccount = this.account?.userAccount;
     if (event.id !== null) {
       this.subscribeToSaveResponse(this.eventService.update(event));
+      this.router.navigate([`event`]);
     } else {
       this.subscribeToSaveResponse(this.eventService.create(event));
+      this.router.navigate([`galery/new`]);
     }
+    this.isSaving = false;
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IEvent>>): void {
@@ -99,16 +105,15 @@ export class EventUpdateComponent implements OnInit {
     });
   }
 
-  protected onSaveSuccess(): void {
-    this.previousState();
-  }
+  protected onSaveSuccess(): void {}
 
   protected onSaveError(): void {
     // Api for inheritance.
   }
 
-  protected onSaveFinalize(): void {
+  protected onSaveFinalize(): boolean {
     this.isSaving = false;
+    return this.isSaving;
   }
 
   protected updateForm(event: IEvent): void {
