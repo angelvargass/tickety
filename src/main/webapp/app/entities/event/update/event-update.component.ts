@@ -31,7 +31,7 @@ export class EventUpdateComponent implements OnInit {
   isSaving = false;
   event: IEvent | null = null;
   eventSatusValues = Object.keys(EventSatus);
-
+  eventStatusCurrent = EventSatus;
   galeriesCollection: IGalery[] = [];
   userAccountsSharedCollection: IUserAccount[] = [];
   organizationsSharedCollection: IOrganization[] = [];
@@ -92,6 +92,7 @@ export class EventUpdateComponent implements OnInit {
       this.subscribeToSaveResponse(this.eventService.update(event));
       this.router.navigate([`event`]);
     } else {
+      event.eventSatus = this.eventStatusCurrent.OPEN;
       this.subscribeToSaveResponse(this.eventService.create(event));
       this.router.navigate([`galery/new`]);
     }

@@ -31,7 +31,7 @@
         <div class="row mb-3">
           <label class="form-label" for="field_eventSatus">Estado</label>
           <select class="form-control" name="eventSatus" formControlName="eventSatus" id="field_eventSatus" data-cy="eventSatus">
-            <option [ngValue]="null">{{ 'ticketyApp.EventSatus.null' | translate }}</option>
+            <option selected>OPEN</option>
             <option *ngFor="let eventSatus of eventSatusValues" [value]="eventSatus" [disabled]="editForm.controls.id.value === null">
               {{ 'ticketyApp.EventSatus.' + eventSatus | translate }}
             </option>
