@@ -12,6 +12,7 @@ import { SortService } from 'app/shared/sort/sort.service';
 @Component({
   selector: 'jhi-photo',
   templateUrl: './photo.component.html',
+  styleUrls: ['./photo.component.scss'],
 })
 export class PhotoComponent implements OnInit {
   photos?: IPhoto[];

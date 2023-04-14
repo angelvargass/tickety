@@ -1,9 +1,7 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
+<div class="d-flex justify-content-center background-image color-letra">
+  <div class="col-8 fondo-blanco">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="jhi-event-heading" data-cy="EventCreateUpdateHeading" jhiTranslate="ticketyApp.event.home.createOrEditLabel">
-        Crear o editar Event
-      </h2>
+      <h2 id="jhi-event-heading" data-cy="EventCreateUpdateHeading">Crear o editar Evento</h2>
 
       <div>
         <jhi-alert-error></jhi-alert-error>
@@ -14,7 +12,7 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="ticketyApp.event.date" for="field_date">Date</label>
+          <label class="form-label" for="field_date">Fecha</label>
           <div class="input-group">
             <input
               id="field_date"
@@ -31,17 +29,17 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="ticketyApp.event.eventSatus" for="field_eventSatus">Event Satus</label>
+          <label class="form-label" for="field_eventSatus">Estado</label>
           <select class="form-control" name="eventSatus" formControlName="eventSatus" id="field_eventSatus" data-cy="eventSatus">
-            <option [ngValue]="null">{{ 'ticketyApp.EventSatus.null' | translate }}</option>
-            <option *ngFor="let eventSatus of eventSatusValues" [value]="eventSatus">
+            <option selected>OPEN</option>
+            <option *ngFor="let eventSatus of eventSatusValues" [value]="eventSatus" [disabled]="editForm.controls.id.value === null">
               {{ 'ticketyApp.EventSatus.' + eventSatus | translate }}
             </option>
           </select>
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="ticketyApp.event.talTickets" for="field_talTickets">Tal Tickets</label>
+          <label class="form-label" for="field_talTickets">Tickets disponibles</label>
           <input
             type="number"
             class="form-control"
@@ -70,7 +68,7 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="ticketyApp.event.eventPrice" for="field_eventPrice">Event Price</label>
+          <label class="form-label" for="field_eventPrice">Precio de los tikects</label>
           <input
             type="number"
             class="form-control"
@@ -82,12 +80,12 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="ticketyApp.event.eventName" for="field_eventName">Event Name</label>
+          <label class="form-label" for="field_eventName">Nombre</label>
           <input type="text" class="form-control" name="eventName" id="field_eventName" data-cy="eventName" formControlName="eventName" />
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="ticketyApp.event.eventDescription" for="field_eventDescription">Event Description</label>
+          <label class="form-label" for="field_eventDescription">Descripción</label>
           <input
             type="text"
             class="form-control"
@@ -99,7 +97,7 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="ticketyApp.event.galery" for="field_galery">Galery</label>
+          <label class="form-label" for="field_galery">Galería de imágenes</label>
           <select
             class="form-control"
             id="field_galery"
@@ -114,7 +112,7 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="ticketyApp.event.venue" for="field_venue">Venue</label>
+          <label class="form-label" for="field_venue">Dirección</label>
           <select class="form-control" id="field_venue" data-cy="venue" name="venue" formControlName="venue" [compareWith]="compareVenue">
             <option [ngValue]="null"></option>
             <option [ngValue]="venueOption" *ngFor="let venueOption of venuesSharedCollection">{{ venueOption.id }}</option>
@@ -123,7 +121,13 @@
       </div>
 
       <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+        <button
+          type="button"
+          id="cancel-save"
+          data-cy="entityCreateCancelButton"
+          class="btn btn-secondary fondo-rojo"
+          (click)="previousState()"
+        >
           <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
         </button>
 

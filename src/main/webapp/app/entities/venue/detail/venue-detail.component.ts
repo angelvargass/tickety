@@ -6,6 +6,7 @@ import { IVenue } from '../venue.model';
 @Component({
   selector: 'jhi-venue-detail',
   templateUrl: './venue-detail.component.html',
+  styleUrls: ['./venue-detail.component.scss'],
 })
 export class VenueDetailComponent implements OnInit {
   venue: IVenue | null = null;
