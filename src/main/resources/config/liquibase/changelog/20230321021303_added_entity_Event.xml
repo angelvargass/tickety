@@ -23,6 +23,15 @@
             <column name="tal_tickets" type="integer">
                 <constraints nullable="true" />
             </column>
+            <column name="event_price" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="event_name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="event_description" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
             <column name="galery_id" type="bigint">
                 <constraints nullable="true" unique="true" uniqueConstraintName="ux_event__galery_id" />
             </column>
