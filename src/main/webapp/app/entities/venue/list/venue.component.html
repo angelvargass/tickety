@@ -38,15 +38,28 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+
+          <th scope="col" jhiSortBy="name">
+            <div class="d-flex">
+              <span>Nombre</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="description">
+            <div class="d-flex">
+              <span>Descripción</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col" jhiSortBy="address">
             <div class="d-flex">
-              <span jhiTranslate="ticketyApp.venue.address">Address</span>
+              <span>Address</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
           <th scope="col" jhiSortBy="capacity">
             <div class="d-flex">
-              <span jhiTranslate="ticketyApp.venue.capacity">Capacity</span>
+              <span>Capacity</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -58,6 +71,8 @@
           <td>
             <a [routerLink]="['/venue', venue.id, 'view']">{{ venue.id }}</a>
           </td>
+          <td>{{ venue.name }}</td>
+          <td>{{ venue.description }}</td>
           <td>{{ venue.address }}</td>
           <td>{{ venue.capacity }}</td>
           <td class="text-end">
