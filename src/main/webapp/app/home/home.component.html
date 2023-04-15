@@ -269,40 +269,104 @@
               <h2 class="section-heading text-uppercase">Contacto</h2>
               <h3 class="section-subheading text-muted">Envianos tu opinión</h3>
             </div>
-            <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+            <form id="contactForm" data-sb-form-api-token="API_TOKEN" [formGroup]="contactFormGroup">
               <div class="row align-items-stretch mb-5">
                 <div class="col-md-6">
                   <div class="form-group">
-                    <input class="form-control" id="name" type="text" placeholder="Your Name *" data-sb-validations="required" />
-                    <div class="invalid-feedback" data-sb-feedback="name:required">Nombre es requerido</div>
+                    <input
+                      formControlName="name"
+                      class="form-control"
+                      id="name"
+                      type="text"
+                      placeholder="Nombre *"
+                      data-sb-validations="required"
+                    />
+                    <div
+                      *ngIf="
+                        contactFormGroup.get('name')!.invalid &&
+                        (contactFormGroup.get('name')!.dirty || contactFormGroup.get('name')!.touched)
+                      "
+                    >
+                      <small class="form-text text-danger" *ngIf="contactFormGroup.get('name')?.errors?.required">
+                        Su nombre es obligatorio.
+                      </small>
+                    </div>
                   </div>
                   <div class="form-group">
-                    <input class="form-control" id="email" type="email" placeholder="Your Email *" data-sb-validations="required,email" />
-                    <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
-                    <div class="invalid-feedback" data-sb-feedback="email:email">El correo no es válido</div>
+                    <input
+                      formControlName="email"
+                      class="form-control"
+                      id="email"
+                      type="email"
+                      placeholder="Email *"
+                      data-sb-validations="required,email"
+                    />
+                    <div
+                      *ngIf="
+                        contactFormGroup.get('email')!.invalid &&
+                        (contactFormGroup.get('email')!.dirty || contactFormGroup.get('email')!.touched)
+                      "
+                    >
+                      <small class="form-text text-danger" *ngIf="contactFormGroup.get('email')?.errors?.required">
+                        Su email es obligatorio.
+                      </small>
+                    </div>
+
+                    <div
+                      *ngIf="
+                        contactFormGroup.get('email')!.invalid &&
+                        (contactFormGroup.get('email')!.dirty || contactFormGroup.get('email')!.touched)
+                      "
+                    >
+                      <small class="form-text text-danger" *ngIf="contactFormGroup.get('email')?.errors?.email">
+                        Ingrese un email válido.
+                      </small>
+                    </div>
                   </div>
                   <div class="form-group mb-md-0">
-                    <input class="form-control" id="phone" type="tel" placeholder="Your Phone *" data-sb-validations="required" />
-                    <div class="invalid-feedback" data-sb-feedback="phone:required">Teléfono es requerido</div>
+                    <input
+                      formControlName="phone"
+                      class="form-control"
+                      id="phone"
+                      type="tel"
+                      placeholder="Teléfono"
+                      data-sb-validations="required"
+                    />
                   </div>
                 </div>
                 <div class="col-md-6" style="padding-top: 30px">
                   <div class="form-group form-group-textarea mb-md-0">
-                    <textarea class="form-control" id="message" placeholder="Your Message *" data-sb-validations="required"></textarea>
-                    <div class="invalid-feedback" data-sb-feedback="message:required">Mensaje es requerido</div>
+                    <textarea
+                      formControlName="message"
+                      class="form-control"
+                      id="message"
+                      placeholder="Mensaje *"
+                      data-sb-validations="required"
+                    ></textarea>
+                    <div
+                      *ngIf="
+                        contactFormGroup.get('message')!.invalid &&
+                        (contactFormGroup.get('message')!.dirty || contactFormGroup.get('message')!.touched)
+                      "
+                    >
+                      <small class="form-text text-danger" *ngIf="contactFormGroup.get('message')?.errors?.required">
+                        Su mensaje es obligatorio.
+                      </small>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="d-none" id="submitSuccessMessage">
-                <div class="text-center text-white mb-3">
-                  <div class="fw-bolder">Enviado Correctamente</div>
-                  <br />
-                </div>
-              </div>
-              <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error al enviar el mensaje</div></div>
               <!-- Submit Button-->
               <div class="text-center">
-                <button class="btn btn-primary btn-xl text-uppercase boton" id="submitButton" type="submit">Enviar</button>
+                <button
+                  (click)="submitContactForm()"
+                  [disabled]="contactFormGroup.invalid"
+                  class="btn btn-primary btn-xl text-uppercase boton"
+                  id="submitButton"
+                  type="submit"
+                >
+                  Enviar
+                </button>
               </div>
             </form>
           </div>

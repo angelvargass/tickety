@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}" lang="en">
+  <head>
+    <title th:text="#{email.contact.info}">Contact information</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="icon" th:href="@{|${baseUrl}/favicon.ico|}" />
+  </head>
+  <body>
+    <p th:text="#{email.activation.greeting(${admin})}"></p>
+    <p th:text="#{email.contact.text1}"></p>
+    <p th:text="#{email.contact.from(${user})}"></p>
+    <p th:text="#{email.contact.email(${contacting_email})}"></p>
+    <p th:text="#{email.contact.message(${message})}"></p>
+  </body>
+</html>

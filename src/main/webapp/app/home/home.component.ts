@@ -5,6 +5,8 @@ import { takeUntil } from 'rxjs/operators';
 
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { HomeService } from './home.service';
 declare var $: any;
 
 @Component({
@@ -19,12 +21,19 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChildren('div[class*="carousel-inner"]') carouselInner!: ElementRef;
 
+  contactFormGroup = new FormGroup({
+    name: new FormControl({}, { validators: [Validators.required] }),
+    email: new FormControl({}, { validators: [Validators.required, Validators.email] }),
+    phone: new FormControl({}),
+    message: new FormControl({}, { validators: [Validators.required] }),
+  });
+
   carouselWidth: number = 0;
   cardWidth: number = 0;
   scrollPosition = 0;
   carouselItems: any[] = [];
 
-  constructor(private accountService: AccountService, private router: Router) {}
+  constructor(private accountService: AccountService, private router: Router, private homeService: HomeService) {}
 
   ngOnInit(): void {
     this.accountService
@@ -70,5 +79,12 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.scrollPosition -= this.cardWidth;
       $(`.carousel-inner${carouselNumber}`).animate({ scrollLeft: this.scrollPosition }, 600);
     }
+  }
+
+  submitContactForm() {
+    const contactFormModel = this.contactFormGroup.getRawValue();
+    this.homeService.sendContactForm(contactFormModel).subscribe(x => {
+      this.contactFormGroup.reset();
+    });
   }
 }

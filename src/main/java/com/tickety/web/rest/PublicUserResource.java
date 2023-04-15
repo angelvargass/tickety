@@ -1,7 +1,9 @@
 package com.tickety.web.rest;
 
+import com.tickety.service.MailService;
 import com.tickety.service.UserService;
 import com.tickety.service.dto.UserDTO;
+import com.tickety.web.rest.dto.ContactFormDTO;
 import java.util.*;
 import java.util.Collections;
 import org.slf4j.Logger;
@@ -27,9 +29,11 @@ public class PublicUserResource {
     private final Logger log = LoggerFactory.getLogger(PublicUserResource.class);
 
     private final UserService userService;
+    private final MailService mailService;
 
-    public PublicUserResource(UserService userService) {
+    public PublicUserResource(UserService userService, MailService mailService) {
         this.userService = userService;
+        this.mailService = mailService;
     }
 
     /**
@@ -61,5 +65,10 @@ public class PublicUserResource {
     @GetMapping("/authorities")
     public List<String> getAuthorities() {
         return userService.getAuthorities();
+    }
+
+    @PostMapping("/contact-info")
+    public void sendContactInfoEmail(@RequestBody ContactFormDTO contactFormDTO) {
+        this.mailService.sendContactInfoEmail(contactFormDTO);
     }
 }
