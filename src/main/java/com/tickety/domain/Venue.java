@@ -37,7 +37,7 @@ public class Venue implements Serializable {
     @Column(name = "coordinates")
     private String coordinates;
 
-    @Column(name = "photoUrl")
+    @Column(name = "photo_url")
     private String photoUrl;
 
     @Min(value = 0)
