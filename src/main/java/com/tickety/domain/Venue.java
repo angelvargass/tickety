@@ -25,8 +25,20 @@ public class Venue implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "description")
+    private String description;
+
     @Column(name = "address")
     private String address;
+
+    @Column(name = "coordinates")
+    private String coordinates;
+
+    @Column(name = "photoUrl")
+    private String photoUrl;
 
     @Min(value = 0)
     @Column(name = "capacity")
@@ -110,6 +122,38 @@ public class Venue implements Serializable {
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(String coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
 
     @Override
     public boolean equals(Object o) {

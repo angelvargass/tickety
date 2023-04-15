@@ -18,7 +18,11 @@ type VenueFormDefaults = Pick<NewVenue, 'id'>;
 
 type VenueFormGroupContent = {
   id: FormControl<IVenue['id'] | NewVenue['id']>;
+  name: FormControl<IVenue['name']>;
+  description: FormControl<IVenue['description']>;
   address: FormControl<IVenue['address']>;
+  coordinates: FormControl<IVenue['coordinates']>;
+  photoUrl: FormControl<IVenue['photoUrl']>;
   capacity: FormControl<IVenue['capacity']>;
 };
 
@@ -39,9 +43,19 @@ export class VenueFormService {
           validators: [Validators.required],
         }
       ),
-      address: new FormControl(venueRawValue.address),
+      name: new FormControl(venueRawValue.name, {
+        validators: [Validators.required, Validators.min(2)],
+      }),
+      description: new FormControl(venueRawValue.description, {
+        validators: [Validators.required],
+      }),
+      address: new FormControl(venueRawValue.address, {
+        validators: [Validators.required],
+      }),
+      coordinates: new FormControl(venueRawValue.coordinates),
+      photoUrl: new FormControl(venueRawValue.description),
       capacity: new FormControl(venueRawValue.capacity, {
-        validators: [Validators.min(0)],
+        validators: [Validators.required, Validators.min(0)],
       }),
     });
   }
