@@ -123,7 +123,7 @@
             </span>
           </a>
           <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="account-menu">
-            <li *ngSwitchCase="true">
+            <li *ngIf="!accountService.hasAnyAuthority(['ROLE_ADMIN'])">
               <a
                 class="dropdown-item"
                 routerLink="user-account/{{ account?.id }}/edit"
@@ -135,7 +135,7 @@
                 <span>Perfil</span>
               </a>
             </li>
-            <li *ngSwitchCase="true">
+            <li *ngIf="!accountService.hasAnyAuthority(['ROLE_ADMIN'])">
               <a
                 class="dropdown-item"
                 routerLink="organization/new"
