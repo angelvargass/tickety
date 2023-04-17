@@ -68,6 +68,9 @@
             <column name="date" type="date"/>
             <column name="event_satus" type="string"/>
             <column name="tal_tickets" type="numeric"/>
+            <column name="event_price" type="numeric"/>
+            <column name="event_name" type="string"/>
+            <column name="event_description" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>
