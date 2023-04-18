@@ -10,6 +10,8 @@ import { IEvent } from '../entities/event/event.model';
 import { IGalery } from '../entities/galery/galery.model';
 import { IPhoto } from '../entities/photo/photo.model';
 
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { HomeService } from './home.service';
 declare var $: any;
 
 @Component({
@@ -24,12 +26,24 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChildren('div[class*="carousel-inner"]') carouselInner!: ElementRef;
 
+  contactFormGroup = new FormGroup({
+    name: new FormControl({}, { validators: [Validators.required] }),
+    email: new FormControl({}, { validators: [Validators.required, Validators.email] }),
+    phone: new FormControl({}),
+    message: new FormControl({}, { validators: [Validators.required] }),
+  });
+
   carouselWidth: number = 0;
   cardWidth: number = 0;
   scrollPosition = 0;
   carouselItems: IEvent[] = [];
 
-  constructor(private accountService: AccountService, private router: Router, private eventService: EventService) {}
+  constructor(
+    private accountService: AccountService,
+    private router: Router,
+    private eventService: EventService,
+    private homeService: HomeService
+  ) {}
 
   ngOnInit(): void {
     this.accountService
@@ -91,5 +105,12 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.scrollPosition -= this.cardWidth;
       $(`.carousel-inner${carouselNumber}`).animate({ scrollLeft: this.scrollPosition }, 600);
     }
+  }
+
+  submitContactForm() {
+    const contactFormModel = this.contactFormGroup.getRawValue();
+    this.homeService.sendContactForm(contactFormModel).subscribe(x => {
+      this.contactFormGroup.reset();
+    });
   }
 }
