@@ -29,7 +29,7 @@ export class NavbarComponent implements OnInit {
     private loginService: LoginService,
     private translateService: TranslateService,
     private sessionStorageService: SessionStorageService,
-    private accountService: AccountService,
+    protected accountService: AccountService,
     private profileService: ProfileService,
     private router: Router
   ) {
