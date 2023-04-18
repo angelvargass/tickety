@@ -25,6 +25,13 @@ import { RouterModule } from '@angular/router';
           pageTitle: 'contact.home.title',
         },
       },
+      {
+        path: 'venue',
+        loadChildren: () => import('../entities/venue/venue.module').then(m => m.VenueModule),
+        data: {
+          pageTitle: 'venue.home.title',
+        },
+      },
     ]),
   ],
 })

@@ -42,8 +42,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
       next: account => {
         this.authenticationError = false;
         if (!this.router.getCurrentNavigation()) {
-          // There were no routing during login (eg from navigationToStoredUrl)
-          this.router.navigate([`user-account/${account?.userAccount?.id}/edit`]);
+          if (!account?.userAccount) {
+            this.router.navigate(['/']);
+          } else {
+            this.router.navigate([`user-account/${account?.userAccount?.id}/edit`]);
+          }
         }
       },
       error: () => (this.authenticationError = true),
