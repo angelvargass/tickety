@@ -10,6 +10,8 @@ import { TicketService } from '../service/ticket.service';
 import { IEvent } from 'app/entities/event/event.model';
 import { EventService } from 'app/entities/event/service/event.service';
 import { TicketStatus } from 'app/entities/enumerations/ticket-status.model';
+import { IUserAccount } from '../../user-account/user-account.model';
+import { UserAccountService } from '../../user-account/service/user-account.service';
 
 @Component({
   selector: 'jhi-ticket-update',
@@ -20,6 +22,7 @@ export class TicketUpdateComponent implements OnInit {
   ticket: ITicket | null = null;
   ticketStatusValues = Object.keys(TicketStatus);
 
+  userAccountsCollection: IUserAccount[] = [];
   eventsSharedCollection: IEvent[] = [];
 
   editForm: TicketFormGroup = this.ticketFormService.createTicketFormGroup();
@@ -27,9 +30,12 @@ export class TicketUpdateComponent implements OnInit {
   constructor(
     protected ticketService: TicketService,
     protected ticketFormService: TicketFormService,
+    protected userAccountService: UserAccountService,
     protected eventService: EventService,
     protected activatedRoute: ActivatedRoute
   ) {}
+
+  compareUserAccount = (o1: IUserAccount | null, o2: IUserAccount | null): boolean => this.userAccountService.compareUserAccount(o1, o2);
 
   compareEvent = (o1: IEvent | null, o2: IEvent | null): boolean => this.eventService.compareEvent(o1, o2);
 
@@ -81,10 +87,24 @@ export class TicketUpdateComponent implements OnInit {
     this.ticket = ticket;
     this.ticketFormService.resetForm(this.editForm, ticket);
 
+    this.userAccountsCollection = this.userAccountService.addUserAccountToCollectionIfMissing<IUserAccount>(
+      this.userAccountsCollection,
+      ticket.userAccount
+    );
     this.eventsSharedCollection = this.eventService.addEventToCollectionIfMissing<IEvent>(this.eventsSharedCollection, ticket.event);
   }
 
   protected loadRelationshipsOptions(): void {
+    this.userAccountService
+      .query({ filter: 'ticket-is-null' })
+      .pipe(map((res: HttpResponse<IUserAccount[]>) => res.body ?? []))
+      .pipe(
+        map((userAccounts: IUserAccount[]) =>
+          this.userAccountService.addUserAccountToCollectionIfMissing<IUserAccount>(userAccounts, this.ticket?.userAccount)
+        )
+      )
+      .subscribe((userAccounts: IUserAccount[]) => (this.userAccountsCollection = userAccounts));
+
     this.eventService
       .query()
       .pipe(map((res: HttpResponse<IEvent[]>) => res.body ?? []))

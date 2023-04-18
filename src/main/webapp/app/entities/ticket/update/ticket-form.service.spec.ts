@@ -22,6 +22,10 @@ describe('Ticket Form Service', () => {
             id: expect.any(Object),
             date: expect.any(Object),
             ticketStatus: expect.any(Object),
+            payment: expect.any(Object),
+            amount: expect.any(Object),
+            seat: expect.any(Object),
+            userAccount: expect.any(Object),
             event: expect.any(Object),
           })
         );
@@ -35,6 +39,10 @@ describe('Ticket Form Service', () => {
             id: expect.any(Object),
             date: expect.any(Object),
             ticketStatus: expect.any(Object),
+            payment: expect.any(Object),
+            amount: expect.any(Object),
+            seat: expect.any(Object),
+            userAccount: expect.any(Object),
             event: expect.any(Object),
           })
         );

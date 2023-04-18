@@ -45,7 +45,7 @@ public class Ticket implements Serializable {
     @JoinColumn(name = "USER_ACCOUNT_ID", unique = true)
     private UserAccount userAccount;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnoreProperties(value = { "galery", "artists", "tickets", "userAccount", "organization", "venue" }, allowSetters = true)
     private Event event;
 

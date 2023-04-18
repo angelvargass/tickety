@@ -31,6 +31,38 @@
         </div>
 
         <div class="row mb-3">
+          <label class="form-label" jhiTranslate="ticketyApp.ticket.payment" for="field_payment">Payment</label>
+          <input type="text" class="form-control" name="payment" id="field_payment" data-cy="payment" formControlName="payment" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="ticketyApp.ticket.amount" for="field_amount">Amount</label>
+          <input type="number" class="form-control" name="amount" id="field_amount" data-cy="amount" formControlName="amount" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="ticketyApp.ticket.seat" for="field_seat">Seat</label>
+          <input type="text" class="form-control" name="seat" id="field_seat" data-cy="seat" formControlName="seat" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="ticketyApp.ticket.userAccount" for="field_userAccount">User Account</label>
+          <select
+            class="form-control"
+            id="field_userAccount"
+            data-cy="userAccount"
+            name="userAccount"
+            formControlName="userAccount"
+            [compareWith]="compareUserAccount"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="userAccountOption" *ngFor="let userAccountOption of userAccountsCollection">
+              {{ userAccountOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
           <label class="form-label" jhiTranslate="ticketyApp.ticket.ticketStatus" for="field_ticketStatus">Ticket Status</label>
           <select class="form-control" name="ticketStatus" formControlName="ticketStatus" id="field_ticketStatus" data-cy="ticketStatus">
             <option [ngValue]="null">{{ 'ticketyApp.TicketStatus.null' | translate }}</option>

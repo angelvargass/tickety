@@ -58,7 +58,7 @@ public class Event implements Serializable {
     @JsonIgnoreProperties(value = { "genres", "event" }, allowSetters = true)
     private Set<Artist> artists = new HashSet<>();
 
-    @OneToMany(mappedBy = "event", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "event", cascade = CascadeType.REMOVE)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "event" }, allowSetters = true)
     private Set<Ticket> tickets = new HashSet<>();
