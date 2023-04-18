@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { IEvent } from '../event.model';
-import { IPhoto } from '../../photo/photo.model';
 import { IGalery } from '../../galery/galery.model';
+import { IPhoto } from '../../photo/photo.model';
 
 @Component({
   selector: 'jhi-event-detail',
@@ -22,7 +22,9 @@ export class EventDetailComponent implements OnInit {
       this.galery = <IGalery>this.event?.galery;
     });
 
-    console.log(this.galery?.photos);
+    const myPhotos = <IPhoto[]>(<unknown>this.galery?.photos);
+    this.event!.showCase = myPhotos[0].url;
+    console.log(this.event?.showCase);
   }
 
   previousState(): void {

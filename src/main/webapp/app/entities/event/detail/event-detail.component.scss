@@ -1,10 +1,5 @@
-.image-event-bg {
-  background-image: url('../../../../content/images/m4-bacground-unsplash.jpg');
+.bg-separator {
   height: 140px;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
 }
 
 .background-image {
@@ -17,10 +12,6 @@
 
 .fondo-blanco {
   background-color: #20262e;
-  padding: 25px;
-  margin: 50px;
-  border-radius: 15px;
-  margin-bottom: 100px;
 }
 
 .color-letra {
@@ -45,4 +36,25 @@
 .fondo-rojo {
   background-color: #bb2d3b;
   border-color: #bb2d3b;
+}
+
+.img-responsive {
+  width: 100%;
+  height: 100%;
+}
+.event-img-container {
+  box-shadow: 5px 5px 5px 2px rgba(0.3, 0, 0.3, 0.3);
+  position: relative;
+}
+
+.event-details-containet {
+  width: 100%;
+  height: 62%;
+  box-shadow: 5px 5px 5px 2px rgba(0.3, 0, 0.3, 0.3);
+}
+
+.btn-event {
+  transform: translate(-120px, 400px);
+  position: absolute;
+  width: 100px;
 }

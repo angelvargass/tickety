@@ -1,80 +1,53 @@
-<div class="image-event-bg"></div>
-
+<div class="background-image bg-separator"></div>
 <div class="d-flex justify-content-center background-image color-letra">
-  <div class="col-8 fondo-blanco">
-    <div *ngIf="event">
-      <h2 data-cy="eventDetailsHeading">
-        <span>Evento {{ event.eventName }}</span>
-      </h2>
+  <div class="container fondo-blanco">
+    <div class="row">
+      <div class="col-md-12 mt-4 mb-4">
+        <div *ngIf="event" class="row">
+          <jhi-alert-error></jhi-alert-error>
 
-      <hr />
+          <jhi-alert></jhi-alert>
 
-      <jhi-alert-error></jhi-alert-error>
-
-      <jhi-alert></jhi-alert>
-
-      <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="global.field.id">ID</span></dt>
-        <dd>
-          <span>{{ event.id }}</span>
-        </dd>
-        <dt><span>Fecha</span></dt>
-        <dd>
-          <span>{{ event.date | formatMediumDate }}</span>
-        </dd>
-        <dt><span>Estado</span></dt>
-        <dd>
-          <span jhiTranslate="{{ 'ticketyApp.EventSatus.' + event.eventSatus }}">{{ event.eventSatus }}</span>
-        </dd>
-        <dt><span>Tickets disponibles</span></dt>
-        <dd>
-          <span>{{ event.talTickets }}</span>
-        </dd>
-        <dt><span>Nombre</span></dt>
-        <dd>
-          <span>{{ event.eventName }}</span>
-        </dd>
-        <dt><span>Descripción</span></dt>
-        <dd>
-          <span>{{ event.eventDescription }}</span>
-        </dd>
-        <dt><span>Galería</span></dt>
-        <dd>
-          <div *ngIf="event.galery">
-            <a class="color-letra" [routerLink]="['/galery', event.galery.id, 'view']">{{ event.galery.id }}</a>
+          <div class="col-md-8 event-img-container">
+            <img src="{{ event.showCase }}" alt="Paris" class="img-responsive" />
+            <button type="button" [routerLink]="['/event', event.id, 'edit']" class="btn btn-sm btn-outline-danger btn-event">
+              <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+            </button>
           </div>
-        </dd>
-        <dt><span>Cuenta</span></dt>
-        <dd>
-          <div *ngIf="event.userAccount">
-            <a class="color-letra" [routerLink]="['/user-account', event.userAccount.id, 'view']">{{ event.userAccount.id }}</a>
-          </div>
-        </dd>
-        <dt><span>Organización</span></dt>
-        <dd>
-          <div *ngIf="event.organization">
-            <a class="color-letra" [routerLink]="['/organization', event.organization.id, 'view']">{{ event.organization.id }}</a>
-          </div>
-        </dd>
-        <dt><span>Dirección</span></dt>
-        <dd>
-          <div *ngIf="event.venue">
-            <a class="color-letra" [routerLink]="['/venue', event.venue.id, 'view']">{{ event.venue.id }}</a>
-          </div>
-        </dd>
-      </dl>
 
-      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
-      </button>
-
-      <button type="button" [routerLink]="['/event', event.id, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
-      </button>
-
-      <button type="button" [routerLink]="['/ticket/new']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.buy">Comprar Entrada</span>
-      </button>
+          <div class="col-md-4">
+            <div class="row m-lg-5">
+              <div class="col-md-12 mb-2">
+                <button [routerLink]="['/ticket/new']" type="button" class="btn btn-block btn-info btn-lg ml-2 mt-4">
+                  Comprar Entrada
+                </button>
+              </div>
+            </div>
+            <div class="event-details-containet">
+              <dl class="col-xs-1 m-lg-5">
+                <dt><span>Nombre</span></dt>
+                <dd>
+                  <span>{{ event.eventName }}</span>
+                </dd>
+                <hr class="hr" />
+                <dt><span>Descripción</span></dt>
+                <dd>
+                  <span>{{ event.eventDescription }}</span>
+                </dd>
+                <dt><span>Fecha</span></dt>
+                <dd>
+                  <span>{{ event.date | formatMediumDate }}</span>
+                </dd>
+                <dt><span>Tickets disponibles</span></dt>
+                <dd>
+                  <span>{{ event.talTickets }}</span>
+                </dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+<div class="background-image bg-separator"></div>
