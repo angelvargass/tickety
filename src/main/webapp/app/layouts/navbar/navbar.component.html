@@ -1,4 +1,4 @@
-<nav data-cy="navbar" class="navbar navbar-dark navbar-expand-md bg-dark">
+<nav #navBardiv data-cy="navbar" class="navbar navbar-dark navbar-expand-md fixed-top bg-dark" (scroll)="onScroll()">
   <div class="container-fluid">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
       <span class="logo-img"></span>

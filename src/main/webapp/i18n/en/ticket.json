@@ -20,6 +20,10 @@
       "id": "ID",
       "date": "Date",
       "ticketStatus": "Ticket Status",
+      "payment": "Payment",
+      "amount": "Amount",
+      "seat": "Seat",
+      "userAccount": "User Account",
       "event": "Event"
     }
   }

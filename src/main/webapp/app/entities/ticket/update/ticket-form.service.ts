@@ -20,6 +20,10 @@ type TicketFormGroupContent = {
   id: FormControl<ITicket['id'] | NewTicket['id']>;
   date: FormControl<ITicket['date']>;
   ticketStatus: FormControl<ITicket['ticketStatus']>;
+  payment: FormControl<ITicket['payment']>;
+  amount: FormControl<ITicket['amount']>;
+  seat: FormControl<ITicket['seat']>;
+  userAccount: FormControl<ITicket['userAccount']>;
   event: FormControl<ITicket['event']>;
 };
 
@@ -42,6 +46,10 @@ export class TicketFormService {
       ),
       date: new FormControl(ticketRawValue.date),
       ticketStatus: new FormControl(ticketRawValue.ticketStatus),
+      payment: new FormControl(ticketRawValue.payment),
+      amount: new FormControl(ticketRawValue.amount),
+      seat: new FormControl(ticketRawValue.seat),
+      userAccount: new FormControl(ticketRawValue.userAccount),
       event: new FormControl(ticketRawValue.event),
     });
   }
