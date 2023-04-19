@@ -33,7 +33,7 @@ public class Galery implements Serializable {
     @Column(name = "status")
     private GaleryStatus status;
 
-    @OneToMany(mappedBy = "galery", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "galery", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "galery" }, allowSetters = true)
     private Set<Photo> photos = new HashSet<>();
