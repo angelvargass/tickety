@@ -88,13 +88,13 @@
 
         <li class="nav-item" display="dynamic" *ngIf="!account">
           <a class="nav-link btn-primary" routerLink="login" href="javascript:void(0);">
-            <span>Iniciar sesión</span>
+            <span style="font-weight: bold">Iniciar sesión</span>
           </a>
         </li>
 
         <li class="nav-item" display="dynamic" *ngIf="!account">
           <a class="nav-link" routerLink="account/register" href="javascript:void(0);">
-            <fa-icon icon="user"></fa-icon>
+            <span style="font-weight: bold">Crear cuenta</span>
           </a>
         </li>
 
@@ -139,6 +139,12 @@
                 <span>Crear organización</span>
               </a>
             </li>
+            <li *ngIf="accountService.hasAnyAuthority(['ROLE_ADMIN'])">
+              <a class="dropdown-item" routerLink="admin/dashboard" routerLinkActive="active" (click)="collapseNavbar()" data-cy="settings">
+                <fa-icon icon="wrench" [fixedWidth]="true"></fa-icon>
+                <span>Administrador</span>
+              </a>
+            </li>
             <li *ngSwitchCase="true">
               <a
                 class="dropdown-item"
@@ -153,8 +159,8 @@
             </li>
             <li *ngSwitchCase="true">
               <a class="dropdown-item" (click)="logout()" id="logout" data-cy="logout">
-                <fa-icon icon="sign-out-alt" [fixedWidth]="true"></fa-icon>
-                <span jhiTranslate="global.menu.account.logout">Cerrar la sesión</span>
+                <fa-icon icon="arrow-right-to-bracket" [fixedWidth]="true"></fa-icon>
+                <span>Cerrar sesión</span>
               </a>
             </li>
             <li *ngSwitchCase="false">
