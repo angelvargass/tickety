@@ -35,9 +35,14 @@
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
         >
-          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu" data-cy="adminMenu">
+          <a
+            class="nav-link btn btn-primary dropdown-toggle"
+            ngbDropdownToggle
+            href="javascript:void(0);"
+            id="admin-menu"
+            data-cy="adminMenu"
+          >
             <span>
-              <fa-icon icon="users-cog"></fa-icon>
               <span jhiTranslate="global.menu.admin.main">Administración</span>
             </span>
           </a>
@@ -109,7 +114,7 @@
           *ngIf="account"
         >
           <a
-            class="nav-link btn-primary dropdown-toggle"
+            class="nav-link btn btn-primary dropdown-toggle"
             ngbDropdownToggle
             href="javascript:void(0);"
             id="account-menu"
