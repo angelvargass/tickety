@@ -135,7 +135,7 @@
                 <span>Perfil</span>
               </a>
             </li>
-            <li *ngIf="!accountService.hasAnyAuthority(['ROLE_ADMIN'])">
+            <li *ngIf="!accountService.hasAnyAuthority(['ROLE_ORGANIZATION']) && !accountService.hasAnyAuthority(['ROLE_ADMIN'])">
               <a
                 class="dropdown-item"
                 routerLink="organization/new"
@@ -147,12 +147,14 @@
                 <span>Crear organización</span>
               </a>
             </li>
-            <li *ngSwitchCase="true">
-              <a class="dropdown-item" routerLink="event/new" routerLinkActive="active" (click)="collapseNavbar()" data-cy="settings">
-                <fa-icon icon="wrench" [fixedWidth]="true"></fa-icon>
-                <span>Crear evento</span>
-              </a>
-            </li>
+            <div *jhiHasAnyAuthority="'ROLE_ORGANIZATION'">
+              <li *ngSwitchCase="true">
+                <a class="dropdown-item" routerLink="event/new" routerLinkActive="active" (click)="collapseNavbar()" data-cy="settings">
+                  <fa-icon icon="wrench" [fixedWidth]="true"></fa-icon>
+                  <span>Crear evento</span>
+                </a>
+              </li>
+            </div>
             <li *ngSwitchCase="true">
               <a
                 class="dropdown-item"

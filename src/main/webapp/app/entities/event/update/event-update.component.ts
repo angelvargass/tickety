@@ -95,7 +95,6 @@ export class EventUpdateComponent implements OnInit {
       event.eventSatus = this.eventStatusCurrent.OPEN;
       this.subscribeToSaveResponse(this.eventService.create(event));
     }
-    this.isSaving = false;
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IEvent>>): void {
