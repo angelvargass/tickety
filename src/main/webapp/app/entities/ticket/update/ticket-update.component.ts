@@ -12,10 +12,13 @@ import { EventService } from 'app/entities/event/service/event.service';
 import { TicketStatus } from 'app/entities/enumerations/ticket-status.model';
 import { IUserAccount } from '../../user-account/user-account.model';
 import { UserAccountService } from '../../user-account/service/user-account.service';
+import { AccountService } from '../../../core/auth/account.service';
+import { Account } from '../../../core/auth/account.model';
 
 @Component({
   selector: 'jhi-ticket-update',
   templateUrl: './ticket-update.component.html',
+  styleUrls: ['./ticket-update.component.scss'],
 })
 export class TicketUpdateComponent implements OnInit {
   isSaving = false;
@@ -26,13 +29,15 @@ export class TicketUpdateComponent implements OnInit {
   eventsSharedCollection: IEvent[] = [];
 
   editForm: TicketFormGroup = this.ticketFormService.createTicketFormGroup();
+  currentAccount: Account | null = null;
 
   constructor(
     protected ticketService: TicketService,
     protected ticketFormService: TicketFormService,
     protected userAccountService: UserAccountService,
     protected eventService: EventService,
-    protected activatedRoute: ActivatedRoute
+    protected activatedRoute: ActivatedRoute,
+    protected accountService: AccountService
   ) {}
 
   compareUserAccount = (o1: IUserAccount | null, o2: IUserAccount | null): boolean => this.userAccountService.compareUserAccount(o1, o2);
@@ -40,6 +45,10 @@ export class TicketUpdateComponent implements OnInit {
   compareEvent = (o1: IEvent | null, o2: IEvent | null): boolean => this.eventService.compareEvent(o1, o2);
 
   ngOnInit(): void {
+    this.accountService.getAuthenticationState().subscribe(account => {
+      this.currentAccount = account;
+    });
+
     this.activatedRoute.data.subscribe(({ ticket }) => {
       this.ticket = ticket;
       if (ticket) {
@@ -48,6 +57,8 @@ export class TicketUpdateComponent implements OnInit {
 
       this.loadRelationshipsOptions();
     });
+
+    console.log(this.currentAccount);
   }
 
   previousState(): void {
@@ -57,6 +68,8 @@ export class TicketUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const ticket = this.ticketFormService.getTicket(this.editForm);
+    ticket.userAccount = this.currentAccount?.userAccount;
+
     if (ticket.id !== null) {
       this.subscribeToSaveResponse(this.ticketService.update(ticket));
     } else {

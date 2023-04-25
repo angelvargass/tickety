@@ -1,3 +1,4 @@
+<div class="background-image bg-separator"></div>
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
@@ -34,6 +35,12 @@
           <label class="form-label" jhiTranslate="ticketyApp.ticket.payment" for="field_payment">Payment</label>
           <input type="text" class="form-control" name="payment" id="field_payment" data-cy="payment" formControlName="payment" />
         </div>
+        <div class="row mb-3">
+          <label class="form-label" for="field_cuantity">Cantidad</label>
+          <i class="bi bi-plus-circle">+</i>
+          <i class="bi bi-dash-circle">-</i>
+          <input type="number" class="form-control" name="amount" id="field_cuantity" data-cy="cuantity" formControlName="cuantity" />
+        </div>
 
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="ticketyApp.ticket.amount" for="field_amount">Amount</label>
@@ -43,23 +50,6 @@
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="ticketyApp.ticket.seat" for="field_seat">Seat</label>
           <input type="text" class="form-control" name="seat" id="field_seat" data-cy="seat" formControlName="seat" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="ticketyApp.ticket.userAccount" for="field_userAccount">User Account</label>
-          <select
-            class="form-control"
-            id="field_userAccount"
-            data-cy="userAccount"
-            name="userAccount"
-            formControlName="userAccount"
-            [compareWith]="compareUserAccount"
-          >
-            <option [ngValue]="null"></option>
-            <option [ngValue]="userAccountOption" *ngFor="let userAccountOption of userAccountsCollection">
-              {{ userAccountOption.id }}
-            </option>
-          </select>
         </div>
 
         <div class="row mb-3">
