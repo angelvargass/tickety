@@ -71,7 +71,6 @@ export class RegisterComponent implements AfterViewInit, OnInit {
   getQueryParams(): void {
     this.route.queryParams.subscribe(params => {
       this.organizationInviteId = params['org_invitation'];
-      console.log(this.organizationInviteId);
     });
   }
 
