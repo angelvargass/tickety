@@ -31,6 +31,8 @@ export class TicketUpdateComponent implements OnInit {
   editForm: TicketFormGroup = this.ticketFormService.createTicketFormGroup();
   currentAccount: Account | null = null;
 
+  ticketCount = 0;
+
   constructor(
     protected ticketService: TicketService,
     protected ticketFormService: TicketFormService,
@@ -54,11 +56,8 @@ export class TicketUpdateComponent implements OnInit {
       if (ticket) {
         this.updateForm(ticket);
       }
-
       this.loadRelationshipsOptions();
     });
-
-    console.log(this.currentAccount);
   }
 
   previousState(): void {
@@ -123,5 +122,15 @@ export class TicketUpdateComponent implements OnInit {
       .pipe(map((res: HttpResponse<IEvent[]>) => res.body ?? []))
       .pipe(map((events: IEvent[]) => this.eventService.addEventToCollectionIfMissing<IEvent>(events, this.ticket?.event)))
       .subscribe((events: IEvent[]) => (this.eventsSharedCollection = events));
+  }
+
+  addticket(): void {
+    this.ticketCount = this.ticketCount + 1;
+  }
+
+  subtractticket(): void {
+    if (this.ticketCount >= 1) {
+      this.ticketCount = this.ticketCount - 1;
+    }
   }
 }

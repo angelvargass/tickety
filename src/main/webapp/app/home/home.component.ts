@@ -46,8 +46,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.carouselItems);
-
     this.accountService
       .getAuthenticationState()
       .pipe(takeUntil(this.destroy$))

@@ -36,10 +36,10 @@
           <input type="text" class="form-control" name="payment" id="field_payment" data-cy="payment" formControlName="payment" />
         </div>
         <div class="row mb-3">
-          <label class="form-label" for="field_cuantity">Cantidad</label>
-          <i class="bi bi-plus-circle">+</i>
-          <i class="bi bi-dash-circle">-</i>
-          <input type="number" class="form-control" name="amount" id="field_cuantity" data-cy="cuantity" formControlName="cuantity" />
+          <label class="form-label">Cantidad</label>
+          <fa-icon class="fa-2x" icon="circle-plus" (click)="addticket()"></fa-icon>
+          <fa-icon class="fa-2x" icon="circle-minus" (click)="subtractticket()"></fa-icon>
+          <span>{{ ticketCount }}</span>
         </div>
 
         <div class="row mb-3">

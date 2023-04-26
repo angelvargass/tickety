@@ -41,8 +41,8 @@ public class Ticket implements Serializable {
     private String seat;
 
     @JsonIgnoreProperties(value = { "events", "roles", "ticket", "organization" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "USER_ACCOUNT_ID", unique = true)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "USER_ACCOUNT_ID")
     private UserAccount userAccount;
 
     @ManyToOne(fetch = FetchType.EAGER)
