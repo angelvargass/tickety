@@ -1,9 +1,8 @@
-<nav #navBardiv data-cy="navbar" class="navbar navbar-dark navbar-expand-md fixed-top bg-dark" (scroll)="onScroll()">
+<nav data-cy="navbar" class="navbar navbar-dark navbar-expand-md navbar-bg-color">
   <div class="container-fluid">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
       <span class="logo-img"></span>
       <span jhiTranslate="global.title" class="navbar-title">Tickety</span>
-      <span class="navbar-version">{{ version }}</span>
     </a>
     <a
       class="navbar-toggler d-lg-none"
@@ -22,81 +21,20 @@
         <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           <a class="nav-link" routerLink="/" (click)="collapseNavbar()">
             <span>
-              <span>Inicio</span>
+              <span style="font-weight: bold">Inicio</span>
             </span>
           </a>
         </li>
         <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-        <li
-          *jhiHasAnyAuthority="'ROLE_ADMIN'"
-          ngbDropdown
-          class="nav-item dropdown pointer"
-          display="dynamic"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-        >
-          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu" data-cy="adminMenu">
-            <span>
-              <fa-icon icon="users-cog"></fa-icon>
-              <span jhiTranslate="global.menu.admin.main">Administración</span>
-            </span>
-          </a>
-          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="admin-menu">
-            <li>
-              <a class="dropdown-item" routerLink="admin/user-management" routerLinkActive="active" (click)="collapseNavbar()">
-                <fa-icon icon="users" [fixedWidth]="true"></fa-icon>
-                <span jhiTranslate="global.menu.admin.userManagement">Gestión de usuarios</span>
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" routerLink="admin/metrics" routerLinkActive="active" (click)="collapseNavbar()">
-                <fa-icon icon="tachometer-alt" [fixedWidth]="true"></fa-icon>
-                <span jhiTranslate="global.menu.admin.metrics">Métricas</span>
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" routerLink="admin/health" routerLinkActive="active" (click)="collapseNavbar()">
-                <fa-icon icon="heart" [fixedWidth]="true"></fa-icon>
-                <span jhiTranslate="global.menu.admin.health">Salud</span>
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" routerLink="admin/configuration" routerLinkActive="active" (click)="collapseNavbar()">
-                <fa-icon icon="cogs" [fixedWidth]="true"></fa-icon>
-                <span jhiTranslate="global.menu.admin.configuration">Configuración</span>
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" routerLink="admin/logs" routerLinkActive="active" (click)="collapseNavbar()">
-                <fa-icon icon="tasks" [fixedWidth]="true"></fa-icon>
-                <span jhiTranslate="global.menu.admin.logs">Logs</span>
-              </a>
-            </li>
-            <li *ngIf="openAPIEnabled">
-              <a class="dropdown-item" routerLink="admin/docs" routerLinkActive="active" (click)="collapseNavbar()">
-                <fa-icon icon="book" [fixedWidth]="true"></fa-icon>
-                <span jhiTranslate="global.menu.admin.apidocs">API</span>
-              </a>
-            </li>
-            <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
-            <li *ngIf="!inProduction">
-              <a class="dropdown-item" href="./h2-console/" target="_tab" (click)="collapseNavbar()">
-                <fa-icon icon="database" [fixedWidth]="true"></fa-icon>
-                <span jhiTranslate="global.menu.admin.database">Base de datos</span>
-              </a>
-            </li>
-          </ul>
-        </li>
-
         <li class="nav-item" display="dynamic" *ngIf="!account">
           <a class="nav-link btn-primary" routerLink="login" href="javascript:void(0);">
-            <span>Iniciar sesión</span>
+            <span style="font-weight: bold">Iniciar sesión</span>
           </a>
         </li>
 
         <li class="nav-item" display="dynamic" *ngIf="!account">
-          <a class="nav-link btn-primary" routerLink="account/register" href="javascript:void(0);">
-            <span>Crear cuenta</span>
+          <a class="nav-link" routerLink="account/register" href="javascript:void(0);">
+            <span style="font-weight: bold">Crear cuenta</span>
           </a>
         </li>
 
@@ -108,15 +46,9 @@
           [routerLinkActiveOptions]="{ exact: true }"
           *ngIf="account"
         >
-          <a
-            class="nav-link btn-primary dropdown-toggle"
-            ngbDropdownToggle
-            href="javascript:void(0);"
-            id="account-menu"
-            data-cy="accountMenu"
-          >
+          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu" data-cy="accountMenu">
             <span *ngIf="!account?.imageUrl">
-              <span jhiTranslate="global.menu.account.main">Cuenta</span>
+              <fa-icon icon="user"></fa-icon>
             </span>
             <span *ngIf="account?.imageUrl">
               <img [src]="account!.imageUrl" class="profile-image rounded-circle" alt="Avatar" />
@@ -147,6 +79,12 @@
                 <span>Crear organización</span>
               </a>
             </li>
+            <li *ngIf="accountService.hasAnyAuthority(['ROLE_ADMIN'])">
+              <a class="dropdown-item" routerLink="admin/dashboard" routerLinkActive="active" (click)="collapseNavbar()" data-cy="settings">
+                <fa-icon icon="wrench" [fixedWidth]="true"></fa-icon>
+                <span>Administrador</span>
+              </a>
+            </li>
             <div *jhiHasAnyAuthority="'ROLE_ORGANIZATION'">
               <li *ngSwitchCase="true">
                 <a class="dropdown-item" routerLink="event/new" routerLinkActive="active" (click)="collapseNavbar()" data-cy="settings">
@@ -169,8 +107,8 @@
             </li>
             <li *ngSwitchCase="true">
               <a class="dropdown-item" (click)="logout()" id="logout" data-cy="logout">
-                <fa-icon icon="sign-out-alt" [fixedWidth]="true"></fa-icon>
-                <span jhiTranslate="global.menu.account.logout">Cerrar la sesión</span>
+                <fa-icon icon="arrow-right-to-bracket" [fixedWidth]="true"></fa-icon>
+                <span>Cerrar sesión</span>
               </a>
             </li>
             <li *ngSwitchCase="false">

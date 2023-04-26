@@ -1,52 +1,44 @@
-<div>
-  <h2>
-    <span id="user-management-page-heading" jhiTranslate="userManagement.home.title" data-cy="userManagementPageHeading">Usuarios</span>
-
-    <div class="d-flex justify-content-end">
-      <button class="btn btn-info me-2" (click)="loadAll()" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="userManagement.home.refreshListLabel">Refrescar lista</span>
-      </button>
-      <button class="btn btn-primary jh-create-entity" [routerLink]="['./new']">
-        <fa-icon icon="plus"></fa-icon> <span>Crear un nuevo usuario administrador</span>
-      </button>
-    </div>
+<div style="margin-top: 3%">
+  <h2 style="margin-left: 10%; font-weight: bold">
+    <span>Usuarios</span>
   </h2>
 
-  <jhi-alert-error></jhi-alert-error>
+  <div class="d-flex justify-content-end">
+    <button class="btn btn-info me-2" (click)="loadAll()" [disabled]="isLoading">
+      <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+    </button>
 
-  <jhi-alert></jhi-alert>
+    <button class="btn btn-primary" [routerLink]="['./new']">
+      <span>Registrar usuario administrador</span>
+    </button>
+  </div>
 
-  <div class="table-responsive" *ngIf="users">
-    <table class="table table-striped" aria-describedby="user-management-page-heading">
+  <div class="table-responsive tickety-table" *ngIf="users">
+    <table class="table table-hover">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="transition()">
-          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="login"><span jhiTranslate="userManagement.login">Login</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="email"><span jhiTranslate="userManagement.email">Email</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col"></th>
-          <th scope="col" jhiSortBy="langKey"><span jhiTranslate="userManagement.langKey">Idioma</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col"><span jhiTranslate="userManagement.profiles">Perfiles</span></th>
-          <th scope="col" jhiSortBy="createdDate">
-            <span jhiTranslate="userManagement.createdDate">Fecha de creación</span> <fa-icon icon="sort"></fa-icon>
+          <th class="text-center" scope="col" jhiSortBy="login">
+            <span>Nombre de usuario</span>
+            <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="lastModifiedBy">
-            <span jhiTranslate="userManagement.lastModifiedBy">Modificado por</span> <fa-icon icon="sort"></fa-icon>
+          <th class="text-center" scope="col" jhiSortBy="email">
+            <span>Correo electrónico</span>
+            <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="lastModifiedDate">
-            <span jhiTranslate="userManagement.lastModifiedDate">Fecha de modificación</span> <fa-icon icon="sort"></fa-icon>
+          <th class="text-center" scope="col">Estatus</th>
+          <th class="text-center" scope="col"><span>Roles</span></th>
+          <th class="text-center" scope="col" jhiSortBy="createdDate">
+            <span>Fecha de creación</span>
+            <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col"></th>
+          <th class="text-center" scope="col">Acción</th>
         </tr>
       </thead>
       <tbody *ngIf="users">
         <tr *ngFor="let user of users; trackBy: trackIdentity">
-          <td>
-            <a [routerLink]="['./', user.login, 'view']">{{ user.id }}</a>
-          </td>
-          <td>{{ user.login }}</td>
-          <td>{{ user.email }}</td>
-          <td>
+          <td class="text-center">{{ user.login }}</td>
+          <td class="text-center">{{ user.email }}</td>
+          <td class="text-center">
             <button
               class="btn btn-danger btn-sm"
               (click)="setActive(user, true)"
@@ -56,36 +48,23 @@
               Desactivado
             </button>
             <button
+              style="border-radius: 30px"
               class="btn btn-success btn-sm"
               (click)="setActive(user, false)"
               *ngIf="user.activated"
               [disabled]="!currentAccount || currentAccount.login === user.login"
-              jhiTranslate="userManagement.activated"
             >
               Activado
             </button>
           </td>
-          <td>{{ user.langKey }}</td>
-          <td>
+          <td class="text-center">
             <div *ngFor="let authority of user.authorities">
-              <span class="badge bg-info">{{ authority }}</span>
+              <span style="border-radius: 30px" class="badge bg-info">{{ authority }}</span>
             </div>
           </td>
-          <td>{{ user.createdDate | date: 'dd/MM/yy HH:mm' }}</td>
-          <td>{{ user.lastModifiedBy }}</td>
-          <td>{{ user.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</td>
-          <td class="text-end">
+          <td class="text-center">{{ user.createdDate | date: 'dd/MM/yy' }}</td>
+          <td class="text-center">
             <div class="btn-group">
-              <button type="submit" [routerLink]="['./', user.login, 'view']" class="btn btn-info btn-sm">
-                <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
-              </button>
-
-              <button type="submit" [routerLink]="['./', user.login, 'edit']" queryParamsHandling="merge" class="btn btn-primary btn-sm">
-                <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
-              </button>
-
               <button
                 type="button"
                 (click)="deleteUser(user)"
@@ -93,7 +72,7 @@
                 [disabled]="!currentAccount || currentAccount.login === user.login"
               >
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span>
+                <span class="d-none d-md-inline"></span>
               </button>
             </div>
           </td>
