@@ -14,6 +14,7 @@ import { IUserAccount } from '../../user-account/user-account.model';
 import { UserAccountService } from '../../user-account/service/user-account.service';
 import { AccountService } from '../../../core/auth/account.service';
 import { Account } from '../../../core/auth/account.model';
+import { DataService } from '../../../shared/data/data.service';
 
 @Component({
   selector: 'jhi-ticket-update',
@@ -32,6 +33,7 @@ export class TicketUpdateComponent implements OnInit {
   currentAccount: Account | null = null;
 
   ticketCount = 0;
+  currentPrice: number | null | undefined = null;
 
   constructor(
     protected ticketService: TicketService,
@@ -39,7 +41,8 @@ export class TicketUpdateComponent implements OnInit {
     protected userAccountService: UserAccountService,
     protected eventService: EventService,
     protected activatedRoute: ActivatedRoute,
-    protected accountService: AccountService
+    protected accountService: AccountService,
+    protected dataService: DataService
   ) {}
 
   compareUserAccount = (o1: IUserAccount | null, o2: IUserAccount | null): boolean => this.userAccountService.compareUserAccount(o1, o2);
@@ -47,6 +50,8 @@ export class TicketUpdateComponent implements OnInit {
   compareEvent = (o1: IEvent | null, o2: IEvent | null): boolean => this.eventService.compareEvent(o1, o2);
 
   ngOnInit(): void {
+    this.dataService.currentprice.subscribe(price => (this.currentPrice = price));
+
     this.accountService.getAuthenticationState().subscribe(account => {
       this.currentAccount = account;
     });
@@ -58,6 +63,8 @@ export class TicketUpdateComponent implements OnInit {
       }
       this.loadRelationshipsOptions();
     });
+
+    console.log(this.currentPrice);
   }
 
   previousState(): void {

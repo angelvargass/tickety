@@ -1,15 +1,18 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { IEvent } from '../../entities/event/event.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class DataService {
-  private eventSource = new BehaviorSubject<IEvent | null>(null);
-  currentEvent = this.eventSource.asObservable();
+  private priceSource = new BehaviorSubject<number>(0);
+  currentprice = this.priceSource.asObservable();
 
   constructor() {}
 
-  updateCurrentEvent(event: IEvent | null) {
-    this.eventSource.next(event);
+  changePrice(price: number | null | undefined) {
+    if (price != null) {
+      this.priceSource.next(price);
+    }
   }
 }
