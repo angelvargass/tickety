@@ -79,7 +79,7 @@
         <div class="container h-50">
           <div class="row d-flex align-items-center h-100">
             <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-              <div class="card bg-dark" style="color: white; border-radius: 15px; margin: 2% 0 0 30%; width: 100%">
+              <div class="card bg-dark" style="color: white; border-radius: 15px; margin: 5% 0 0 30%; width: 100%">
                 <div class="card-body p-5">
                   <h2 class="text-center mb-5">Editar perfil</h2>
 
@@ -87,6 +87,7 @@
 
                   <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
                     <div formGroupName="user" class="mb-3">
+                      <label class="form-label" for="nombre">Nombre</label>
                       <input
                         type="text"
                         class="form-control"
@@ -123,6 +124,7 @@
                     </div>
 
                     <div formGroupName="user" class="mb-3">
+                      <label class="form-label" for="apellido">Apellido</label>
                       <input
                         type="text"
                         class="form-control"
@@ -159,6 +161,7 @@
                     </div>
 
                     <div class="mb-3">
+                      <label class="form-label" for="field_genderu">Género</label>
                       <select class="form-control" name="genderu" formControlName="genderu" id="field_genderu" data-cy="genderu">
                         <option [ngValue]="null">{{ null }}</option>
                         <option *ngFor="let gender of genderValues" [value]="gender">{{ gender }}</option>
