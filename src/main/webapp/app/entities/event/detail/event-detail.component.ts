@@ -28,7 +28,6 @@ export class EventDetailComponent implements OnInit {
 
     const myPhotos = <IPhoto[]>(<unknown>this.galery?.photos);
     this.event!.showCase = myPhotos[0].url;
-    console.log(this.event?.showCase);
   }
 
   previousState(): void {

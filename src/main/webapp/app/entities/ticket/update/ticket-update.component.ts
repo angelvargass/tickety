@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 
 import { TicketFormService, TicketFormGroup } from './ticket-form.service';
@@ -15,6 +14,8 @@ import { UserAccountService } from '../../user-account/service/user-account.serv
 import { AccountService } from '../../../core/auth/account.service';
 import { Account } from '../../../core/auth/account.model';
 import { DataService } from '../../../shared/data/data.service';
+import { NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'jhi-ticket-update',
@@ -42,7 +43,8 @@ export class TicketUpdateComponent implements OnInit {
     protected eventService: EventService,
     protected activatedRoute: ActivatedRoute,
     protected accountService: AccountService,
-    protected dataService: DataService
+    protected dataService: DataService,
+    protected calendar: NgbCalendar
   ) {}
 
   compareUserAccount = (o1: IUserAccount | null, o2: IUserAccount | null): boolean => this.userAccountService.compareUserAccount(o1, o2);
@@ -63,8 +65,6 @@ export class TicketUpdateComponent implements OnInit {
       }
       this.loadRelationshipsOptions();
     });
-
-    console.log(this.currentPrice);
   }
 
   previousState(): void {
@@ -73,13 +73,18 @@ export class TicketUpdateComponent implements OnInit {
 
   save(): void {
     this.isSaving = true;
+    const tickets: any[] = [];
     const ticket = this.ticketFormService.getTicket(this.editForm);
-    ticket.userAccount = this.currentAccount?.userAccount;
 
+    for (let i = 0; i < this.ticketCount; i++) {
+      tickets.push(ticket);
+    }
+
+    ticket.userAccount = this.currentAccount?.userAccount;
     if (ticket.id !== null) {
       this.subscribeToSaveResponse(this.ticketService.update(ticket));
     } else {
-      this.subscribeToSaveResponse(this.ticketService.create(ticket));
+      this.subscribeToSaveResponse(this.ticketService.create(tickets));
     }
   }
 
@@ -133,11 +138,17 @@ export class TicketUpdateComponent implements OnInit {
 
   addticket(): void {
     this.ticketCount = this.ticketCount + 1;
+    this.editForm.controls.amount.setValue((this.currentPrice || 0) * this.ticketCount);
   }
 
   subtractticket(): void {
     if (this.ticketCount >= 1) {
       this.ticketCount = this.ticketCount - 1;
+      this.editForm.controls.amount.setValue((this.currentPrice || 0) * this.ticketCount);
     }
+  }
+
+  delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 }
