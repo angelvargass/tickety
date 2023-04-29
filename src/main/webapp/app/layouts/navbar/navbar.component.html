@@ -67,18 +67,6 @@
                 <span>Perfil</span>
               </a>
             </li>
-            <li *ngIf="!accountService.hasAnyAuthority(['ROLE_ADMIN'])">
-              <a
-                class="dropdown-item"
-                routerLink="organization/new"
-                routerLinkActive="active"
-                (click)="collapseNavbar()"
-                data-cy="settings"
-              >
-                <fa-icon icon="wrench" [fixedWidth]="true"></fa-icon>
-                <span>Crear organización</span>
-              </a>
-            </li>
             <li *ngIf="accountService.hasAnyAuthority(['ROLE_ADMIN'])">
               <a class="dropdown-item" routerLink="admin/dashboard" routerLinkActive="active" (click)="collapseNavbar()" data-cy="settings">
                 <fa-icon icon="wrench" [fixedWidth]="true"></fa-icon>
