@@ -127,6 +127,7 @@ public class AccountResource {
         }
 
         Optional<UserAccount> userAccount = userAccountRepository.findByUser(user.get());
+        userAccount.get().getUser().getAuthorities();
         AdminUserAccountDTO adminUserAccountDTO = new AdminUserAccountDTO(user.get());
         adminUserAccountDTO.setUserAccount(userAccount.orElse(null));
         return adminUserAccountDTO;
