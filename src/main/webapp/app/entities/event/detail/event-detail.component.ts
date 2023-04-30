@@ -5,6 +5,9 @@ import { IEvent } from '../event.model';
 import { IGalery } from '../../galery/galery.model';
 import { IPhoto } from '../../photo/photo.model';
 import { DataService } from '../../../shared/data/data.service';
+import { MatDialog } from '@angular/material/dialog';
+
+import { TicketUpdateComponent } from '../../ticket/update/ticket-update.component';
 
 @Component({
   selector: 'jhi-event-detail',
@@ -16,7 +19,7 @@ export class EventDetailComponent implements OnInit {
   galery: IGalery | null = null;
   currentPrice: number | null | undefined = null;
 
-  constructor(protected activatedRoute: ActivatedRoute, protected dataService: DataService) {}
+  constructor(protected activatedRoute: ActivatedRoute, protected dataService: DataService, protected matDialog: MatDialog) {}
 
   ngOnInit(): void {
     this.dataService.currentprice.subscribe(price => (this.currentPrice = price));
@@ -36,5 +39,18 @@ export class EventDetailComponent implements OnInit {
 
   setTicketPrice(): void {
     this.dataService.changePrice(this.event?.eventPrice);
+    this.openModal();
+  }
+
+  openModal(): void {
+    console.log(this.event);
+
+    this.matDialog.open(TicketUpdateComponent, {
+      width: '330px',
+      height: '400px',
+      data: {
+        event: this.event,
+      },
+    });
   }
 }
