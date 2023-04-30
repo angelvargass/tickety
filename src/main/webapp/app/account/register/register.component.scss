@@ -1,3 +1,27 @@
-.bg-primary {
-  background-color: #20262e !important;
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+}
+.wrapper .image-holder {
+  width: 69.9%;
+}
+.wrapper .form-inner {
+  width: 30.1%;
+}
+
+.image-holder {
+  background-image: url('../../../content/images/concert6.jpg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: unset !important;
+  line-height: unset !important;
 }

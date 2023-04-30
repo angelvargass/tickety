@@ -42,8 +42,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
       next: account => {
         this.authenticationError = false;
         if (!this.router.getCurrentNavigation()) {
-          if (!account?.userAccount) {
-            this.router.navigate(['/']);
+          if (this.accountService.hasAnyAuthority('ROLE_ADMIN')) {
+            this.router.navigate(['/admin/dashboard']);
           } else {
             this.router.navigate([`user-account/${account?.userAccount?.id}/edit`]);
           }
