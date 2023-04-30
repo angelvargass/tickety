@@ -46,8 +46,8 @@ export class EventDetailComponent implements OnInit {
     console.log(this.event);
 
     this.matDialog.open(TicketUpdateComponent, {
-      width: '330px',
-      height: '400px',
+      width: '400px',
+      height: '280px',
       data: {
         event: this.event,
       },

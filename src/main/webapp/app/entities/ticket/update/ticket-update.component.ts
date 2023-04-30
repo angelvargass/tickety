@@ -76,7 +76,7 @@ export class TicketUpdateComponent implements OnInit {
   }
 
   previousState(): void {
-    window.history.back();
+    //window.history.back();
   }
 
   save(): void {
