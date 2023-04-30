@@ -66,15 +66,11 @@ export class EventUpdateComponent implements OnInit {
       this.account = account;
     });
 
-    const event = this.eventFormService.getEvent(this.editForm);
-    console.log(event);
-
     this.activatedRoute.data.subscribe(({ event }) => {
       this.event = event;
       if (event) {
         this.updateForm(event);
       }
-
       this.loadRelationshipsOptions();
     });
   }

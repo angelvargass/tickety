@@ -3,7 +3,7 @@ import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { finalize, map } from 'rxjs/operators';
 
-import { TicketFormService, TicketFormGroup } from './ticket-form.service';
+import { TicketFormGroup, TicketFormService } from './ticket-form.service';
 import { ITicket } from '../ticket.model';
 import { TicketService } from '../service/ticket.service';
 import { IEvent } from 'app/entities/event/event.model';
@@ -64,6 +64,8 @@ export class TicketUpdateComponent implements OnInit {
       this.currentAccount = account;
     });
 
+    this.eventService.find(this.data.event.id).subscribe(event => (this.parentEvent = <IEvent>(<unknown>event.body)));
+
     this.activatedRoute.data.subscribe(({ ticket }) => {
       this.ticket = ticket;
       if (ticket) {
@@ -81,11 +83,9 @@ export class TicketUpdateComponent implements OnInit {
     this.isSaving = true;
     const tickets: any[] = [];
     const ticket = this.ticketFormService.getTicket(this.editForm);
-    this.eventService.find(this.data.event.id).subscribe(event => {
-      this.parentEvent = event;
-    });
-
-    this.eventService.find(this.data.event.id);
+    ticket.event = this.parentEvent;
+    ticket.ticketStatus = TicketStatus.SOLD;
+    ticket.amount = this.currentPrice;
 
     for (let i = 0; i < this.ticketCount; i++) {
       tickets.push(ticket);
@@ -149,14 +149,12 @@ export class TicketUpdateComponent implements OnInit {
 
   addticket(): void {
     this.ticketCount = this.ticketCount + 1;
-    this.editForm.controls.amount.setValue((this.currentPrice || 0) * this.ticketCount);
     this.totalPay = (this.currentPrice || 0) * this.ticketCount;
   }
 
   subtractticket(): void {
     if (this.ticketCount >= 1) {
       this.ticketCount = this.ticketCount - 1;
-      this.editForm.controls.amount.setValue((this.currentPrice || 0) * this.ticketCount);
       this.totalPay = (this.currentPrice || 0) * this.ticketCount;
     }
   }
