@@ -13,7 +13,6 @@ import { SortByDirective } from './sort/sort-by.directive';
 import { SortDirective } from './sort/sort.directive';
 import { ItemCountComponent } from './pagination/item-count.component';
 import { FilterComponent } from './filter/filter.component';
-import { ModalTicketsComponent } from './modal-tickets/modal-tickets.component';
 
 @NgModule({
   imports: [SharedLibsModule],
@@ -30,7 +29,6 @@ import { ModalTicketsComponent } from './modal-tickets/modal-tickets.component';
     SortDirective,
     ItemCountComponent,
     FilterComponent,
-    ModalTicketsComponent,
   ],
   exports: [
     SharedLibsModule,
@@ -46,7 +44,6 @@ import { ModalTicketsComponent } from './modal-tickets/modal-tickets.component';
     SortDirective,
     ItemCountComponent,
     FilterComponent,
-    ModalTicketsComponent,
   ],
 })
 export class SharedModule {}
