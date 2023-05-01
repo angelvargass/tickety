@@ -58,7 +58,7 @@
             <li *ngIf="!accountService.hasAnyAuthority(['ROLE_ADMIN'])">
               <a
                 class="dropdown-item"
-                routerLink="user-account/{{ account?.id }}/edit"
+                routerLink="user-account/{{ account.id }}/edit"
                 routerLinkActive="active"
                 (click)="collapseNavbar()"
                 data-cy="settings"
