@@ -12,6 +12,7 @@ import { OrganizationService } from 'app/entities/organization/service/organizat
 import { Gender } from 'app/entities/enumerations/gender.model';
 import { AccountService } from '../../../core/auth/account.service';
 import { Authority } from '../../../config/authority.constants';
+import { LoginService } from '../../../login/login.service';
 
 @Component({
   selector: 'jhi-user-account-update',
@@ -40,7 +41,8 @@ export class UserAccountUpdateComponent implements OnInit {
     protected organizationService: OrganizationService,
     protected activatedRoute: ActivatedRoute,
     private router: Router,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private loginService: LoginService
   ) {}
 
   compareOrganization = (o1: IOrganization | null, o2: IOrganization | null): boolean =>
@@ -147,5 +149,10 @@ export class UserAccountUpdateComponent implements OnInit {
 
   userHasOnlyPromoterRole(): boolean | undefined {
     return this.userAuthorities?.includes(Authority.PROMOTER) && this.userAuthorities?.length === 2;
+  }
+
+  logout(): void {
+    this.loginService.logout();
+    this.router.navigate(['']);
   }
 }

@@ -21,7 +21,7 @@
         <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           <a class="nav-link" routerLink="/" (click)="collapseNavbar()">
             <span>
-              <span style="font-weight: bold">Inicio</span>
+              <span style="font-weight: bold; color: white">Inicio</span>
             </span>
           </a>
         </li>
@@ -46,7 +46,14 @@
           [routerLinkActiveOptions]="{ exact: true }"
           *ngIf="account"
         >
-          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu" data-cy="accountMenu">
+          <a
+            style="color: white"
+            class="nav-link dropdown-toggle"
+            ngbDropdownToggle
+            href="javascript:void(0);"
+            id="account-menu"
+            data-cy="accountMenu"
+          >
             <span *ngIf="!account?.imageUrl">
               <fa-icon icon="user"></fa-icon>
             </span>

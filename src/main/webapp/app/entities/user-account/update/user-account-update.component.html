@@ -1,7 +1,10 @@
-<div class="container-fluid">
+<div class="container-fluid bg-dark">
   <div class="row flex-nowrap">
     <!-- DISPLAY NAVBAR BASED ON USER AUTHORITY -->
-    <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px; height: 80vh">
+    <div
+      class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark"
+      style="border: 1px solid gray !important; width: 280px; height: 80vh"
+    >
       <hr />
       <ul *ngIf="userHasOnlyUserRole()" class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
@@ -42,6 +45,13 @@
           <a routerLink="/account/password" class="nav-link text-light">
             <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
             Cambiar contraseña
+          </a>
+        </li>
+
+        <li>
+          <a (click)="logout()" class="nav-link text-light">
+            <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+            Cerrar sesión
           </a>
         </li>
       </ul>
@@ -97,6 +107,13 @@
             Cambiar contraseña
           </a>
         </li>
+
+        <li>
+          <a (click)="logout()" class="nav-link text-light">
+            <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+            Cerrar sesión
+          </a>
+        </li>
       </ul>
 
       <hr />
@@ -107,7 +124,7 @@
         <div class="container h-50">
           <div class="row d-flex align-items-center h-100">
             <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-              <div class="card bg-dark" style="color: white; border-radius: 15px; margin: 5% 0 0 30%; width: 100%">
+              <div class="bg-dark" style="color: white; margin: 5% 0 -30 30%; width: 100%">
                 <div class="card-body p-5">
                   <h2 class="text-center mb-5">Editar perfil</h2>
 
