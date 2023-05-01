@@ -67,7 +67,7 @@
                 <span>Perfil</span>
               </a>
             </li>
-            <li *ngIf="!accountService.hasAnyAuthority(['ROLE_ORGANIZATION']) && !accountService.hasAnyAuthority(['ROLE_ADMIN'])">
+            <li *ngIf="!accountService.hasAnyAuthority(['ROLE_ADMIN']) && !accountService.hasAnyAuthority(['ROLE_ORGANIZATION'])">
               <a
                 class="dropdown-item"
                 routerLink="organization/new"
@@ -85,7 +85,14 @@
                 <span>Administrador</span>
               </a>
             </li>
-            <div *jhiHasAnyAuthority="'ROLE_ORGANIZATION'">
+            <div
+              *ngIf="
+                accountService.hasAnyAuthority('ROLE_ORGANIZATION') ||
+                (accountService.hasAnyAuthority(['ROLE_USER']) &&
+                  !accountService.hasAnyAuthority(['ROLE_ADMIN']) &&
+                  !accountService.hasAnyAuthority(['ROLE_USER']))
+              "
+            >
               <li *ngSwitchCase="true">
                 <a class="dropdown-item" routerLink="event/new" routerLinkActive="active" (click)="collapseNavbar()" data-cy="settings">
                   <fa-icon icon="wrench" [fixedWidth]="true"></fa-icon>

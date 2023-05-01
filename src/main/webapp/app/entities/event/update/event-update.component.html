@@ -28,10 +28,9 @@
           </div>
         </div>
 
-        <div class="row mb-3">
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
           <label class="form-label" for="field_eventSatus">Estado</label>
           <select class="form-control" name="eventSatus" formControlName="eventSatus" id="field_eventSatus" data-cy="eventSatus">
-            <option selected>OPEN</option>
             <option *ngFor="let eventSatus of eventSatusValues" [value]="eventSatus" [disabled]="editForm.controls.id.value === null">
               {{ 'ticketyApp.EventSatus.' + eventSatus | translate }}
             </option>
@@ -96,7 +95,7 @@
           />
         </div>
 
-        <div class="row mb-3">
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
           <label class="form-label" for="field_galery">Galería de imágenes</label>
           <select
             class="form-control"
@@ -107,7 +106,7 @@
             [compareWith]="compareGalery"
           >
             <option [ngValue]="null"></option>
-            <option [ngValue]="galeryOption" *ngFor="let galeryOption of galeriesCollection">{{ galeryOption.id }}</option>
+            <option [ngValue]="galeryOption" *ngFor="let galeryOption of galeriesCollection">{{ galeryOption.name }}</option>
           </select>
         </div>
 
@@ -131,13 +130,7 @@
           <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
         </button>
 
-        <button
-          type="submit"
-          id="save-entity"
-          data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
-        >
+        <button type="submit" id="save-entity" data-cy="entityCreateSaveButton" class="btn btn-primary">
           <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>
         </button>
       </div>

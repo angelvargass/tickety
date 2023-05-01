@@ -20,6 +20,7 @@ import { AccountService } from '../../../core/auth/account.service';
 import { Account } from '../../../core/auth/account.model';
 import { UserService } from '../../user/user.service';
 import { PhotoModule } from '../../photo/photo.module';
+import { GaleryUpdateComponent } from '../../galery/update/galery-update.component';
 
 @Component({
   selector: 'jhi-event-update',
@@ -94,6 +95,7 @@ export class EventUpdateComponent implements OnInit {
     } else {
       event.eventSatus = this.eventStatusCurrent.OPEN;
       this.subscribeToSaveResponse(this.eventService.create(event));
+      this.router.navigate([`galery/new`]);
     }
   }
 
