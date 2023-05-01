@@ -43,14 +43,14 @@ public class CacheConfiguration {
     @Bean
     public JCacheManagerCustomizer cacheManagerCustomizer() {
         return cm -> {
-            createCache(cm, com.tickety.repository.UserRepository.USERS_BY_LOGIN_CACHE);
-            createCache(cm, com.tickety.repository.UserRepository.USERS_BY_EMAIL_CACHE);
-            createCache(cm, com.tickety.domain.User.class.getName());
-            createCache(cm, com.tickety.domain.Authority.class.getName());
-            createCache(cm, com.tickety.domain.User.class.getName() + ".authorities");
-            createCache(cm, com.tickety.domain.UserAccount.class.getName());
-            createCache(cm, com.tickety.domain.UserAccount.class.getName() + ".events");
-            createCache(cm, com.tickety.domain.UserAccount.class.getName() + ".roles");
+            //createCache(cm, com.tickety.repository.UserRepository.USERS_BY_LOGIN_CACHE);
+            //createCache(cm, com.tickety.repository.UserRepository.USERS_BY_EMAIL_CACHE);
+            //createCache(cm, com.tickety.domain.User.class.getName());
+            //createCache(cm, com.tickety.domain.Authority.class.getName());
+            //createCache(cm, com.tickety.domain.User.class.getName() + ".authorities");
+            //createCache(cm, com.tickety.domain.UserAccount.class.getName());
+            //createCache(cm, com.tickety.domain.UserAccount.class.getName() + ".events");
+            //createCache(cm, com.tickety.domain.UserAccount.class.getName() + ".roles");
             createCache(cm, com.tickety.domain.Roles.class.getName());
             createCache(cm, com.tickety.domain.Contact.class.getName());
             createCache(cm, com.tickety.domain.Photo.class.getName());

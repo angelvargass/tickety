@@ -35,6 +35,15 @@
             Crear organización
           </a>
         </li>
+
+        <hr />
+
+        <li>
+          <a routerLink="/account/password" class="nav-link text-light">
+            <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+            Cambiar contraseña
+          </a>
+        </li>
       </ul>
 
       <ul *ngIf="userHasOrganizationOrPromoterRole()" class="nav nav-pills flex-column mb-auto">
@@ -77,6 +86,15 @@
           <a routerLink="/organization/invite-promoter" class="nav-link text-light">
             <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
             Invitar promotor
+          </a>
+        </li>
+
+        <hr />
+
+        <li>
+          <a routerLink="/account/password" class="nav-link text-light">
+            <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+            Cambiar contraseña
           </a>
         </li>
       </ul>
