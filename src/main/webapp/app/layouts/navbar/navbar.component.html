@@ -80,18 +80,6 @@
               </a>
             </li>
             <li *ngSwitchCase="true">
-              <a
-                class="dropdown-item"
-                routerLink="account/password"
-                routerLinkActive="active"
-                (click)="collapseNavbar()"
-                data-cy="passwordItem"
-              >
-                <fa-icon icon="lock" [fixedWidth]="true"></fa-icon>
-                <span jhiTranslate="global.menu.account.password">Contraseña</span>
-              </a>
-            </li>
-            <li *ngSwitchCase="true">
               <a class="dropdown-item" (click)="logout()" id="logout" data-cy="logout">
                 <fa-icon icon="arrow-right-to-bracket" [fixedWidth]="true"></fa-icon>
                 <span>Cerrar sesión</span>
