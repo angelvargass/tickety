@@ -1,13 +1,18 @@
 package com.tickety.web.rest;
 
+import com.tickety.domain.Event;
 import com.tickety.domain.Ticket;
+import com.tickety.domain.UserAccount;
+import com.tickety.repository.EventRepository;
 import com.tickety.repository.TicketRepository;
 import com.tickety.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.xml.crypto.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,6 +30,9 @@ import tech.jhipster.web.util.ResponseUtil;
 @Transactional
 public class TicketResource {
 
+    //
+    private final EventRepository eventRepository;
+
     private final Logger log = LoggerFactory.getLogger(TicketResource.class);
 
     private static final String ENTITY_NAME = "ticket";
@@ -34,8 +42,9 @@ public class TicketResource {
 
     private final TicketRepository ticketRepository;
 
-    public TicketResource(TicketRepository ticketRepository) {
+    public TicketResource(TicketRepository ticketRepository, EventRepository eventRepository) {
         this.ticketRepository = ticketRepository;
+        this.eventRepository = eventRepository;
     }
 
     /**
@@ -47,6 +56,14 @@ public class TicketResource {
      */
     @PostMapping("/tickets")
     public ResponseEntity<Ticket> createTicket(@RequestBody Ticket ticket) throws URISyntaxException {
+        // Check if events has tickets
+        Optional<Event> currentEvent = eventRepository.findById(ticket.getEvent().getId());
+        // Update Event Total Tickets
+        currentEvent.get().talTickets(currentEvent.get().getTalTickets() - 1);
+        eventRepository.save(currentEvent.get());
+        if (ticket.getDate() == null) {
+            ticket.setDate(LocalDate.now());
+        }
         log.debug("REST request to save Ticket : {}", ticket);
         if (ticket.getId() != null) {
             throw new BadRequestAlertException("A new ticket cannot already have an ID", ENTITY_NAME, "idexists");

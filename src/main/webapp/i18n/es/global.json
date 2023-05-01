@@ -109,6 +109,7 @@
       "open": "Abrir",
       "save": "Guardar",
       "view": "Vista",
+      "buy": "Comprar",
       "show": "Show {{otherEntity}}"
     },
     "detail": {

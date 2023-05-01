@@ -1,7 +1,7 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
+<div class="d-flex justify-content-center background-image color-letra">
+  <div class="col-8 fondo-blanco">
     <div *ngIf="venue">
-      <h2 data-cy="venueDetailsHeading"><span jhiTranslate="ticketyApp.venue.detail.title">Venue</span></h2>
+      <h2 data-cy="venueDetailsHeading"><span>Dirección</span></h2>
 
       <hr />
 
@@ -10,15 +10,15 @@
       <jhi-alert></jhi-alert>
 
       <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dt><span>ID</span></dt>
         <dd>
           <span>{{ venue.id }}</span>
         </dd>
-        <dt><span jhiTranslate="ticketyApp.venue.address">Address</span></dt>
+        <dt><span>Dirección</span></dt>
         <dd>
           <span>{{ venue.address }}</span>
         </dd>
-        <dt><span jhiTranslate="ticketyApp.venue.capacity">Capacity</span></dt>
+        <dt><span>Capacidad</span></dt>
         <dd>
           <span>{{ venue.capacity }}</span>
         </dd>

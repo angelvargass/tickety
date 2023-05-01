@@ -1,7 +1,7 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
+<div class="d-flex justify-content-center background-image color-letra">
+  <div class="col-8 fondo-blanco">
     <div *ngIf="userAccount">
-      <h2 data-cy="userAccountDetailsHeading"><span jhiTranslate="ticketyApp.userAccount.detail.title">User Account</span></h2>
+      <h2 data-cy="userAccountDetailsHeading"><span>Cuenta</span></h2>
 
       <hr />
 
@@ -14,14 +14,16 @@
         <dd>
           <span>{{ userAccount.id }}</span>
         </dd>
-        <dt><span jhiTranslate="ticketyApp.userAccount.genderu">Genderu</span></dt>
+        <dt><span>Género</span></dt>
         <dd>
           <span jhiTranslate="{{ 'ticketyApp.Gender.' + userAccount.genderu }}">{{ userAccount.genderu }}</span>
         </dd>
-        <dt><span jhiTranslate="ticketyApp.userAccount.organization">Organization</span></dt>
+        <dt><span>Organización</span></dt>
         <dd>
           <div *ngIf="userAccount.organization">
-            <a [routerLink]="['/organization', userAccount.organization.id, 'view']">{{ userAccount.organization.id }}</a>
+            <a class="color-letra" [routerLink]="['/organization', userAccount.organization.id, 'view']">{{
+              userAccount.organization.id
+            }}</a>
           </div>
         </dd>
       </dl>

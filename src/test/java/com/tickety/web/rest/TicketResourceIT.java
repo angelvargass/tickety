@@ -38,6 +38,15 @@ class TicketResourceIT {
     private static final TicketStatus DEFAULT_TICKET_STATUS = TicketStatus.PENDING;
     private static final TicketStatus UPDATED_TICKET_STATUS = TicketStatus.CONFIRMED;
 
+    private static final String DEFAULT_PAYMENT = "AAAAAAAAAA";
+    private static final String UPDATED_PAYMENT = "BBBBBBBBBB";
+
+    private static final Long DEFAULT_AMOUNT = 1L;
+    private static final Long UPDATED_AMOUNT = 2L;
+
+    private static final String DEFAULT_SEAT = "AAAAAAAAAA";
+    private static final String UPDATED_SEAT = "BBBBBBBBBB";
+
     private static final String ENTITY_API_URL = "/api/tickets";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -62,7 +71,12 @@ class TicketResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Ticket createEntity(EntityManager em) {
-        Ticket ticket = new Ticket().date(DEFAULT_DATE).ticketStatus(DEFAULT_TICKET_STATUS);
+        Ticket ticket = new Ticket()
+            .date(DEFAULT_DATE)
+            .ticketStatus(DEFAULT_TICKET_STATUS)
+            .payment(DEFAULT_PAYMENT)
+            .amount(DEFAULT_AMOUNT)
+            .seat(DEFAULT_SEAT);
         return ticket;
     }
 
@@ -73,7 +87,12 @@ class TicketResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Ticket createUpdatedEntity(EntityManager em) {
-        Ticket ticket = new Ticket().date(UPDATED_DATE).ticketStatus(UPDATED_TICKET_STATUS);
+        Ticket ticket = new Ticket()
+            .date(UPDATED_DATE)
+            .ticketStatus(UPDATED_TICKET_STATUS)
+            .payment(UPDATED_PAYMENT)
+            .amount(UPDATED_AMOUNT)
+            .seat(UPDATED_SEAT);
         return ticket;
     }
 
@@ -97,6 +116,9 @@ class TicketResourceIT {
         Ticket testTicket = ticketList.get(ticketList.size() - 1);
         assertThat(testTicket.getDate()).isEqualTo(DEFAULT_DATE);
         assertThat(testTicket.getTicketStatus()).isEqualTo(DEFAULT_TICKET_STATUS);
+        assertThat(testTicket.getPayment()).isEqualTo(DEFAULT_PAYMENT);
+        assertThat(testTicket.getAmount()).isEqualTo(DEFAULT_AMOUNT);
+        assertThat(testTicket.getSeat()).isEqualTo(DEFAULT_SEAT);
     }
 
     @Test
@@ -130,7 +152,10 @@ class TicketResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(ticket.getId().intValue())))
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
-            .andExpect(jsonPath("$.[*].ticketStatus").value(hasItem(DEFAULT_TICKET_STATUS.toString())));
+            .andExpect(jsonPath("$.[*].ticketStatus").value(hasItem(DEFAULT_TICKET_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].payment").value(hasItem(DEFAULT_PAYMENT)))
+            .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT.intValue())))
+            .andExpect(jsonPath("$.[*].seat").value(hasItem(DEFAULT_SEAT)));
     }
 
     @Test
@@ -146,7 +171,10 @@ class TicketResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(ticket.getId().intValue()))
             .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
-            .andExpect(jsonPath("$.ticketStatus").value(DEFAULT_TICKET_STATUS.toString()));
+            .andExpect(jsonPath("$.ticketStatus").value(DEFAULT_TICKET_STATUS.toString()))
+            .andExpect(jsonPath("$.payment").value(DEFAULT_PAYMENT))
+            .andExpect(jsonPath("$.amount").value(DEFAULT_AMOUNT.intValue()))
+            .andExpect(jsonPath("$.seat").value(DEFAULT_SEAT));
     }
 
     @Test
@@ -168,7 +196,12 @@ class TicketResourceIT {
         Ticket updatedTicket = ticketRepository.findById(ticket.getId()).get();
         // Disconnect from session so that the updates on updatedTicket are not directly saved in db
         em.detach(updatedTicket);
-        updatedTicket.date(UPDATED_DATE).ticketStatus(UPDATED_TICKET_STATUS);
+        updatedTicket
+            .date(UPDATED_DATE)
+            .ticketStatus(UPDATED_TICKET_STATUS)
+            .payment(UPDATED_PAYMENT)
+            .amount(UPDATED_AMOUNT)
+            .seat(UPDATED_SEAT);
 
         restTicketMockMvc
             .perform(
@@ -184,6 +217,9 @@ class TicketResourceIT {
         Ticket testTicket = ticketList.get(ticketList.size() - 1);
         assertThat(testTicket.getDate()).isEqualTo(UPDATED_DATE);
         assertThat(testTicket.getTicketStatus()).isEqualTo(UPDATED_TICKET_STATUS);
+        assertThat(testTicket.getPayment()).isEqualTo(UPDATED_PAYMENT);
+        assertThat(testTicket.getAmount()).isEqualTo(UPDATED_AMOUNT);
+        assertThat(testTicket.getSeat()).isEqualTo(UPDATED_SEAT);
     }
 
     @Test
@@ -254,6 +290,8 @@ class TicketResourceIT {
         Ticket partialUpdatedTicket = new Ticket();
         partialUpdatedTicket.setId(ticket.getId());
 
+        partialUpdatedTicket.payment(UPDATED_PAYMENT);
+
         restTicketMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedTicket.getId())
@@ -268,6 +306,9 @@ class TicketResourceIT {
         Ticket testTicket = ticketList.get(ticketList.size() - 1);
         assertThat(testTicket.getDate()).isEqualTo(DEFAULT_DATE);
         assertThat(testTicket.getTicketStatus()).isEqualTo(DEFAULT_TICKET_STATUS);
+        assertThat(testTicket.getPayment()).isEqualTo(UPDATED_PAYMENT);
+        assertThat(testTicket.getAmount()).isEqualTo(DEFAULT_AMOUNT);
+        assertThat(testTicket.getSeat()).isEqualTo(DEFAULT_SEAT);
     }
 
     @Test
@@ -282,7 +323,12 @@ class TicketResourceIT {
         Ticket partialUpdatedTicket = new Ticket();
         partialUpdatedTicket.setId(ticket.getId());
 
-        partialUpdatedTicket.date(UPDATED_DATE).ticketStatus(UPDATED_TICKET_STATUS);
+        partialUpdatedTicket
+            .date(UPDATED_DATE)
+            .ticketStatus(UPDATED_TICKET_STATUS)
+            .payment(UPDATED_PAYMENT)
+            .amount(UPDATED_AMOUNT)
+            .seat(UPDATED_SEAT);
 
         restTicketMockMvc
             .perform(
@@ -298,6 +344,9 @@ class TicketResourceIT {
         Ticket testTicket = ticketList.get(ticketList.size() - 1);
         assertThat(testTicket.getDate()).isEqualTo(UPDATED_DATE);
         assertThat(testTicket.getTicketStatus()).isEqualTo(UPDATED_TICKET_STATUS);
+        assertThat(testTicket.getPayment()).isEqualTo(UPDATED_PAYMENT);
+        assertThat(testTicket.getAmount()).isEqualTo(UPDATED_AMOUNT);
+        assertThat(testTicket.getSeat()).isEqualTo(UPDATED_SEAT);
     }
 
     @Test

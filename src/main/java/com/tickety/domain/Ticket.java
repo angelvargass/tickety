@@ -31,11 +31,72 @@ public class Ticket implements Serializable {
     @Column(name = "ticket_status")
     private TicketStatus ticketStatus;
 
-    @ManyToOne
+    @Column(name = "payment")
+    private String payment;
+
+    @Column(name = "amount")
+    private Long amount;
+
+    @Column(name = "seat")
+    private String seat;
+
+    @JsonIgnoreProperties(value = { "events", "roles", "ticket", "organization" }, allowSetters = true)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "USER_ACCOUNT_ID")
+    private UserAccount userAccount;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnoreProperties(value = { "galery", "artists", "tickets", "userAccount", "organization", "venue" }, allowSetters = true)
     private Event event;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
+
+    public String getPayment() {
+        return payment;
+    }
+
+    public Long getAmount() {
+        return amount;
+    }
+
+    public String getSeat() {
+        return seat;
+    }
+
+    public UserAccount getUserAccount() {
+        return userAccount;
+    }
+
+    public Ticket payment(String payment) {
+        this.setPayment(payment);
+        return this;
+    }
+
+    public void setPayment(String payment) {
+        this.payment = payment;
+    }
+
+    public Ticket amount(Long amount) {
+        this.setAmount(amount);
+        return this;
+    }
+
+    public void setAmount(Long amount) {
+        this.amount = amount;
+    }
+
+    public Ticket seat(String seat) {
+        this.setSeat(seat);
+        return this;
+    }
+
+    public void setSeat(String seat) {
+        this.seat = seat;
+    }
+
+    public void setUserAccount(UserAccount userAccount) {
+        this.userAccount = userAccount;
+    }
 
     public Long getId() {
         return this.id;
@@ -115,6 +176,9 @@ public class Ticket implements Serializable {
             "id=" + getId() +
             ", date='" + getDate() + "'" +
             ", ticketStatus='" + getTicketStatus() + "'" +
+            ", payment='" + getPayment() + "'" +
+            ", amount=" + getAmount() +
+            ", seat='" + getSeat() + "'" +
             "}";
     }
 }

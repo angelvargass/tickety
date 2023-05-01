@@ -1,0 +1,47 @@
+.bg-separator {
+  height: 100px;
+}
+
+.background-image {
+  background-image: url('../../../../content/images/fondo-inicio.avif');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+.fondo-blanco {
+  background-color: #20262e;
+  padding: 25px;
+  margin: 50px;
+  border-radius: 15px;
+  margin-bottom: 100px;
+}
+
+.color-letra {
+  color: white;
+}
+
+.color-boton {
+  background-color: #913175;
+  border-color: #913175;
+  color: white;
+}
+
+.color-sec {
+  color: #913175;
+}
+
+.boton-inicio {
+  text-align: center;
+  padding: 30px;
+}
+
+.fondo-rojo {
+  background-color: #bb2d3b;
+  border-color: #bb2d3b;
+}
+
+.fa-1x {
+  cursor: pointer;
+}

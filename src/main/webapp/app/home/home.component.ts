@@ -5,6 +5,11 @@ import { takeUntil } from 'rxjs/operators';
 
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
+import { EventService } from '../entities/event/service/event.service';
+import { IEvent } from '../entities/event/event.model';
+import { IGalery } from '../entities/galery/galery.model';
+import { IPhoto } from '../entities/photo/photo.model';
+
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HomeService } from './home.service';
 declare var $: any;
@@ -31,9 +36,14 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   carouselWidth: number = 0;
   cardWidth: number = 0;
   scrollPosition = 0;
-  carouselItems: any[] = [];
+  carouselItems: IEvent[] = [];
 
-  constructor(private accountService: AccountService, private router: Router, private homeService: HomeService) {}
+  constructor(
+    private accountService: AccountService,
+    private router: Router,
+    private eventService: EventService,
+    private homeService: HomeService
+  ) {}
 
   ngOnInit(): void {
     this.accountService
@@ -41,15 +51,31 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe(account => (this.account = account));
 
-    //Get events from somewhere
-    this.carouselItems.push(
-      { itemNumber: 1 },
-      { itemNumber: 2 },
-      { itemNumber: 3 },
-      { itemNumber: 4 },
-      { itemNumber: 5 },
-      { itemNumber: 6 }
-    );
+    const filterEvents = {
+      sort: ['id,asc'],
+    };
+
+    this.eventService.query('id').subscribe({
+      next: response => {
+        this.setShowCase(<IEvent[]>response.body);
+      },
+      error: err => {
+        console.log(err);
+      },
+    });
+
+    this.ngAfterViewInit();
+  }
+
+  // this function set the showcase (image that will be display on the vent card)
+  setShowCase(eventList: IEvent[]): void {
+    eventList.forEach(ev => {
+      let tmpGaleria = <IGalery>ev.galery;
+      let tmpPhotos = <IPhoto[]>(<unknown>tmpGaleria.photos);
+      // Modify to pick the favorite
+      ev.showCase = tmpPhotos[0].url;
+      this.carouselItems.push(<IEvent>ev);
+    });
   }
 
   ngOnDestroy(): void {

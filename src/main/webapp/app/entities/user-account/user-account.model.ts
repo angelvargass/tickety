@@ -6,7 +6,7 @@ export interface IUserAccount {
   id: number;
   genderu?: Gender | null;
   organization?: Pick<IOrganization, 'id'> | null;
-  user: Account | null;
+  user?: Account | null;
 }
 
 export type NewUserAccount = Omit<IUserAccount, 'id'> & { id: null };

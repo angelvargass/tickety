@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { concatMap, forkJoin, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import dayjs from 'dayjs/esm';
 
@@ -31,11 +31,12 @@ export class TicketService {
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
-  create(ticket: NewTicket): Observable<EntityResponseType> {
-    const copy = this.convertDateFromClient(ticket);
-    return this.http
-      .post<RestTicket>(this.resourceUrl, copy, { observe: 'response' })
-      .pipe(map(res => this.convertResponseFromServer(res)));
+  create(tickets: NewTicket[]): Observable<any> {
+    return of(...tickets).pipe(
+      concatMap(ticket =>
+        this.http.post<RestTicket>(this.resourceUrl, ticket, { observe: 'response' }).pipe(map(res => this.convertResponseFromServer(res)))
+      )
+    );
   }
 
   update(ticket: ITicket): Observable<EntityResponseType> {

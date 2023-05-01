@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { SessionStorageService } from 'ngx-webstorage';
@@ -17,6 +17,7 @@ import { EntityNavbarItems } from 'app/entities/entity-navbar-items';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
+  @ViewChild('navBardiv') navBardiv!: ElementRef;
   inProduction?: boolean;
   isNavbarCollapsed = true;
   languages = LANGUAGES;
@@ -24,6 +25,7 @@ export class NavbarComponent implements OnInit {
   version = '';
   account: Account | null = null;
   entitiesNavbarItems: any[] = [];
+  last_scroll_top = 0;
 
   constructor(
     private loginService: LoginService,
@@ -31,7 +33,8 @@ export class NavbarComponent implements OnInit {
     private sessionStorageService: SessionStorageService,
     protected accountService: AccountService,
     private profileService: ProfileService,
-    private router: Router
+    private router: Router,
+    private rd: Renderer2
   ) {
     if (VERSION) {
       this.version = VERSION.toLowerCase().startsWith('v') ? VERSION : `v${VERSION}`;
@@ -48,6 +51,19 @@ export class NavbarComponent implements OnInit {
     this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;
     });
+  }
+
+  @HostListener('window:scroll', []) onScroll() {
+    var verticalOffset = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+
+    if (verticalOffset < this.last_scroll_top) {
+      this.rd.addClass(this.navBardiv.nativeElement, 'scrolled-up');
+      this.rd.removeClass(this.navBardiv.nativeElement, 'scrolled-down');
+    } else {
+      this.rd.removeClass(this.navBardiv.nativeElement, 'scrolled-up');
+      this.rd.addClass(this.navBardiv.nativeElement, 'scrolled-down');
+    }
+    this.last_scroll_top = verticalOffset;
   }
 
   changeLanguage(languageKey: string): void {

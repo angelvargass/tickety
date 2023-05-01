@@ -73,11 +73,14 @@
     "packaging": "jar"
   },
   "dependencies": {
+    "@angular/animations": "^14.2.0",
+    "@angular/cdk": "^14.2.0",
     "@angular/common": "14.2.0",
     "@angular/compiler": "14.2.0",
     "@angular/core": "14.2.0",
     "@angular/forms": "14.2.0",
     "@angular/localize": "14.2.0",
+    "@angular/material": "^14.2.0",
     "@angular/platform-browser": "14.2.0",
     "@angular/platform-browser-dynamic": "14.2.0",
     "@angular/router": "14.2.0",
@@ -90,7 +93,7 @@
     "@popperjs/core": "2.11.6",
     "bootstrap": "5.2.0",
     "dayjs": "1.11.5",
-    "jquery": "^3.3.1",
+    "jquery": "^3.6.4",
     "ngx-infinite-scroll": "14.0.0",
     "ngx-webstorage": "10.0.1",
     "rxjs": "7.5.6",

@@ -20,6 +20,18 @@
             <column name="ticket_status" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
+            <column name="payment" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="amount" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="seat" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="user_account_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
             <column name="event_id" type="bigint">
                 <constraints nullable="true" />
             </column>
@@ -46,6 +58,9 @@
             <column name="id" type="numeric"/>
             <column name="date" type="date"/>
             <column name="ticket_status" type="string"/>
+            <column name="payment" type="string"/>
+            <column name="amount" type="numeric"/>
+            <column name="seat" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

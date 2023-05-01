@@ -38,22 +38,33 @@ public class Event implements Serializable {
     @Column(name = "tal_tickets")
     private Integer talTickets;
 
-    @JsonIgnoreProperties(value = { "photos", "event" }, allowSetters = true)
-    @OneToOne
+    @Column(name = "event_price")
+    private Long eventPrice;
+
+    @Column(name = "event_name")
+    private String eventName;
+
+    @Column(name = "event_description")
+    private String eventDescription;
+
+    @JsonIgnoreProperties(value = { "event" }, allowSetters = true)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(unique = true)
     private Galery galery;
 
-    @OneToMany(mappedBy = "event")
+    @OneToMany(mappedBy = "event", fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "genres", "event" }, allowSetters = true)
     private Set<Artist> artists = new HashSet<>();
 
-    @OneToMany(mappedBy = "event")
+    @OneToMany(mappedBy = "event", cascade = CascadeType.REMOVE)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "event" }, allowSetters = true)
     private Set<Ticket> tickets = new HashSet<>();
 
     @ManyToOne
+    @JoinColumn(name = "USER_ACCOUNT_ID")
     @JsonIgnoreProperties(value = { "events", "roles", "organization" }, allowSetters = true)
     private UserAccount userAccount;
 
@@ -117,6 +128,45 @@ public class Event implements Serializable {
 
     public void setTalTickets(Integer talTickets) {
         this.talTickets = talTickets;
+    }
+
+    public Long getEventPrice() {
+        return this.eventPrice;
+    }
+
+    public Event eventPrice(Long eventPrice) {
+        this.setEventPrice(eventPrice);
+        return this;
+    }
+
+    public Event eventName(String eventName) {
+        this.setEventName(eventName);
+        return this;
+    }
+
+    public Event eventDescription(String eventDescription) {
+        this.setEventDescription(eventDescription);
+        return this;
+    }
+
+    public String getEventName() {
+        return eventName;
+    }
+
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
+    }
+
+    public String getEventDescription() {
+        return eventDescription;
+    }
+
+    public void setEventDescription(String eventDescription) {
+        this.eventDescription = eventDescription;
+    }
+
+    public void setEventPrice(Long eventPrice) {
+        this.eventPrice = eventPrice;
     }
 
     public Galery getGalery() {
@@ -260,6 +310,9 @@ public class Event implements Serializable {
             ", date='" + getDate() + "'" +
             ", eventSatus='" + getEventSatus() + "'" +
             ", talTickets=" + getTalTickets() +
+            ", eventPrice=" + getEventPrice() +
+            ", eventName=" + getEventName() +
+            ", eventDescription=" + getEventDescription() +
             "}";
     }
 }
