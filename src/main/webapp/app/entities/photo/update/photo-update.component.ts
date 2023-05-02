@@ -10,8 +10,6 @@ import { PhotoService } from '../service/photo.service';
 import { IGalery } from 'app/entities/galery/galery.model';
 import { GaleryService } from 'app/entities/galery/service/galery.service';
 import { PhotoStatus } from 'app/entities/enumerations/photo-status.model';
-import { FileUploader, FileUploaderOptions, ParsedResponseHeaders } from 'ng2-file-upload';
-import { Cloudinary } from '@cloudinary/angular-5.x';
 
 @Component({
   selector: 'jhi-photo-update',
@@ -19,7 +17,6 @@ import { Cloudinary } from '@cloudinary/angular-5.x';
   styleUrls: ['./photo-update.component.scss'],
 })
 export class PhotoUpdateComponent implements OnInit {
-  uploader: FileUploader | undefined;
   isSaving = false;
   photo: IPhoto | null = null;
   photoStatusValues = Object.keys(PhotoStatus);
@@ -29,7 +26,6 @@ export class PhotoUpdateComponent implements OnInit {
 
   constructor(
     private router: Router,
-    protected cloudinary: Cloudinary,
     protected photoService: PhotoService,
     protected photoFormService: PhotoFormService,
     protected galeryService: GaleryService,
@@ -54,37 +50,6 @@ export class PhotoUpdateComponent implements OnInit {
   }
 
   save(): void {
-    const uploaderOptions: FileUploaderOptions = {
-      url: `https://api.cloudinary.com/v1_1/${this.cloudinary.config().cloud_name}/upload`,
-      // Upload files automatically upon addition to upload queue
-      autoUpload: true,
-      // Use xhrTransport in favor of iframeTransport
-      isHTML5: true,
-      // Calculate progress independently for each uploaded file
-      removeAfterUpload: true,
-      // XHR request headers
-      headers: [
-        {
-          name: 'X-Requested-With',
-          value: 'XMLHttpRequest',
-        },
-      ],
-    };
-
-    this.uploader = new FileUploader(uploaderOptions);
-
-    this.uploader.onBuildItemForm = (fileItem: any, form: FormData): any => {
-      // Add Cloudinary unsigned upload preset to the upload form
-      form.append('upload_preset', this.cloudinary.config().upload_preset);
-
-      // Add file to upload
-      form.append('file', fileItem);
-
-      // Use default "withCredentials" value for CORS requests
-      fileItem.withCredentials = false;
-      return { fileItem, form };
-    };
-
     this.isSaving = true;
     const photo = this.photoFormService.getPhoto(this.editForm);
     if (photo.id !== null) {

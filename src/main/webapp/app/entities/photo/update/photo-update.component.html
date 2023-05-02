@@ -5,7 +5,7 @@
 
       <div>
         <jhi-alert-error></jhi-alert-error>
-
+        <jhi-cloudinary></jhi-cloudinary>
         <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
           <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
           <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
@@ -13,18 +13,8 @@
 
         <div class="row mb-3">
           <label class="form-label" for="field_url">Seleccione la foto que desea agregar</label>
-          <input
-            type="file"
-            ng2FileSelect
-            [uploader]="uploader"
-            class="form-control"
-            name="url"
-            id="field_url"
-            data-cy="url"
-            formControlName="url"
-          />
+          <input type="file" class="form-control" name="url" id="field_url" data-cy="url" formControlName="url" />
         </div>
-
         <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
           <label class="form-label" for="field_status">Estado</label>
           <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
