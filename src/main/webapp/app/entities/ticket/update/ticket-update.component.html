@@ -1,89 +1,39 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="jhi-ticket-heading" data-cy="TicketCreateUpdateHeading" jhiTranslate="ticketyApp.ticket.home.createOrEditLabel">
-        Crear o editar Ticket
-      </h2>
-
       <div>
-        <jhi-alert-error></jhi-alert-error>
-
-        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
-          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="ticketyApp.ticket.date" for="field_date">Date</label>
-          <div class="input-group">
-            <input
-              id="field_date"
-              data-cy="date"
-              type="text"
-              class="form-control"
-              name="date"
-              ngbDatepicker
-              #dateDp="ngbDatepicker"
-              formControlName="date"
-            />
-            <button type="button" class="btn btn-secondary" (click)="dateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+        <div class="">
+          <div class="ml-4">
+            <strong><label class="form-label ml-1">Precio por unidad : ₡</label></strong> <span>{{ currentPrice }}</span>
+          </div>
+          <div class="mb6-l">
+            <fa-icon class="fa-1x" icon="circle-plus" (click)="addticket()"></fa-icon>
+            <span>{{ ticketCount }}</span>
+            <fa-icon class="fa-1x" icon="circle-minus" (click)="subtractticket()"></fa-icon>
           </div>
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="ticketyApp.ticket.payment" for="field_payment">Payment</label>
-          <input type="text" class="form-control" name="payment" id="field_payment" data-cy="payment" formControlName="payment" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="ticketyApp.ticket.amount" for="field_amount">Amount</label>
-          <input type="number" class="form-control" name="amount" id="field_amount" data-cy="amount" formControlName="amount" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="ticketyApp.ticket.seat" for="field_seat">Seat</label>
-          <input type="text" class="form-control" name="seat" id="field_seat" data-cy="seat" formControlName="seat" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="ticketyApp.ticket.userAccount" for="field_userAccount">User Account</label>
-          <select
-            class="form-control"
-            id="field_userAccount"
-            data-cy="userAccount"
-            name="userAccount"
-            formControlName="userAccount"
-            [compareWith]="compareUserAccount"
-          >
-            <option [ngValue]="null"></option>
-            <option [ngValue]="userAccountOption" *ngFor="let userAccountOption of userAccountsCollection">
-              {{ userAccountOption.id }}
-            </option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="ticketyApp.ticket.ticketStatus" for="field_ticketStatus">Ticket Status</label>
-          <select class="form-control" name="ticketStatus" formControlName="ticketStatus" id="field_ticketStatus" data-cy="ticketStatus">
-            <option [ngValue]="null">{{ 'ticketyApp.TicketStatus.null' | translate }}</option>
-            <option *ngFor="let ticketStatus of ticketStatusValues" [value]="ticketStatus">
-              {{ 'ticketyApp.TicketStatus.' + ticketStatus | translate }}
-            </option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="ticketyApp.ticket.event" for="field_event">Event</label>
-          <select class="form-control" id="field_event" data-cy="event" name="event" formControlName="event" [compareWith]="compareEvent">
-            <option [ngValue]="null"></option>
-            <option [ngValue]="eventOption" *ngFor="let eventOption of eventsSharedCollection">{{ eventOption.id }}</option>
-          </select>
-        </div>
+        <table class="table table-hover table-dark">
+          <thead>
+            <tr>
+              <th scope="col">Zona</th>
+              <th scope="col">Cantidad</th>
+              <th scope="col">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>General</th>
+              <td>{{ ticketCount }}</td>
+              <td>₡ {{ totalPay }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       <div>
         <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel" [mat-dialog-close]="true">Cancelar</span>
         </button>
 
         <button
@@ -93,7 +43,7 @@
           [disabled]="editForm.invalid || isSaving"
           class="btn btn-primary"
         >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>
+          <fa-icon icon="save"></fa-icon>&nbsp;<span [mat-dialog-close]="true">Comprar</span>
         </button>
       </div>
     </form>

@@ -8,9 +8,11 @@ import com.tickety.repository.TicketRepository;
 import com.tickety.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.xml.crypto.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -54,19 +56,19 @@ public class TicketResource {
      */
     @PostMapping("/tickets")
     public ResponseEntity<Ticket> createTicket(@RequestBody Ticket ticket) throws URISyntaxException {
-        log.debug("REST request to save Ticket : {}", ticket);
-        if (ticket.getId() != null) {
-            throw new BadRequestAlertException("A new ticket cannot already have an ID", ENTITY_NAME, "idexists");
-        }
         // Check if events has tickets
         Optional<Event> currentEvent = eventRepository.findById(ticket.getEvent().getId());
         // Update Event Total Tickets
         currentEvent.get().talTickets(currentEvent.get().getTalTickets() - 1);
-
         eventRepository.save(currentEvent.get());
-
+        if (ticket.getDate() == null) {
+            ticket.setDate(LocalDate.now());
+        }
+        log.debug("REST request to save Ticket : {}", ticket);
+        if (ticket.getId() != null) {
+            throw new BadRequestAlertException("A new ticket cannot already have an ID", ENTITY_NAME, "idexists");
+        }
         Ticket result = ticketRepository.save(ticket);
-
         return ResponseEntity
             .created(new URI("/api/tickets/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))

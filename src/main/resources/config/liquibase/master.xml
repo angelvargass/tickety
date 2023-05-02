@@ -40,7 +40,6 @@
     <include file="config/liquibase/changelog/20230321021103_added_entity_constraints_Genre.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230321021203_added_entity_constraints_Artist.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230321021303_added_entity_constraints_Event.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20230321021403_added_entity_constraints_Ticket.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230321020703_added_entity_constraints_Photo.xml" relativeToChangelogFile="false"/>
 
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->

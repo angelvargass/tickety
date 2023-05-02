@@ -3,6 +3,7 @@ import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { delay, Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { EventFormService, EventFormGroup } from './event-form.service';
 import { IEvent } from '../event.model';
@@ -19,8 +20,6 @@ import { EventSatus } from 'app/entities/enumerations/event-satus.model';
 import { AccountService } from '../../../core/auth/account.service';
 import { Account } from '../../../core/auth/account.model';
 import { UserService } from '../../user/user.service';
-import { PhotoModule } from '../../photo/photo.module';
-import { GaleryUpdateComponent } from '../../galery/update/galery-update.component';
 
 @Component({
   selector: 'jhi-event-update',
@@ -67,15 +66,11 @@ export class EventUpdateComponent implements OnInit {
       this.account = account;
     });
 
-    const event = this.eventFormService.getEvent(this.editForm);
-    console.log(event);
-
     this.activatedRoute.data.subscribe(({ event }) => {
       this.event = event;
       if (event) {
         this.updateForm(event);
       }
-
       this.loadRelationshipsOptions();
     });
   }

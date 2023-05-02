@@ -30,7 +30,7 @@
                 <constraints nullable="true" />
             </column>
             <column name="user_account_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_ticket__user_account_id" />
+                <constraints nullable="true"/>
             </column>
             <column name="event_id" type="bigint">
                 <constraints nullable="true" />

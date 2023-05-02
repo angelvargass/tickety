@@ -1,20 +1,8 @@
-li {
-  height: 15vh;
-  border: 1px solid #e9e8e8;
-  font-size: 1.4rem;
-  font-weight: bold;
-}
-
-.bg-primary {
-  background-color: #20262e !important;
-}
-
-.btn-primary {
-  background-color: #913175;
-  border-color: #913175;
-  color: white;
-}
-
 .section {
   width: 80%;
+}
+
+a:hover {
+  color: var(--bs-nav-pills-link-active-color);
+  background-color: var(--bs-nav-pills-link-active-bg);
 }

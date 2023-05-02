@@ -138,7 +138,7 @@ export class UserAccountUpdateComponent implements OnInit {
   }
 
   userHasOrganizationOrPromoterRole(): boolean | undefined {
-    return this.userAuthorities?.includes(Authority.ORGANIZATION || Authority.PROMOTER);
+    return this.accountService.hasAnyAuthority(['ROLE_ORGANIZATION', 'ROLE_PROMOTER']);
   }
 
   userHasOnlyOrganizationRole(): boolean | undefined {
