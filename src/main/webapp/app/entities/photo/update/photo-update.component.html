@@ -1,22 +1,20 @@
 <div class="d-flex justify-content-center background-image color-letra">
-  <div class="col-8 fondo-blanco">
+  <div class="col-8 fondo-blanco" style="margin-bottom: 140px">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="jhi-photo-heading" data-cy="PhotoCreateUpdateHeading">Crear o editar Foto</h2>
+      <h2 id="jhi-photo-heading" data-cy="PhotoCreateUpdateHeading">Agregar foto</h2>
 
       <div>
         <jhi-alert-error></jhi-alert-error>
-
         <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
           <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
           <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" for="field_url">Url</label>
+          <label class="form-label" for="field_url">Ingrese el url de la foto</label>
           <input type="text" class="form-control" name="url" id="field_url" data-cy="url" formControlName="url" />
         </div>
-
-        <div class="row mb-3">
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
           <label class="form-label" for="field_status">Estado</label>
           <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
             <option [ngValue]="null">{{ 'ticketyApp.PhotoStatus.null' | translate }}</option>
@@ -37,30 +35,20 @@
             [compareWith]="compareGalery"
           >
             <option [ngValue]="null"></option>
-            <option [ngValue]="galeryOption" *ngFor="let galeryOption of galeriesSharedCollection">{{ galeryOption.id }}</option>
+            <option [ngValue]="galeryOption" *ngFor="let galeryOption of galeriesSharedCollection">{{ galeryOption.name }}</option>
           </select>
         </div>
       </div>
 
       <div>
         <button
-          type="button"
-          id="cancel-save"
-          data-cy="entityCreateCancelButton"
-          class="btn btn-secondary fondo-rojo"
-          (click)="previousState()"
-        >
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
-        </button>
-
-        <button
           type="submit"
           id="save-entity"
           data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
+          [disabled]="editForm.controls.url.value === null && editForm.controls.galery.value === null"
           class="btn btn-primary"
         >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>
+          <span jhiTranslate="entity.action.save">Guardar</span>
         </button>
       </div>
     </form>
