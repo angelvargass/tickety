@@ -67,7 +67,7 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" for="field_eventPrice">Precio de los tikects</label>
+          <label class="form-label" for="field_eventPrice">Precio de los tickets</label>
           <input
             type="number"
             class="form-control"
@@ -126,6 +126,14 @@
           data-cy="entityCreateCancelButton"
           class="btn btn-secondary fondo-rojo"
           (click)="previousState()"
+          [disabled]="
+            editForm.controls.date.value === null &&
+            editForm.controls.talTickets.value === null &&
+            editForm.controls.eventPrice.value === null &&
+            editForm.controls.eventName.value === null &&
+            editForm.controls.eventDescription.value === null &&
+            editForm.controls.venue.value === null
+          "
         >
           <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
         </button>

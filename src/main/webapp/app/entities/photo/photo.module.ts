@@ -6,10 +6,9 @@ import { PhotoUpdateComponent } from './update/photo-update.component';
 import { PhotoDeleteDialogComponent } from './delete/photo-delete-dialog.component';
 import { PhotoRoutingModule } from './route/photo-routing.module';
 import { FileUploadModule } from 'ng2-file-upload';
-import { CloudinaryComponent } from '../../cloudinary/cloudinary.component';
 
 @NgModule({
   imports: [SharedModule, PhotoRoutingModule, FileUploadModule],
-  declarations: [PhotoComponent, PhotoDetailComponent, PhotoUpdateComponent, PhotoDeleteDialogComponent, CloudinaryComponent],
+  declarations: [PhotoComponent, PhotoDetailComponent, PhotoUpdateComponent, PhotoDeleteDialogComponent],
 })
 export class PhotoModule {}

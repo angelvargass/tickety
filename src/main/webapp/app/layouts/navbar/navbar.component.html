@@ -73,33 +73,6 @@
                 <span>Administrador</span>
               </a>
             </li>
-            <div
-              *ngIf="
-                accountService.hasAnyAuthority('ROLE_ORGANIZATION') ||
-                (accountService.hasAnyAuthority(['ROLE_USER']) &&
-                  !accountService.hasAnyAuthority(['ROLE_ADMIN']) &&
-                  !accountService.hasAnyAuthority(['ROLE_USER']))
-              "
-            >
-              <li *ngSwitchCase="true">
-                <a class="dropdown-item" routerLink="event/new" routerLinkActive="active" (click)="collapseNavbar()" data-cy="settings">
-                  <fa-icon icon="wrench" [fixedWidth]="true"></fa-icon>
-                  <span>Crear evento</span>
-                </a>
-              </li>
-            </div>
-            <li *ngSwitchCase="true">
-              <a
-                class="dropdown-item"
-                routerLink="account/password"
-                routerLinkActive="active"
-                (click)="collapseNavbar()"
-                data-cy="passwordItem"
-              >
-                <fa-icon icon="lock" [fixedWidth]="true"></fa-icon>
-                <span jhiTranslate="global.menu.account.password">Contraseña</span>
-              </a>
-            </li>
             <li *ngSwitchCase="true">
               <a class="dropdown-item" (click)="logout()" id="logout" data-cy="logout">
                 <fa-icon icon="arrow-right-to-bracket" [fixedWidth]="true"></fa-icon>

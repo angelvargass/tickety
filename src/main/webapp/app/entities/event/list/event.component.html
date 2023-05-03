@@ -1,5 +1,5 @@
-<div class="background-image color-letra">
-  <h2 id="page-heading" data-cy="EventHeading" style="padding: 30px">
+<div style="margin-top: 3%">
+  <h2 id="page-heading" data-cy="EventHeading" style="margin-left: 10%; font-weight: bold">
     <span>Eventos</span>
 
     <div class="d-flex justify-content-end">
@@ -28,7 +28,7 @@
     <span>Ningún Evento encontrado</span>
   </div>
 
-  <div class="table-responsive table-entities" id="entities" *ngIf="events && events.length > 0">
+  <div class="table-responsive table-entities tickety-table" id="entities" *ngIf="events && events.length > 0">
     <table class="table table-striped fondo-blanco" aria-describedby="page-heading" style="margin-top: 20px; margin-bottom: 30px">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
@@ -136,17 +136,17 @@
             <div class="btn-group">
               <button type="submit" [routerLink]="['/event', event.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
                 <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
+                <span class="d-none d-md-inline"></span>
               </button>
 
               <button type="submit" [routerLink]="['/event', event.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+                <span class="d-none d-md-inline"></span>
               </button>
 
               <button type="submit" (click)="delete(event)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span>
+                <span class="d-none d-md-inline"></span>
               </button>
             </div>
           </td>

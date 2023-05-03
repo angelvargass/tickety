@@ -5,15 +5,14 @@
 
       <div>
         <jhi-alert-error></jhi-alert-error>
-        <jhi-cloudinary></jhi-cloudinary>
         <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
           <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
           <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" for="field_url">Seleccione la foto que desea agregar</label>
-          <input type="file" class="form-control" name="url" id="field_url" data-cy="url" formControlName="url" />
+          <label class="form-label" for="field_url">Ingrese el url de la foto</label>
+          <input type="text" class="form-control" name="url" id="field_url" data-cy="url" formControlName="url" />
         </div>
         <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
           <label class="form-label" for="field_status">Estado</label>
@@ -46,7 +45,7 @@
           type="submit"
           id="save-entity"
           data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
+          [disabled]="editForm.controls.url.value === null && editForm.controls.galery.value === null"
           class="btn btn-primary"
         >
           <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>
