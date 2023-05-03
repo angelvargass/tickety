@@ -28,10 +28,9 @@
           </div>
         </div>
 
-        <div class="row mb-3">
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
           <label class="form-label" for="field_eventSatus">Estado</label>
           <select class="form-control" name="eventSatus" formControlName="eventSatus" id="field_eventSatus" data-cy="eventSatus">
-            <option selected>OPEN</option>
             <option *ngFor="let eventSatus of eventSatusValues" [value]="eventSatus" [disabled]="editForm.controls.id.value === null">
               {{ 'ticketyApp.EventSatus.' + eventSatus | translate }}
             </option>
@@ -68,7 +67,7 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" for="field_eventPrice">Precio de los tikects</label>
+          <label class="form-label" for="field_eventPrice">Precio de los tickets</label>
           <input
             type="number"
             class="form-control"
@@ -96,7 +95,7 @@
           />
         </div>
 
-        <div class="row mb-3">
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
           <label class="form-label" for="field_galery">Galería de imágenes</label>
           <select
             class="form-control"
@@ -107,7 +106,7 @@
             [compareWith]="compareGalery"
           >
             <option [ngValue]="null"></option>
-            <option [ngValue]="galeryOption" *ngFor="let galeryOption of galeriesCollection">{{ galeryOption.id }}</option>
+            <option [ngValue]="galeryOption" *ngFor="let galeryOption of galeriesCollection">{{ galeryOption.name }}</option>
           </select>
         </div>
 
@@ -127,17 +126,19 @@
           data-cy="entityCreateCancelButton"
           class="btn btn-secondary fondo-rojo"
           (click)="previousState()"
+          [disabled]="
+            editForm.controls.date.value === null &&
+            editForm.controls.talTickets.value === null &&
+            editForm.controls.eventPrice.value === null &&
+            editForm.controls.eventName.value === null &&
+            editForm.controls.eventDescription.value === null &&
+            editForm.controls.venue.value === null
+          "
         >
           <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
         </button>
 
-        <button
-          type="submit"
-          id="save-entity"
-          data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
-        >
+        <button type="submit" id="save-entity" data-cy="entityCreateSaveButton" class="btn btn-primary">
           <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>
         </button>
       </div>

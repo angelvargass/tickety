@@ -8,6 +8,7 @@ import { GaleryFormService, GaleryFormGroup } from './galery-form.service';
 import { IGalery } from '../galery.model';
 import { GaleryService } from '../service/galery.service';
 import { GaleryStatus } from 'app/entities/enumerations/galery-status.model';
+import { EventSatus } from '../../enumerations/event-satus.model';
 
 @Component({
   selector: 'jhi-galery-update',
@@ -15,10 +16,11 @@ import { GaleryStatus } from 'app/entities/enumerations/galery-status.model';
   styleUrls: ['./galery-update.component.scss'],
 })
 export class GaleryUpdateComponent implements OnInit {
+  static i: number = 1;
   isSaving = false;
   galery: IGalery | null = null;
   galeryStatusValues = Object.keys(GaleryStatus);
-
+  galeryStatusCurrent = GaleryStatus;
   editForm: GaleryFormGroup = this.galeryFormService.createGaleryFormGroup();
 
   constructor(
@@ -35,6 +37,7 @@ export class GaleryUpdateComponent implements OnInit {
         this.updateForm(galery);
       }
     });
+    this.save();
   }
 
   previousState(): void {
@@ -47,6 +50,8 @@ export class GaleryUpdateComponent implements OnInit {
     if (galery.id !== null) {
       this.subscribeToSaveResponse(this.galeryService.update(galery));
     } else {
+      galery.name = 'Galería' + ' ' + GaleryUpdateComponent.i++;
+      galery.status = this.galeryStatusCurrent.ACTIVE;
       this.subscribeToSaveResponse(this.galeryService.create(galery));
     }
     this.router.navigate([`photo/new`]);
