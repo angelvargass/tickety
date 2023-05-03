@@ -1,15 +1,13 @@
 <form *ngIf="event" name="deleteForm" (ngSubmit)="confirmDelete(event.id!)">
   <div class="modal-header">
-    <h4 class="modal-title" data-cy="eventDeleteDialogHeading" jhiTranslate="entity.delete.title">Confirmar operación de borrado</h4>
+    <h4 class="modal-title" data-cy="eventDeleteDialogHeading" style="font-weight: bold">Eliminar evento</h4>
 
     <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
   </div>
 
   <div class="modal-body">
     <jhi-alert-error></jhi-alert-error>
-    <p id="jhi-delete-event-heading" jhiTranslate="ticketyApp.event.delete.question" [translateValues]="{ id: event.id }">
-      ¿Seguro que quiere eliminar Event {{ event.id }}?
-    </p>
+    <p id="jhi-delete-event-heading">¿Desea eliminar el evento {{ event.eventName }}?</p>
   </div>
 
   <div class="modal-footer">
