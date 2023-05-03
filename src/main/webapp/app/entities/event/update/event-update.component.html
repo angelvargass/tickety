@@ -114,7 +114,7 @@
           <label class="form-label" for="field_venue">Dirección</label>
           <select class="form-control" id="field_venue" data-cy="venue" name="venue" formControlName="venue" [compareWith]="compareVenue">
             <option [ngValue]="null"></option>
-            <option [ngValue]="venueOption" *ngFor="let venueOption of venuesSharedCollection">{{ venueOption.id }}</option>
+            <option [ngValue]="venueOption" *ngFor="let venueOption of venuesSharedCollection">{{ venueOption.name }}</option>
           </select>
         </div>
       </div>
@@ -135,11 +135,11 @@
             editForm.controls.venue.value === null
           "
         >
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+          <span jhiTranslate="entity.action.cancel">Cancelar</span>
         </button>
 
         <button type="submit" id="save-entity" data-cy="entityCreateSaveButton" class="btn btn-primary">
-          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>
+          <span jhiTranslate="entity.action.save">Guardar</span>
         </button>
       </div>
     </form>
