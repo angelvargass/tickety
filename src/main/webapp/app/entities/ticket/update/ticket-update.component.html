@@ -32,10 +32,6 @@
       </div>
 
       <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel" [mat-dialog-close]="true">Cancelar</span>
-        </button>
-
         <button
           type="submit"
           id="save-entity"
@@ -43,7 +39,11 @@
           [disabled]="editForm.invalid || isSaving"
           class="btn btn-primary"
         >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span [mat-dialog-close]="true">Comprar</span>
+          <span [mat-dialog-close]="true">Comprar</span>
+        </button>
+
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <span jhiTranslate="entity.action.cancel" [mat-dialog-close]="true">Cancelar</span>
         </button>
       </div>
     </form>
