@@ -126,6 +126,15 @@
           data-cy="entityCreateCancelButton"
           class="btn btn-secondary fondo-rojo"
           (click)="previousState()"
+        >
+          <span jhiTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          class="btn btn-primary"
           [disabled]="
             editForm.controls.date.value === null &&
             editForm.controls.talTickets.value === null &&
@@ -135,10 +144,6 @@
             editForm.controls.venue.value === null
           "
         >
-          <span jhiTranslate="entity.action.cancel">Cancelar</span>
-        </button>
-
-        <button type="submit" id="save-entity" data-cy="entityCreateSaveButton" class="btn btn-primary">
           <span jhiTranslate="entity.action.save">Guardar</span>
         </button>
       </div>
