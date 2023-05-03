@@ -80,7 +80,7 @@
                 <span>Administrador</span>
               </a>
             </li>
-            <li *ngSwitchCase="true">
+            <li *ngIf="accountService.hasAnyAuthority(['ROLE_ORGANIZATION'])">
               <a class="dropdown-item" routerLink="event/new" routerLinkActive="active" (click)="collapseNavbar()" data-cy="settings">
                 <fa-icon icon="wrench" [fixedWidth]="true"></fa-icon>
                 <span>Crear evento</span>

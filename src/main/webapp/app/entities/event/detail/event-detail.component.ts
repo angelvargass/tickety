@@ -6,6 +6,7 @@ import { IGalery } from '../../galery/galery.model';
 import { IPhoto } from '../../photo/photo.model';
 import { DataService } from '../../../shared/data/data.service';
 import { MatDialog } from '@angular/material/dialog';
+import { AccountService } from '../../../core/auth/account.service';
 
 import { TicketUpdateComponent } from '../../ticket/update/ticket-update.component';
 
@@ -19,7 +20,12 @@ export class EventDetailComponent implements OnInit {
   galery: IGalery | null = null;
   currentPrice: number | null | undefined = null;
 
-  constructor(protected activatedRoute: ActivatedRoute, protected dataService: DataService, protected matDialog: MatDialog) {}
+  constructor(
+    protected activatedRoute: ActivatedRoute,
+    protected dataService: DataService,
+    protected matDialog: MatDialog,
+    protected accountService: AccountService
+  ) {}
 
   ngOnInit(): void {
     this.dataService.currentprice.subscribe(price => (this.currentPrice = price));

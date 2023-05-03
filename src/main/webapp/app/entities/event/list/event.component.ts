@@ -43,7 +43,6 @@ export class EventComponent implements OnInit {
     this.accountService.getAuthenticationState().subscribe(account => {
       this.account = account;
     });
-
     this.load();
   }
 

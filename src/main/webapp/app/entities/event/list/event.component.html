@@ -13,6 +13,7 @@
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-event"
         [routerLink]="['/event/new']"
+        *ngIf="!accountService.hasAnyAuthority(['ROLE_ADMIN'])"
       >
         <fa-icon icon="plus"></fa-icon>
         <span> Crear nuevo Evento </span>
@@ -139,7 +140,13 @@
                 <span class="d-none d-md-inline"></span>
               </button>
 
-              <button type="submit" [routerLink]="['/event', event.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+              <button
+                type="submit"
+                [routerLink]="['/event', event.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+                *ngIf="!accountService.hasAnyAuthority(['ROLE_ADMIN'])"
+              >
                 <fa-icon icon="pencil-alt"></fa-icon>
                 <span class="d-none d-md-inline"></span>
               </button>
@@ -159,6 +166,7 @@
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-event"
         [routerLink]="['/photo/new']"
+        *ngIf="!accountService.hasAnyAuthority(['ROLE_ADMIN'])"
       >
         <fa-icon icon="plus"></fa-icon>
         <span> Agregar foto </span>

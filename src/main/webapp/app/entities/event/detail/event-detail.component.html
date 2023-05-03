@@ -10,14 +10,19 @@
 
           <div class="col-md-8 event-img-container">
             <img src="{{ event.showCase }}" alt="Paris" class="img-responsive" />
-            <button type="button" [routerLink]="['/event', event.id, 'edit']" class="btn btn-sm btn-outline-danger btn-event">
+            <button
+              type="button"
+              [routerLink]="['/event', event.id, 'edit']"
+              class="btn btn-sm btn-outline-danger btn-event"
+              *ngIf="!accountService.hasAnyAuthority(['ROLE_ADMIN'])"
+            >
               <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
             </button>
           </div>
 
           <div class="col-md-4">
             <div class="row m-lg-5">
-              <div class="col-md-12 mb-2">
+              <div class="col-md-12 mb-2" *ngIf="!accountService.hasAnyAuthority(['ROLE_ADMIN'])">
                 <button (click)="setTicketPrice()" type="button" class="btn btn-block btn-info btn-lg ml-2 mt-4">Comprar Entrada</button>
               </div>
             </div>
