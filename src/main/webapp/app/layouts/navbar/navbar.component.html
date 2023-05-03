@@ -74,6 +74,12 @@
               </a>
             </li>
             <li *ngSwitchCase="true">
+              <a class="dropdown-item" routerLink="event/new" routerLinkActive="active" (click)="collapseNavbar()" data-cy="settings">
+                <fa-icon icon="wrench" [fixedWidth]="true"></fa-icon>
+                <span>Crear evento</span>
+              </a>
+            </li>
+            <li *ngSwitchCase="true">
               <a class="dropdown-item" (click)="logout()" id="logout" data-cy="logout">
                 <fa-icon icon="arrow-right-to-bracket" [fixedWidth]="true"></fa-icon>
                 <span>Cerrar sesión</span>
