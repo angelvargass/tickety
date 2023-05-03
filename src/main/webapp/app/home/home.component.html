@@ -10,7 +10,7 @@
               class="container-fluid text-center d-flex align-items-center"
               [style.background-image]="'url(' + carouselItem.showCase + ')'"
               *ngIf="isFirst"
-              style="background-size: cover"
+              style="background-size: contain"
             >
               <button class="fw-bold text-light mx-auto trans" [routerLink]="['/event', carouselItem.id, 'view']">
                 <h1>
