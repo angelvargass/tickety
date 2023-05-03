@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-center background-image color-letra">
+<div class="d-flex justify-content-center fondo-gris color-letra">
   <div class="col-8 fondo-blanco">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <h2 id="jhi-event-heading" data-cy="EventCreateUpdateHeading">Crear o editar Evento</h2>
@@ -121,16 +121,6 @@
 
       <div>
         <button
-          type="button"
-          id="cancel-save"
-          data-cy="entityCreateCancelButton"
-          class="btn btn-secondary fondo-rojo"
-          (click)="previousState()"
-        >
-          <span jhiTranslate="entity.action.cancel">Cancelar</span>
-        </button>
-
-        <button
           type="submit"
           id="save-entity"
           data-cy="entityCreateSaveButton"
@@ -145,6 +135,9 @@
           "
         >
           <span jhiTranslate="entity.action.save">Guardar</span>
+        </button>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <span jhiTranslate="entity.action.cancel">Cancelar</span>
         </button>
       </div>
     </form>

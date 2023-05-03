@@ -9,12 +9,15 @@ import { EntityArrayResponseType, GaleryService } from '../service/galery.servic
 import { GaleryDeleteDialogComponent } from '../delete/galery-delete-dialog.component';
 import { SortService } from 'app/shared/sort/sort.service';
 
+import { Account } from '../../../core/auth/account.model';
+
 @Component({
   selector: 'jhi-galery',
   templateUrl: './galery.component.html',
   styleUrls: ['./galery.component.scss'],
 })
 export class GaleryComponent implements OnInit {
+  account: Account | null = null;
   galeries?: IGalery[];
   isLoading = false;
 
