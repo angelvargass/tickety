@@ -1,11 +1,11 @@
-<section>
-  <div class="mask d-flex align-items-center h-100 gradient-custom-3">
-    <div class="container h-50">
-      <div class="row d-flex justify-content-center align-items-center h-100">
+<section class="vh-100 bg-dark">
+  <div class="mask d-flex align-items-center gradient-custom-3">
+    <div class="container">
+      <div class="row d-flex justify-content-center align-items-center">
         <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-          <div class="card bg-dark" style="border-radius: 15px; margin-top: 10%; color: white">
+          <div class="bg-dark" style="color: white">
             <div class="card-body p-5">
-              <h2 id="jhi-organization-heading" data-cy="OrganizationCreateUpdateHeading">Crea una organización</h2>
+              <h2 style="margin-top: 10%" id="jhi-organization-heading" data-cy="OrganizationCreateUpdateHeading">Crea una organización</h2>
 
               <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
                 <jhi-alert-error></jhi-alert-error>
