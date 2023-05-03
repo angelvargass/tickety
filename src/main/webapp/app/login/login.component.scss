@@ -1,34 +1,31 @@
-.background-image {
-  background-image: url('../../content/images/fondo-inicio.avif');
-  height: 100vh;
-  background-size: cover;
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+}
+.wrapper .image-holder {
+  width: 69.9%;
+}
+.wrapper .form-inner {
+  width: 30.1%;
+}
+
+.image-holder {
+  background-image: url('../../content/images/concert6.jpg');
+  background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center center;
-  //background-size: 100% 100%;
 }
 
-.fondo-blanco {
-  background-color: #20262e;
-  padding: 25px;
-  margin: 50px;
-  border-radius: 15px;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: unset !important;
+  line-height: unset !important;
 }
 
-.color-letra {
+a {
   color: white;
-}
-
-.color-boton {
-  background-color: #913175;
-  border-color: #913175;
-  color: white;
-}
-
-.color-sec {
-  color: #913175;
-}
-
-.boton-inicio {
-  text-align: center;
-  padding: 30px;
 }

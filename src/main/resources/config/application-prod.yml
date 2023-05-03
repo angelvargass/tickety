@@ -134,3 +134,8 @@ jhipster:
 # ===================================================================
 
 # application:
+
+cloudinary:
+  cloud_name: dlil9kbyr
+  api_key: 422929563456485
+  api_secret: j9Y0JCVzQSHD7uHNzsMMcCQlEzs

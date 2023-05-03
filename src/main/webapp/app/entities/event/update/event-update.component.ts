@@ -90,8 +90,8 @@ export class EventUpdateComponent implements OnInit {
     } else {
       event.eventSatus = this.eventStatusCurrent.OPEN;
       this.subscribeToSaveResponse(this.eventService.create(event));
+      this.router.navigate([`galery/new`]);
     }
-    this.isSaving = false;
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IEvent>>): void {

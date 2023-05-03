@@ -20,9 +20,8 @@ export class PhotoUpdateComponent implements OnInit {
   isSaving = false;
   photo: IPhoto | null = null;
   photoStatusValues = Object.keys(PhotoStatus);
-
+  photoStatusCurrent = PhotoStatus;
   galeriesSharedCollection: IGalery[] = [];
-
   editForm: PhotoFormGroup = this.photoFormService.createPhotoFormGroup();
 
   constructor(
@@ -56,6 +55,7 @@ export class PhotoUpdateComponent implements OnInit {
     if (photo.id !== null) {
       this.subscribeToSaveResponse(this.photoService.update(photo));
     } else {
+      photo.status = this.photoStatusCurrent.ACTIVE;
       this.subscribeToSaveResponse(this.photoService.create(photo));
       this.router.navigate([`event`]);
     }

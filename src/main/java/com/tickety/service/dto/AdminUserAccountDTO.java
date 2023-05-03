@@ -22,4 +22,9 @@ public class AdminUserAccountDTO extends AdminUserDTO {
     public void setUserAccount(UserAccount userAccount) {
         this.userAccount = userAccount;
     }
+
+    @Override
+    public String toString() {
+        return "AdminUserAccountDTO{" + "userAccount=" + userAccount.toString() + '}';
+    }
 }

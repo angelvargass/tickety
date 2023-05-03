@@ -1,4 +1,4 @@
-<div>
+<div style="margin-top: 2%">
   <div class="d-flex justify-content-center">
     <div class="col-md-8">
       <div class="alert alert-success" *ngIf="success">
@@ -21,17 +21,18 @@
   </div>
 </div>
 
-<section class="vh-90 bg-image" style="color: white; background-image: url('../../content/images/fondo-inicio.avif')">
+<section class="vh-90 bg-image" style="color: white">
   <div class="mask d-flex align-items-center h-100 gradient-custom-3">
     <div class="container h-50">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-          <div class="card bg-primary" style="border-radius: 15px; margin: 2% 0 2% 0">
+          <div class="card bg-primary" style="border-radius: 15px; margin: 8% 0 25% 0">
             <div class="card-body p-5">
-              <h2 class="text-center mb-5">Invita un promotor a tu organización</h2>
+              <h2 class="text-center mb-5">Invitar promotor a organización</h2>
 
               <form name="form" role="form" (ngSubmit)="register()" [formGroup]="registerForm">
                 <div class="mb-3">
+                  <label class="form-label" for="email">Email</label>
                   <input
                     type="email"
                     class="form-control"

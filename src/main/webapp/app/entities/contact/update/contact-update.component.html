@@ -10,19 +10,20 @@
 <!--  </div>-->
 <!--</div>-->
 
-<section class="vh-90 bg-image" style="background-image: url('../../content/images/fondo-inicio.avif')">
+<section>
   <div class="mask d-flex align-items-center h-100 gradient-custom-3">
     <div class="container h-50">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-          <div class="card bg-primary" style="border-radius: 15px; margin-top: 2%; color: white">
+          <div class="card bg-primary" style="border-radius: 15px; margin: 5% 0 5% 0; color: white">
             <div class="card-body p-5">
-              <h2 id="jhi-contact-heading" data-cy="ContactCreateUpdateHeading">Crea un contacto para tu organización</h2>
+              <h2 id="jhi-contact-heading" data-cy="ContactCreateUpdateHeading">Contacto de organización</h2>
 
               <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
                 <jhi-alert-error></jhi-alert-error>
 
                 <div class="mb-3">
+                  <label class="form-label" for="field_phone">Teléfono</label>
                   <input
                     type="text"
                     placeholder="Teléfono"
@@ -43,6 +44,7 @@
                 </div>
 
                 <div class="mb-3">
+                  <label class="form-label" for="field_instagram">Instagram</label>
                   <input
                     type="text"
                     placeholder="Instagram"
@@ -63,6 +65,7 @@
                 </div>
 
                 <div class="mb-3">
+                  <label class="form-label" for="field_facebook">Facebook</label>
                   <input
                     type="text"
                     placeholder="Facebook"
@@ -81,6 +84,7 @@
                 </div>
 
                 <div class="mb-3">
+                  <label class="form-label" for="field_whatsapp">Whatsapp</label>
                   <input
                     type="text"
                     placeholder="Whatsapp"
