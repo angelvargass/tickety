@@ -14,7 +14,7 @@
               type="button"
               [routerLink]="['/event', event.id, 'edit']"
               class="btn btn-sm btn-outline-danger btn-event"
-              *ngIf="!accountService.hasAnyAuthority(['ROLE_ADMIN'])"
+              *ngIf="!accountService.hasAnyAuthority(['ROLE_ADMIN']) && !accountService.hasAnyAuthority(['ROLE_USER'])"
             >
               <span jhiTranslate="entity.action.edit">Editar</span>
             </button>
