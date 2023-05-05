@@ -84,6 +84,7 @@ export class EventUpdateComponent implements OnInit {
     const event = this.eventFormService.getEvent(this.editForm);
     event.organization = this.account?.userAccount?.organization;
     event.userAccount = this.account?.userAccount;
+    console.log(this.account);
     if (event.id !== null) {
       this.subscribeToSaveResponse(this.eventService.update(event));
       this.router.navigate([`event`]);
