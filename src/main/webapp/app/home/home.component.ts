@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   carouselWidth: number = 0;
   cardWidth: number = 0;
   scrollPosition = 0;
-  carouselItems: IEvent[] = [];
+  carouselItems: any[] = [];
 
   constructor(
     private accountService: AccountService,
@@ -51,9 +51,14 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe(account => (this.account = account));
 
-    const filterEvents = {
-      sort: ['id,asc'],
-    };
+    this.eventService.query().subscribe({
+      next: response => {
+        this.carouselItems = response.body as any[];
+      },
+      error: err => {
+        console.error(err);
+      },
+    });
 
     this.eventService.query('id').subscribe({
       next: response => {

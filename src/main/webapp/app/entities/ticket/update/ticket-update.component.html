@@ -32,18 +32,10 @@
       </div>
 
       <div>
-        <button
-          type="submit"
-          id="save-entity"
-          data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
-        >
-          <span [mat-dialog-close]="true">Comprar</span>
-        </button>
+        <ngx-paypal [config]="payPalConfig"></ngx-paypal>
 
         <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <span jhiTranslate="entity.action.cancel" [mat-dialog-close]="true">Cancelar</span>
+          <span jhiTranslate="entity.action.cancel" [mat-dialog-close]="false">Cancelar</span>
         </button>
       </div>
     </form>

@@ -5,9 +5,10 @@ import { EventDetailComponent } from './detail/event-detail.component';
 import { EventUpdateComponent } from './update/event-update.component';
 import { EventDeleteDialogComponent } from './delete/event-delete-dialog.component';
 import { EventRoutingModule } from './route/event-routing.module';
+import { NgxPayPalModule } from 'ngx-paypal';
 
 @NgModule({
-  imports: [SharedModule, EventRoutingModule],
+  imports: [SharedModule, EventRoutingModule, NgxPayPalModule],
   declarations: [EventComponent, EventDetailComponent, EventUpdateComponent, EventDeleteDialogComponent],
 })
 export class EventModule {}
