@@ -93,10 +93,13 @@ export class DashboardsComponent implements OnInit, AfterViewInit {
 
   private renderWithPieGraphic() {
     this.chart?.destroy();
+    const totalTickets = this.currentEvent.tickets.length + this.currentEvent.talTickets;
+    const totalSelledTicketsPercentage = (this.currentEvent.tickets.length / totalTickets) * 100;
+    const totalUnselledTicketsPercentage = (this.currentEvent.talTickets / totalTickets) * 100;
     this.chart = new Chart(this.canvasRef.nativeElement.getContext('2d'), {
       type: 'pie',
       data: {
-        labels: ['Entradas vendidas', 'Entradas sin vender'],
+        labels: [`Entradas vendidas ${totalSelledTicketsPercentage}%`, `Entradas sin vender ${totalUnselledTicketsPercentage}%`],
         datasets: [
           {
             label: 'Inventario de entradas',
