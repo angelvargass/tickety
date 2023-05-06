@@ -13,6 +13,9 @@ import { Chart } from 'chart.js/auto';
 export class DashboardsComponent implements OnInit, AfterViewInit {
   protected readonly SELLS_REPORT = 'SELLS_REPORT';
   protected readonly ASSISTANTS_REPORT = 'ASSISTANTS_REPORT';
+  protected readonly GRAPHIC_TYPE_LINE = 'line';
+  protected readonly GRAPHIC_TYPE_BARS = 'bar';
+  protected readonly GRAPHIC_TYPE_PIE = 'pie';
   @ViewChild('sells_report_chart') canvasRef!: ElementRef;
 
   constructor(
@@ -25,7 +28,7 @@ export class DashboardsComponent implements OnInit, AfterViewInit {
   currentViewMode = this.SELLS_REPORT;
   currentEvent: any;
   totalSelledTickets: number = 0;
-  public chart: any;
+  public chart: Chart | undefined;
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ event }) => {
@@ -33,6 +36,10 @@ export class DashboardsComponent implements OnInit, AfterViewInit {
     });
 
     this.initInfo();
+  }
+
+  ngAfterViewInit(): void {
+    this.createSellsReportChart(this.GRAPHIC_TYPE_BARS);
   }
 
   initInfo() {
@@ -43,16 +50,16 @@ export class DashboardsComponent implements OnInit, AfterViewInit {
     this.currentViewMode = viewMode;
 
     if (viewMode === this.SELLS_REPORT) {
-      this.createSellsReportChart();
+      this.createSellsReportChart(this.GRAPHIC_TYPE_BARS);
     } else {
     }
   }
 
-  ngAfterViewInit(): void {
-    this.createSellsReportChart();
+  onGraphicTypeChange(type: string) {
+    this.createSellsReportChart(type);
   }
 
-  createSellsReportChart() {
+  private getDateRangesForDatasets() {
     let currentDate = new Date(this.currentEvent.creationDate);
     const endDate = new Date(this.currentEvent.date);
     const dateRanges: any[] = [];
@@ -62,7 +69,80 @@ export class DashboardsComponent implements OnInit, AfterViewInit {
       currentDate.setDate(currentDate.getDate() + 1);
     }
 
+    return dateRanges;
+  }
+
+  createSellsReportChart(graphicType: string) {
+    const dateRanges = this.getDateRangesForDatasets();
     const [selledTicketsGroupedByDate, profitsGroupedByDate] = this.getGroupedValuesByDate(dateRanges, this.currentEvent.tickets);
+
+    switch (graphicType) {
+      case this.GRAPHIC_TYPE_BARS:
+        this.renderWithBarsGraphic(dateRanges, selledTicketsGroupedByDate, profitsGroupedByDate);
+        break;
+
+      case this.GRAPHIC_TYPE_LINE:
+        this.renderWithLineGraphic(dateRanges, profitsGroupedByDate, selledTicketsGroupedByDate);
+        break;
+
+      case this.GRAPHIC_TYPE_PIE:
+        this.renderWithPieGraphic();
+        break;
+    }
+  }
+
+  private renderWithPieGraphic() {
+    this.chart?.destroy();
+    this.chart = new Chart(this.canvasRef.nativeElement.getContext('2d'), {
+      type: 'pie',
+      data: {
+        labels: ['Entradas vendidas', 'Entradas sin vender'],
+        datasets: [
+          {
+            label: 'Inventario de entradas',
+            data: [this.currentEvent.tickets.length, this.currentEvent.talTickets],
+            backgroundColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)'],
+            hoverOffset: 4,
+          },
+        ],
+      },
+      options: {
+        aspectRatio: 2.5,
+      },
+    });
+  }
+
+  private renderWithLineGraphic(dateRanges: any[], profitsGroupedByDate: any[], selledTicketsGroupedByDate: any[]) {
+    this.chart?.destroy();
+    this.chart = new Chart(this.canvasRef.nativeElement.getContext('2d'), {
+      type: 'line',
+      data: {
+        labels: dateRanges,
+        datasets: [
+          {
+            label: 'Ganancias',
+            data: profitsGroupedByDate,
+            backgroundColor: '#94B5F3',
+            borderColor: 'rgb(75, 192, 192)',
+            tension: 0.1,
+          },
+          {
+            label: 'Tickets',
+            data: selledTicketsGroupedByDate,
+            backgroundColor: '#F39494',
+            borderColor: '#F39494',
+            tension: 0.1,
+          },
+        ],
+      },
+      options: {
+        aspectRatio: 2.5,
+      },
+    });
+  }
+
+  private renderWithBarsGraphic(dateRanges: any[], selledTicketsGroupedByDate: any[], profitsGroupedByDate: any[]) {
+    this.chart?.destroy();
     this.chart = new Chart(this.canvasRef.nativeElement.getContext('2d'), {
       type: 'bar',
       data: {
@@ -94,7 +174,6 @@ export class DashboardsComponent implements OnInit, AfterViewInit {
       selledTicketsGroupedByDate.push(ticketsByDate.length);
 
       if (ticketsByDate.length !== 0) {
-        console.log(selledTicketsGroupedByDate);
         // @ts-ignore
         const totalAmount = ticketsByDate.reduce((acc, ticket) => acc + ticket.amount, 0);
         profitsGroupedByDate.push(totalAmount);
