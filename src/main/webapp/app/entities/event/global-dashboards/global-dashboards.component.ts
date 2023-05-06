@@ -119,7 +119,7 @@ export class GlobalDashboardsComponent implements OnInit {
           {
             label: 'Ganancias',
             data: values,
-            backgroundColor: '#94B5F3',
+            backgroundColor: '#CEF394',
             borderColor: 'rgb(75, 192, 192)',
             tension: 0.1,
           },
