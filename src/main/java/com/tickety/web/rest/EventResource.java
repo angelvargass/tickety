@@ -2,10 +2,12 @@ package com.tickety.web.rest;
 
 import com.tickety.domain.Event;
 import com.tickety.repository.EventRepository;
+import com.tickety.service.EventService;
 import com.tickety.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import javax.validation.Valid;
@@ -36,8 +38,11 @@ public class EventResource {
 
     private final EventRepository eventRepository;
 
-    public EventResource(EventRepository eventRepository) {
+    private final EventService eventService;
+
+    public EventResource(EventRepository eventRepository, EventService eventService) {
         this.eventRepository = eventRepository;
+        this.eventService = eventService;
     }
 
     /**
@@ -49,7 +54,7 @@ public class EventResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/events")
-    public ResponseEntity<Event> createEvent(@Valid @RequestBody Event event) throws URISyntaxException {
+    public ResponseEntity<Event> createEvent(@RequestBody Event event) throws URISyntaxException {
         log.debug("REST request to save Event : {}", event);
         if (event.getId() != null) {
             throw new BadRequestAlertException("A new event cannot already have an ID", ENTITY_NAME, "idexists");
@@ -175,6 +180,11 @@ public class EventResource {
         log.debug("REST request to get Event : {}", id);
         Optional<Event> event = eventRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(event);
+    }
+
+    @GetMapping("/events/global-top-sellers")
+    public Map<String, Long> getGlobalTopSellerEvents() {
+        return this.eventService.getTopSellerEvents();
     }
 
     /**

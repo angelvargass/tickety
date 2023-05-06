@@ -1,0 +1,47 @@
+<div class="container-fluid bg-dark">
+  <div class="row flex-nowrap">
+    <div
+      class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark"
+      style="border: 1px solid gray !important; width: 280px; height: 80vh"
+    >
+      <hr />
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+          <p class="h4 fw-bold" aria-current="page">
+            <svg class="bi me-2" width="16" height="16">
+              <use xlink:href="#home"></use>
+            </svg>
+            Dashboard global
+          </p>
+        </li>
+
+        <li>
+          <a class="nav-link text-light">
+            <svg class="bi me-2" width="16" height="16">
+              <use xlink:href="#speedometer2"></use>
+            </svg>
+            Reporte de ventas
+          </a>
+        </li>
+
+        <hr />
+      </ul>
+
+      <hr />
+    </div>
+
+    <section class="vh-70 section">
+      <div style="color: white; margin-left: 5%">
+        <h2 style="margin-bottom: 5%">Ventas globales de eventos</h2>
+        <select #graphicType (change)="onGraphicTypeChange(graphicType.value)" class="form-select" aria-label="Default select example">
+          <option selected="true" value="bar">Total de ventas globales por mes</option>
+          <option value="line">Top 3 de ventas globales</option>
+        </select>
+
+        <div class="chart-container">
+          <canvas #sells_report_chart width="400" height="400">{{ chart }}</canvas>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

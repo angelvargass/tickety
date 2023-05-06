@@ -1,19 +1,11 @@
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center vh-100 bg-dark">
   <div class="col-8">
     <div *ngIf="user">
-      <h2>
-        <span jhiTranslate="userManagement.detail.title">Usuario</span> [<strong>{{ user.login }}</strong
-        >]
+      <h2 style="margin-top: 5%">
+        <span>Perfil de </span> <strong>{{ user.firstName }} {{ user.lastName }}</strong>
       </h2>
 
       <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="userManagement.login">Login</span></dt>
-        <dd>
-          <span>{{ user.login }}</span>
-          <span *ngIf="user.activated" class="badge bg-success" jhiTranslate="userManagement.activated">Activado</span>
-          <span *ngIf="!user.activated" class="badge bg-danger" jhiTranslate="userManagement.deactivated">Desactivado</span>
-        </dd>
-
         <dt><span jhiTranslate="userManagement.firstName">Nombre</span></dt>
         <dd>{{ user.firstName }}</dd>
 
@@ -23,22 +15,10 @@
         <dt><span jhiTranslate="userManagement.email">Email</span></dt>
         <dd>{{ user.email }}</dd>
 
-        <dt><span jhiTranslate="userManagement.langKey">Idioma</span></dt>
-        <dd>{{ user.langKey }}</dd>
+        <dt><span>Fecha de creación</span></dt>
+        <dd>{{ user.createdDate | date: 'dd/MM/yyyy' }}</dd>
 
-        <dt><span jhiTranslate="userManagement.createdBy">Creado por</span></dt>
-        <dd>{{ user.createdBy }}</dd>
-
-        <dt><span jhiTranslate="userManagement.createdDate">Fecha de creación</span></dt>
-        <dd>{{ user.createdDate | date: 'dd/MM/yy HH:mm' }}</dd>
-
-        <dt><span jhiTranslate="userManagement.lastModifiedBy">Modificado por</span></dt>
-        <dd>{{ user.lastModifiedBy }}</dd>
-
-        <dt><span jhiTranslate="userManagement.lastModifiedDate">Fecha de modificación</span></dt>
-        <dd>{{ user.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</dd>
-
-        <dt><span jhiTranslate="userManagement.profiles">Perfiles</span></dt>
+        <dt><span>Roles</span></dt>
         <dd>
           <ul class="list-unstyled">
             <li *ngFor="let authority of user.authorities">
@@ -47,10 +27,6 @@
           </ul>
         </dd>
       </dl>
-
-      <button type="submit" routerLink="../../" class="btn btn-info">
-        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
-      </button>
     </div>
   </div>
 </div>

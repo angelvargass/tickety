@@ -12,6 +12,7 @@ import { SortService } from 'app/shared/sort/sort.service';
 @Component({
   selector: 'jhi-venue',
   templateUrl: './venue.component.html',
+  styleUrls: ['./venue.component.scss'],
 })
 export class VenueComponent implements OnInit {
   venues?: IVenue[];

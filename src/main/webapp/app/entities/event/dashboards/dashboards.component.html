@@ -1,0 +1,113 @@
+<div class="container-fluid bg-dark">
+  <div class="row flex-nowrap">
+    <div
+      class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark"
+      style="border: 1px solid gray !important; width: 280px; height: 80vh"
+    >
+      <hr />
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+          <p class="h4 fw-bold" aria-current="page">
+            <svg class="bi me-2" width="16" height="16">
+              <use xlink:href="#home"></use>
+            </svg>
+            {{ currentEvent.eventName }}
+          </p>
+        </li>
+
+        <li>
+          <a (click)="changeViewMode(SELLS_REPORT)" class="nav-link text-light">
+            <svg class="bi me-2" width="16" height="16">
+              <use xlink:href="#speedometer2"></use>
+            </svg>
+            Reporte de ventas
+          </a>
+        </li>
+        <li>
+          <a (click)="changeViewMode(ASSISTANTS_REPORT)" class="nav-link text-light">
+            <svg class="bi me-2" width="16" height="16">
+              <use xlink:href="#grid"></use>
+            </svg>
+            Asistentes
+          </a>
+        </li>
+
+        <hr />
+      </ul>
+
+      <hr />
+    </div>
+
+    <section class="vh-70 section">
+      <div *ngIf="currentViewMode == SELLS_REPORT" style="color: white; margin-left: 5%">
+        <h2 style="margin-bottom: 5%">
+          Reporte de ventas de <b>{{ currentEvent.eventName }}</b>
+        </h2>
+        <select #graphicType (change)="onGraphicTypeChange(graphicType.value)" class="form-select" aria-label="Default select example">
+          <option selected="true" value="bar">Ventas por día</option>
+          <option value="line">Líneas</option>
+          <option value="pie">Tickets vendidos</option>
+        </select>
+
+        <div class="chart-container">
+          <canvas #sells_report_chart width="400" height="400">{{ sellsReportChart }}</canvas>
+        </div>
+      </div>
+
+      <div *ngIf="currentViewMode == ASSISTANTS_REPORT" style="color: white; margin-left: 5%">
+        <h2>
+          Asistentes de <b>{{ currentEvent.eventName }}</b>
+        </h2>
+
+        <div class="chart-container">
+          <canvas #assistants_report_chart width="400" height="400">{{ assistantReportChart }}</canvas>
+        </div>
+
+        <hr />
+
+        <div class="table-responsive table-entities" id="entities" *ngIf="tickets && tickets.length > 0">
+          <table class="table">
+            <thead>
+              <tr>
+                <th class="text-center" scope="col">
+                  <span>Identificador de ticket</span>
+                </th>
+                <th class="text-center" scope="col">
+                  <span>Fecha de compra</span>
+                </th>
+                <th class="text-center" scope="col">
+                  <span>Estatus</span>
+                </th>
+
+                <th class="text-center" scope="col">
+                  <span>Comprador</span>
+                </th>
+
+                <th class="text-center" scope="col">
+                  <span>Precio del ticket</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ticket of tickets | slice: (page - 1) * pageSize:page * pageSize" data-cy="entityTable">
+                <td class="text-center">{{ ticket.id }}</td>
+                <td class="text-center">{{ ticket.date }}</td>
+                <td class="text-center">{{ ticket.ticketStatus }}</td>
+                <td class="text-center">
+                  <a [routerLink]="['../../../', 'admin', 'user-management', ticket.userAccount.user.login, 'view']">
+                    {{ ticket.userAccount.user.firstName }} {{ ticket.userAccount.user.lastName }}
+                  </a>
+                </td>
+                <td class="text-center">₡ {{ ticket.amount }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="d-flex justify-content-center">
+            <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="tickets.length"> </ngb-pagination>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

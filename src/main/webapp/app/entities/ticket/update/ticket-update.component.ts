@@ -16,7 +16,8 @@ import { Account } from '../../../core/auth/account.model';
 import { DataService } from '../../../shared/data/data.service';
 import { NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ICreateOrderRequest, IPayPalConfig } from 'ngx-paypal';
 
 @Component({
   selector: 'jhi-ticket-update',
@@ -39,6 +40,8 @@ export class TicketUpdateComponent implements OnInit {
   currentPrice: number | null | undefined = null;
   totalPay: number | null | undefined = null;
 
+  public payPalConfig?: IPayPalConfig;
+
   constructor(
     protected ticketService: TicketService,
     protected ticketFormService: TicketFormService,
@@ -48,7 +51,8 @@ export class TicketUpdateComponent implements OnInit {
     protected accountService: AccountService,
     protected dataService: DataService,
     protected calendar: NgbCalendar,
-    @Inject(MAT_DIALOG_DATA) protected data: any
+    @Inject(MAT_DIALOG_DATA) protected data: any,
+    private dialogRef: MatDialogRef<TicketUpdateComponent>
   ) {
     console.log(data.event.eventName);
   }
@@ -58,6 +62,7 @@ export class TicketUpdateComponent implements OnInit {
   compareEvent = (o1: IEvent | null, o2: IEvent | null): boolean => this.eventService.compareEvent(o1, o2);
 
   ngOnInit(): void {
+    this.initConfig();
     this.dataService.currentprice.subscribe(price => (this.currentPrice = price));
 
     this.accountService.getAuthenticationState().subscribe(account => {
@@ -75,8 +80,82 @@ export class TicketUpdateComponent implements OnInit {
     });
   }
 
+  private initConfig(): void {
+    this.payPalConfig = {
+      currency: 'USD',
+      clientId: 'AVhwfs7Pf52DU9ZkscvX7d0qYMLsv6g8wSQfJiorqIBd1s1Pf_xWBv2JGwxP0liijXnP7R4vjnXAoULq',
+      createOrderOnClient: data =>
+        <ICreateOrderRequest>{
+          intent: 'CAPTURE',
+          purchase_units: [
+            {
+              amount: {
+                currency_code: 'USD',
+                value: this.getTotalValueOfTickets().toFixed(2),
+                breakdown: {
+                  item_total: {
+                    currency_code: 'USD',
+                    value: this.getTotalValueOfTickets().toFixed(2),
+                  },
+                },
+              },
+              items: this.getPaypalItems(),
+            },
+          ],
+        },
+      advanced: {
+        commit: 'true',
+      },
+      style: {
+        label: 'paypal',
+        layout: 'vertical',
+      },
+      onApprove: (data, actions) => {
+        this.save();
+        this.closeDialog(true);
+      },
+      onClientAuthorization: data => {},
+      onCancel: (data, actions) => {
+        this.closeDialog(false);
+      },
+      onError: err => {
+        //Show error
+      },
+      onClick: (data, actions) => {},
+    };
+  }
+
+  private closeDialog(result: boolean) {
+    this.dialogRef.close(result);
+  }
+
   previousState(): void {
     //window.history.back();
+  }
+
+  private getPaypalItems(): any[] {
+    const items: any[] = [];
+
+    items.push({
+      name: this.parentEvent?.eventName,
+      quantity: 1,
+      category: 'DIGITAL_GOODS',
+      unit_amount: {
+        currency_code: 'USD',
+        // @ts-ignore
+        value: this.getTotalValueOfTickets().toFixed(2),
+      },
+    });
+
+    return items;
+  }
+
+  private getTotalValueOfTickets(): number {
+    return (this.ticketCount * this.currentPrice!) / this.getUSDtoCRCExchange();
+  }
+
+  private getUSDtoCRCExchange(): number {
+    return 548.58;
   }
 
   save(): void {

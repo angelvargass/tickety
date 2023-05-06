@@ -67,6 +67,10 @@ export class EventService {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  getTopSellers() {
+    return this.http.get(`${this.resourceUrl}/global-top-sellers`, { observe: 'response' });
+  }
+
   getEventIdentifier(event: Pick<IEvent, 'id'>): number {
     return event.id;
   }

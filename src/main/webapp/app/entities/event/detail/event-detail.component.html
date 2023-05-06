@@ -1,5 +1,4 @@
-<div class="background-image bg-separator"></div>
-<div class="d-flex justify-content-center background-image color-letra">
+<div class="d-flex justify-content-center fondo-blanco color-letra">
   <div class="container fondo-blanco">
     <div class="row">
       <div class="col-md-12 mt-4 mb-4">
@@ -14,16 +13,16 @@
               type="button"
               [routerLink]="['/event', event.id, 'edit']"
               class="btn btn-sm btn-outline-danger btn-event"
-              *ngIf="!accountService.hasAnyAuthority(['ROLE_ADMIN'])"
+              *ngIf="!accountService.hasAnyAuthority(['ROLE_ADMIN']) && !accountService.hasAnyAuthority(['ROLE_USER'])"
             >
-              <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+              <span jhiTranslate="entity.action.edit">Editar</span>
             </button>
           </div>
 
           <div class="col-md-4">
             <div class="row m-lg-5">
               <div class="col-md-12 mb-2" *ngIf="!accountService.hasAnyAuthority(['ROLE_ADMIN'])">
-                <button (click)="setTicketPrice()" type="button" class="btn btn-block btn-info btn-lg ml-2 mt-4">Comprar Entrada</button>
+                <button (click)="setTicketPrice()" type="button" class="btn btn-block btn-primary btn-lg ml-2 mt-4">Comprar Entrada</button>
               </div>
             </div>
             <div class="event-details-containet">
@@ -57,4 +56,5 @@
     </div>
   </div>
 </div>
-<div class="background-image bg-separator"></div>
+
+<div class="fondo-blanco bg-separator"></div>

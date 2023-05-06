@@ -30,6 +30,9 @@ public class Event implements Serializable {
     @Column(name = "date")
     private LocalDate date;
 
+    @Column(name = "creation_date")
+    private LocalDate creationDate = LocalDate.now();
+
     @Enumerated(EnumType.STRING)
     @Column(name = "event_satus")
     private EventSatus eventSatus;
@@ -58,7 +61,7 @@ public class Event implements Serializable {
     @JsonIgnoreProperties(value = { "genres", "event" }, allowSetters = true)
     private Set<Artist> artists = new HashSet<>();
 
-    @OneToMany(mappedBy = "event", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "event", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "event" }, allowSetters = true)
     private Set<Ticket> tickets = new HashSet<>();
@@ -281,6 +284,14 @@ public class Event implements Serializable {
     public Event venue(Venue venue) {
         this.setVenue(venue);
         return this;
+    }
+
+    public LocalDate getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

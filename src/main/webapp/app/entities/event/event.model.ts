@@ -16,7 +16,7 @@ export interface IEvent {
   galery?: Pick<IGalery, 'id'> | null;
   userAccount?: Pick<IUserAccount, 'id'> | null;
   organization?: Pick<IOrganization, 'id'> | null;
-  venue?: Pick<IVenue, 'id'> | null;
+  venue?: Pick<IVenue, 'id' | 'name'> | null;
   // this is only use for showing the main image for the event
   showCase?: string | null;
 }

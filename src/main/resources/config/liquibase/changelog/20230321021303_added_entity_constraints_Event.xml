@@ -17,7 +17,7 @@
         <addForeignKeyConstraint baseColumnNames="user_account_id"
                                  baseTableName="event"
                                  constraintName="fk_event__user_account_id"
-                                 referencedColumnNames="id"
+                                 referencedColumnNames="user_id"
                                  referencedTableName="user_account"/>
 
         <addForeignKeyConstraint baseColumnNames="organization_id"

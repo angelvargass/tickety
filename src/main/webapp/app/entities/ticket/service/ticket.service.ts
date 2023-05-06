@@ -66,6 +66,10 @@ export class TicketService {
       .pipe(map(res => this.convertResponseArrayFromServer(res)));
   }
 
+  findTicketsByEvent(eventId: number): Observable<any> {
+    return this.http.get(`${this.resourceUrl}/event/${eventId}`, { observe: 'response' });
+  }
+
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }

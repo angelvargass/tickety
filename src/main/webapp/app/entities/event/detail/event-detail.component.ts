@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AccountService } from '../../../core/auth/account.service';
 
 import { TicketUpdateComponent } from '../../ticket/update/ticket-update.component';
+import { ICreateOrderRequest, IPayPalConfig } from 'ngx-paypal';
 
 @Component({
   selector: 'jhi-event-detail',
@@ -49,14 +50,21 @@ export class EventDetailComponent implements OnInit {
   }
 
   openModal(): void {
-    console.log(this.event);
-
-    this.matDialog.open(TicketUpdateComponent, {
-      width: '400px',
-      height: '280px',
-      data: {
-        event: this.event,
-      },
-    });
+    this.matDialog
+      .open(TicketUpdateComponent, {
+        width: '400px',
+        height: '280px',
+        data: {
+          event: this.event,
+        },
+      })
+      .afterClosed()
+      .subscribe({
+        next: value => {
+          console.log(value);
+          if (value) {
+          }
+        },
+      });
   }
 }
