@@ -44,6 +44,14 @@ const eventRoute: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
+    path: ':id/dashboards',
+    component: DashboardsComponent,
+    resolve: {
+      event: EventRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
     path: 'dashboards/global',
     component: GlobalDashboardsComponent,
     resolve: {
