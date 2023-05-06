@@ -27,14 +27,11 @@ export class GlobalDashboardsComponent implements OnInit {
   ) {}
 
   currentViewMode = this.SELLS_REPORT;
-  currentEvent: any;
-  totalSelledTickets: number = 0;
   eventList: any[] = [];
+  topSellers: any = undefined;
   public chart: Chart | undefined;
 
   ngOnInit(): void {
-    this.currentEvent = undefined;
-
     this.initInfo();
   }
 
@@ -43,6 +40,15 @@ export class GlobalDashboardsComponent implements OnInit {
       next: value => {
         this.eventList = value.body as any[];
         this.createSellsReportChart(this.GRAPHIC_TYPE_BARS);
+      },
+      error: err => {
+        console.error(err);
+      },
+    });
+
+    this.eventService.getTopSellers().subscribe({
+      next: value => {
+        this.topSellers = value.body;
       },
       error: err => {
         console.error(err);
@@ -64,19 +70,13 @@ export class GlobalDashboardsComponent implements OnInit {
   }
 
   createSellsReportChart(graphicType: string) {
-    const groupedByYearAndMonthTotalSells = this.getTotalSellsgroupByYearAndMonth();
-
     switch (graphicType) {
       case this.GRAPHIC_TYPE_BARS:
-        this.renderWithBarsGraphic(groupedByYearAndMonthTotalSells);
+        this.renderWithBarsGraphic();
         break;
 
       case this.GRAPHIC_TYPE_LINE:
-        //this.renderWithLineGraphic(dateRanges, profitsGroupedByDate, selledTicketsGroupedByDate);
-        break;
-
-      case this.GRAPHIC_TYPE_PIE:
-        //this.renderWithPieGraphic();
+        this.renderWithLineGraphic();
         break;
     }
   }
@@ -107,25 +107,20 @@ export class GlobalDashboardsComponent implements OnInit {
     return groupedByYearAndMonth;
   }
 
-  private renderWithLineGraphic(dateRanges: any[], profitsGroupedByDate: any[], selledTicketsGroupedByDate: any[]) {
+  private renderWithLineGraphic() {
     this.chart?.destroy();
+    const keys: any[] = Object.keys(this.topSellers);
+    const values: any[] = Object.values(this.topSellers);
     this.chart = new Chart(this.canvasRef.nativeElement.getContext('2d'), {
       type: 'line',
       data: {
-        labels: dateRanges,
+        labels: keys,
         datasets: [
           {
             label: 'Ganancias',
-            data: profitsGroupedByDate,
+            data: values,
             backgroundColor: '#94B5F3',
             borderColor: 'rgb(75, 192, 192)',
-            tension: 0.1,
-          },
-          {
-            label: 'Tickets',
-            data: selledTicketsGroupedByDate,
-            backgroundColor: '#F39494',
-            borderColor: '#F39494',
             tension: 0.1,
           },
         ],
@@ -136,7 +131,8 @@ export class GlobalDashboardsComponent implements OnInit {
     });
   }
 
-  private renderWithBarsGraphic(groupedByYearAndMonthTotalSells: any) {
+  private renderWithBarsGraphic() {
+    const groupedByYearAndMonthTotalSells = this.getTotalSellsgroupByYearAndMonth();
     this.chart?.destroy();
     const dates: any[] = Object.keys(groupedByYearAndMonthTotalSells);
     const values: any[] = Object.values(groupedByYearAndMonthTotalSells);
