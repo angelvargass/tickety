@@ -7,6 +7,7 @@ import { EventDetailComponent } from '../detail/event-detail.component';
 import { EventUpdateComponent } from '../update/event-update.component';
 import { EventRoutingResolveService } from './event-routing-resolve.service';
 import { ASC } from 'app/config/navigation.constants';
+import { DashboardsComponent } from '../dashboards/dashboards.component';
 
 const eventRoute: Routes = [
   {
@@ -36,6 +37,14 @@ const eventRoute: Routes = [
   {
     path: ':id/edit',
     component: EventUpdateComponent,
+    resolve: {
+      event: EventRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: ':id/dashboards',
+    component: DashboardsComponent,
     resolve: {
       event: EventRoutingResolveService,
     },

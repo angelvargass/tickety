@@ -1,0 +1,16 @@
+.section {
+  width: 70%;
+}
+
+a:hover {
+  color: var(--bs-nav-pills-link-active-color);
+  background-color: var(--bs-nav-pills-link-active-bg);
+}
+
+input {
+  width: 600px;
+}
+
+select {
+  width: 600px;
+}

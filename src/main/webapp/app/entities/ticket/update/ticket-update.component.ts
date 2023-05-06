@@ -135,19 +135,18 @@ export class TicketUpdateComponent implements OnInit {
 
   private getPaypalItems(): any[] {
     const items: any[] = [];
-    for (let i = 0; i < this.ticketCount; i++) {
-      items.push({
-        name: this.parentEvent?.eventName,
-        quantity: '1',
-        category: 'DIGITAL_GOODS',
-        unit_amount: {
-          currency_code: 'USD',
-          // @ts-ignore
-          value: (this.currentPrice! / this.getUSDtoCRCExchange()).toFixed(2),
-        },
-      });
-    }
-    console.log(items);
+
+    items.push({
+      name: this.parentEvent?.eventName,
+      quantity: 1,
+      category: 'DIGITAL_GOODS',
+      unit_amount: {
+        currency_code: 'USD',
+        // @ts-ignore
+        value: this.getTotalValueOfTickets().toFixed(2),
+      },
+    });
+
     return items;
   }
 
