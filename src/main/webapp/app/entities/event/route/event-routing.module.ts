@@ -8,6 +8,7 @@ import { EventUpdateComponent } from '../update/event-update.component';
 import { EventRoutingResolveService } from './event-routing-resolve.service';
 import { ASC } from 'app/config/navigation.constants';
 import { DashboardsComponent } from '../dashboards/dashboards.component';
+import { GlobalDashboardsComponent } from '../global-dashboards/global-dashboards.component';
 
 const eventRoute: Routes = [
   {
@@ -43,8 +44,8 @@ const eventRoute: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
-    path: ':id/dashboards',
-    component: DashboardsComponent,
+    path: 'dashboards/global',
+    component: GlobalDashboardsComponent,
     resolve: {
       event: EventRoutingResolveService,
     },

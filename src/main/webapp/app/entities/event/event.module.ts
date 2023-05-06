@@ -7,9 +7,17 @@ import { EventDeleteDialogComponent } from './delete/event-delete-dialog.compone
 import { EventRoutingModule } from './route/event-routing.module';
 import { NgxPayPalModule } from 'ngx-paypal';
 import { DashboardsComponent } from './dashboards/dashboards.component';
+import { GlobalDashboardsComponent } from './global-dashboards/global-dashboards.component';
 
 @NgModule({
   imports: [SharedModule, EventRoutingModule, NgxPayPalModule],
-  declarations: [EventComponent, EventDetailComponent, EventUpdateComponent, EventDeleteDialogComponent, DashboardsComponent],
+  declarations: [
+    EventComponent,
+    EventDetailComponent,
+    EventUpdateComponent,
+    EventDeleteDialogComponent,
+    DashboardsComponent,
+    GlobalDashboardsComponent,
+  ],
 })
 export class EventModule {}
