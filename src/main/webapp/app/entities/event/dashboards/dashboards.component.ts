@@ -4,6 +4,7 @@ import { EventService } from '../service/event.service';
 import { AccountService } from '../../../core/auth/account.service';
 import { UserAccountService } from '../../user-account/service/user-account.service';
 import { Chart } from 'chart.js/auto';
+import { TicketService } from '../../ticket/service/ticket.service';
 
 @Component({
   selector: '[jhi-event-dashboard]',
@@ -16,19 +17,25 @@ export class DashboardsComponent implements OnInit, AfterViewInit {
   protected readonly GRAPHIC_TYPE_LINE = 'line';
   protected readonly GRAPHIC_TYPE_BARS = 'bar';
   protected readonly GRAPHIC_TYPE_PIE = 'pie';
-  @ViewChild('sells_report_chart') canvasRef!: ElementRef;
+  @ViewChild('sells_report_chart') sellsCanvasRef!: ElementRef;
+  @ViewChild('assistants_report_chart') assistantsCanvasRef!: ElementRef;
 
   constructor(
     protected eventService: EventService,
     protected activatedRoute: ActivatedRoute,
     protected accountService: AccountService,
-    protected userAccountService: UserAccountService
+    protected userAccountService: UserAccountService,
+    protected ticketService: TicketService
   ) {}
 
   currentViewMode = this.SELLS_REPORT;
   currentEvent: any;
   totalSelledTickets: number = 0;
-  public chart: Chart | undefined;
+  tickets: any[] = [];
+  page = 1;
+  pageSize = 10;
+  public sellsReportChart: Chart | undefined;
+  public assistantReportChart: Chart | undefined;
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ event }) => {
@@ -52,11 +59,71 @@ export class DashboardsComponent implements OnInit, AfterViewInit {
     if (viewMode === this.SELLS_REPORT) {
       this.createSellsReportChart(this.GRAPHIC_TYPE_BARS);
     } else {
+      this.createAssistantsReportList();
+      this.createTicketsPerAssistantReport();
     }
   }
 
+  createAssistantsReportList() {
+    this.ticketService.findTicketsByEvent(this.currentEvent.id).subscribe(res => {
+      this.tickets = res.body;
+    });
+  }
+
   onGraphicTypeChange(type: string) {
-    this.createSellsReportChart(type);
+    if (this.currentViewMode === this.SELLS_REPORT) {
+      this.createSellsReportChart(type);
+    }
+  }
+
+  createTicketsPerAssistantReport() {
+    this.assistantReportChart?.destroy();
+    const { buyersLabelsDataSet, buyersTicketAmountDataSet } = this.getDataSetsForAssistantsReportChart();
+
+    const hexBackgroundColors = ['#ffb4b4', '#e1c693', '#8dd0b3', '#ae7373', '#e4d3ff'];
+
+    this.assistantReportChart = new Chart(this.assistantsCanvasRef.nativeElement.getContext('2d'), {
+      type: 'pie',
+      data: {
+        labels: buyersLabelsDataSet,
+        datasets: [
+          {
+            label: 'Entradas',
+            data: buyersTicketAmountDataSet,
+            backgroundColor: hexBackgroundColors,
+            hoverOffset: 4,
+          },
+        ],
+      },
+      options: {
+        aspectRatio: 2.5,
+      },
+    });
+  }
+
+  private getDataSetsForAssistantsReportChart() {
+    const ticketsLeft = this.currentEvent.talTickets;
+    const totalTickets = this.currentEvent.tickets.length + ticketsLeft;
+    const allBuyersUserAccountIdsAndName = [
+      ...new Set(
+        this.tickets.map(ticket => `${ticket.userAccount.id}-${ticket.userAccount.user.firstName} ${ticket.userAccount.user.lastName}`)
+      ),
+    ];
+    const buyersLabelsDataSet = [];
+    const buyersTicketAmountDataSet = [];
+
+    for (const buyerIdAndName of allBuyersUserAccountIdsAndName) {
+      const buyerId = buyerIdAndName.split('-')[0];
+      const buyerName = buyerIdAndName.split('-')[1];
+      const buyerTickets = this.tickets.filter(x => x.userAccount.id === +buyerId);
+      const buyerPercentageOfTickets = (buyerTickets.length / totalTickets) * 100;
+      buyersLabelsDataSet.push(`${buyerName} - ${buyerPercentageOfTickets}%`);
+      buyersTicketAmountDataSet.push(buyerTickets.length);
+    }
+
+    buyersLabelsDataSet.push(`Entradas sin vender - ${(ticketsLeft / totalTickets) * 100}%`);
+    buyersTicketAmountDataSet.push(ticketsLeft);
+    return { buyersLabelsDataSet, buyersTicketAmountDataSet };
   }
 
   private getDateRangesForDatasets() {
@@ -92,11 +159,11 @@ export class DashboardsComponent implements OnInit, AfterViewInit {
   }
 
   private renderWithPieGraphic() {
-    this.chart?.destroy();
+    this.sellsReportChart?.destroy();
     const totalTickets = this.currentEvent.tickets.length + this.currentEvent.talTickets;
     const totalSelledTicketsPercentage = (this.currentEvent.tickets.length / totalTickets) * 100;
     const totalUnselledTicketsPercentage = (this.currentEvent.talTickets / totalTickets) * 100;
-    this.chart = new Chart(this.canvasRef.nativeElement.getContext('2d'), {
+    this.sellsReportChart = new Chart(this.sellsCanvasRef.nativeElement.getContext('2d'), {
       type: 'pie',
       data: {
         labels: [`Entradas vendidas ${totalSelledTicketsPercentage}%`, `Entradas sin vender ${totalUnselledTicketsPercentage}%`],
@@ -116,11 +183,11 @@ export class DashboardsComponent implements OnInit, AfterViewInit {
   }
 
   private renderWithLineGraphic(dateRanges: any[], profitsGroupedByDate: any[], selledTicketsGroupedByDate: any[]) {
-    this.chart?.destroy();
+    this.sellsReportChart?.destroy();
     console.log(dateRanges);
     console.log(profitsGroupedByDate);
     console.log(selledTicketsGroupedByDate);
-    this.chart = new Chart(this.canvasRef.nativeElement.getContext('2d'), {
+    this.sellsReportChart = new Chart(this.sellsCanvasRef.nativeElement.getContext('2d'), {
       type: 'line',
       data: {
         labels: dateRanges,
@@ -148,8 +215,8 @@ export class DashboardsComponent implements OnInit, AfterViewInit {
   }
 
   private renderWithBarsGraphic(dateRanges: any[], selledTicketsGroupedByDate: any[], profitsGroupedByDate: any[]) {
-    this.chart?.destroy();
-    this.chart = new Chart(this.canvasRef.nativeElement.getContext('2d'), {
+    this.sellsReportChart?.destroy();
+    this.sellsReportChart = new Chart(this.sellsCanvasRef.nativeElement.getContext('2d'), {
       type: 'bar',
       data: {
         labels: dateRanges,

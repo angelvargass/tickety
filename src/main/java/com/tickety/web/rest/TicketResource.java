@@ -194,4 +194,12 @@ public class TicketResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
+
+    @GetMapping("/tickets/event/{eventId}")
+    public List<Ticket> getTicketsByEvent(@PathVariable Long eventId) {
+        Event event = new Event();
+        event.setId(eventId);
+
+        return this.ticketRepository.findByEvent(event);
+    }
 }
