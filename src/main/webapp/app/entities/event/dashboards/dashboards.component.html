@@ -38,9 +38,9 @@
           Reporte de ventas de <b>{{ currentEvent.eventName }}</b>
         </h2>
         <select #graphicType (change)="onGraphicTypeChange(graphicType.value)" class="form-select" aria-label="Default select example">
-          <option selected="true" value="bar">Barras</option>
+          <option selected="true" value="bar">Ventas por día</option>
           <option value="line">Líneas</option>
-          <option value="pie">Circular</option>
+          <option value="pie">Tickets vendidos</option>
         </select>
 
         <div class="chart-container">

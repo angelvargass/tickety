@@ -114,6 +114,9 @@ export class DashboardsComponent implements OnInit, AfterViewInit {
 
   private renderWithLineGraphic(dateRanges: any[], profitsGroupedByDate: any[], selledTicketsGroupedByDate: any[]) {
     this.chart?.destroy();
+    console.log(dateRanges);
+    console.log(profitsGroupedByDate);
+    console.log(selledTicketsGroupedByDate);
     this.chart = new Chart(this.canvasRef.nativeElement.getContext('2d'), {
       type: 'line',
       data: {
