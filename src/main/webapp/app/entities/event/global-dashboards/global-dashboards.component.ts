@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewChildren } from '@angular/core';
-import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { EventService } from '../service/event.service';
 import { AccountService } from '../../../core/auth/account.service';
 import { UserAccountService } from '../../user-account/service/user-account.service';
@@ -16,7 +16,6 @@ export class GlobalDashboardsComponent implements OnInit {
 
   protected readonly GRAPHIC_TYPE_LINE = 'line';
   protected readonly GRAPHIC_TYPE_BARS = 'bar';
-  protected readonly GRAPHIC_TYPE_PIE = 'pie';
   @ViewChild('sells_report_chart') canvasRef!: ElementRef;
 
   constructor(
@@ -25,8 +24,6 @@ export class GlobalDashboardsComponent implements OnInit {
     protected accountService: AccountService,
     protected userAccountService: UserAccountService
   ) {}
-
-  currentViewMode = this.SELLS_REPORT;
   eventList: any[] = [];
   topSellers: any = undefined;
   public chart: Chart | undefined;
@@ -56,15 +53,6 @@ export class GlobalDashboardsComponent implements OnInit {
     });
   }
 
-  changeViewMode(viewMode: any) {
-    this.currentViewMode = viewMode;
-
-    if (viewMode === this.SELLS_REPORT) {
-      this.createSellsReportChart(this.GRAPHIC_TYPE_BARS);
-    } else {
-    }
-  }
-
   onGraphicTypeChange(type: string) {
     this.createSellsReportChart(type);
   }
@@ -81,8 +69,8 @@ export class GlobalDashboardsComponent implements OnInit {
     }
   }
 
-  private getTotalSellsgroupByYearAndMonth(): any {
-    const groupedByYearAndMonth = this.eventList.reduce((acc, item) => {
+  private getTotalSellsGroupedByYearAndMonth(): any {
+    return this.eventList.reduce((acc, item) => {
       const dateParts = item.creationDate.split('-');
       const year = dateParts[0];
       const month = dateParts[1];
@@ -103,8 +91,6 @@ export class GlobalDashboardsComponent implements OnInit {
 
       return acc;
     }, {});
-
-    return groupedByYearAndMonth;
   }
 
   private renderWithLineGraphic() {
@@ -132,7 +118,7 @@ export class GlobalDashboardsComponent implements OnInit {
   }
 
   private renderWithBarsGraphic() {
-    const groupedByYearAndMonthTotalSells = this.getTotalSellsgroupByYearAndMonth();
+    const groupedByYearAndMonthTotalSells = this.getTotalSellsGroupedByYearAndMonth();
     this.chart?.destroy();
     const dates: any[] = Object.keys(groupedByYearAndMonthTotalSells);
     const values: any[] = Object.values(groupedByYearAndMonthTotalSells);

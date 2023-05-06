@@ -1,6 +1,5 @@
 <div class="container-fluid bg-dark">
   <div class="row flex-nowrap">
-    <!-- DISPLAY NAVBAR BASED ON USER AUTHORITY -->
     <div
       class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark"
       style="border: 1px solid gray !important; width: 280px; height: 80vh"
@@ -17,7 +16,7 @@
         </li>
 
         <li>
-          <a (click)="changeViewMode(SELLS_REPORT)" class="nav-link text-light">
+          <a class="nav-link text-light">
             <svg class="bi me-2" width="16" height="16">
               <use xlink:href="#speedometer2"></use>
             </svg>
@@ -32,7 +31,7 @@
     </div>
 
     <section class="vh-70 section">
-      <div *ngIf="currentViewMode == SELLS_REPORT" style="color: white; margin-left: 5%">
+      <div style="color: white; margin-left: 5%">
         <h2 style="margin-bottom: 5%">Ventas globales de eventos</h2>
         <select #graphicType (change)="onGraphicTypeChange(graphicType.value)" class="form-select" aria-label="Default select example">
           <option selected="true" value="bar">Total de ventas globales por mes</option>
