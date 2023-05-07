@@ -10,7 +10,7 @@
     <meta name="theme-color" content="#000000" />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src gap://ready file://* *; style-src 'self' http://* https://* 'unsafe-inline'; script-src 'self' http://* https://* 'unsafe-inline' 'unsafe-eval'"
+      content="default-src gap://ready file://* *; style-src 'self' http://* https://* 'unsafe-inline'; script-src 'self' http://* https://* 'unsafe-inline' 'unsafe-eval'; script-src-elem 'self' https://www.paypal.com;"
     />
     <base href="/" />
     <link rel="icon" href="favicon.ico" />
@@ -129,6 +129,9 @@
       r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
       ga('create','UA-XXXXX-X');ga('send','pageview');
     </script>-->
-    <script src="https://www.paypal.com/sdk/js?client-id=AVhwfs7Pf52DU9ZkscvX7d0qYMLsv6g8wSQfJiorqIBd1s1Pf_xWBv2JGwxP0liijXnP7R4vjnXAoULq&intent=capture&currency=USD"></script>
+    <script
+      script-src-elem
+      src="https://www.paypal.com/sdk/js?client-id=AVhwfs7Pf52DU9ZkscvX7d0qYMLsv6g8wSQfJiorqIBd1s1Pf_xWBv2JGwxP0liijXnP7R4vjnXAoULq&intent=capture&currency=USD"
+    ></script>
   </body>
 </html>
