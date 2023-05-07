@@ -110,9 +110,7 @@
           </td>
 
           <td class="text-center">
-            <div *ngIf="event.venue">
-              <a [routerLink]="['/event', event.id, 'dashboards']">Dashboards</a>
-            </div>
+            <a [routerLink]="['/event', event.id, 'dashboards']">Dashboards</a>
           </td>
 
           <td class="text-center">
